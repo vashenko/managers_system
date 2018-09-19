@@ -28,6 +28,7 @@ import {HttpService} from './services/http.service';
 import { HttpClientModule} from '@angular/common/http';
 import {ConvertService} from './services/convert.service';
 import {ManagerService} from './services/manager-service.service';
+import {GroupByPipe} from './pipes/group-by.pipe';
 
 const routes: Routes = [
   { path: '', redirectTo: 'log-in', pathMatch: 'full' },
@@ -42,7 +43,8 @@ const routes: Routes = [
     ManagersListComponent,
     SignInComponent,
     NavbarComponent,
-    OrderedProductsConvertorPipe
+    OrderedProductsConvertorPipe,
+    GroupByPipe
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,7 @@ const routes: Routes = [
     HttpClientModule
 
   ],
-  providers: [FirebaseService, SocialAuthService, HttpService, ConvertService, ManagerService],
+  providers: [FirebaseService, SocialAuthService, HttpService, ConvertService, ManagerService, GroupByPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

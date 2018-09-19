@@ -6,6 +6,7 @@ import {ShowedManager} from '../../domains/showed-manager';
 import {DataSource } from '@angular/cdk/table';
 import {map} from 'rxjs/operators';
 import {Observable, of as observableOf, merge} from 'rxjs';
+import {GroupByPipe} from '../../pipes/group-by.pipe';
 
 @Component({
   selector: 'app-managers-list',
@@ -66,7 +67,9 @@ export class DataTableDataSource extends DataSource<ShowedManager> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'Name': return compare(a.name, b.name, isAsc);
+        case 'position': return compare(+a.position, +b.position, isAsc);
+        case 'direction': return compare(a.direction, b.direction, isAsc);
+        case 'name': return compare(a.name, b.name, isAsc);
         default: return 0;
       }
     });
@@ -74,7 +77,7 @@ export class DataTableDataSource extends DataSource<ShowedManager> {
 }
 
 function compare(a, b, isAsc) {
-  return (a < b ? -1 : 1);
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
 
