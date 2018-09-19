@@ -19,7 +19,8 @@ export class ManagersListComponent implements OnInit {
   dataSource: DataTableDataSource | null;
   data: ShowedManager[] = [];
 
-  displayedColumns: string[] = ['position', 'direction', 'name'];
+  displayedColumns: string[] = ['position', 'direction', 'name', 'Monday', 'Tuesday',
+                                'Wednesday', 'Thursday', 'Friday', 'AnyDay'];
 
   constructor(private managerService: ManagerService, private httpService: HttpService) {}
 
