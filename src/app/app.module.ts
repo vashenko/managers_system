@@ -18,7 +18,6 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { RouterModule, Routes} from '@angular/router';
-import { OrderedProductsConvertorPipe} from './pipes/array-convertor.pipe';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -28,7 +27,7 @@ import {HttpService} from './services/http.service';
 import { HttpClientModule} from '@angular/common/http';
 import {ConvertService} from './services/convert.service';
 import {ManagerService} from './services/manager-service.service';
-import {GroupByPipe} from './pipes/group-by.pipe';
+import {DateService} from './services/date-service.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'log-in', pathMatch: 'full' },
@@ -43,8 +42,6 @@ const routes: Routes = [
     ManagersListComponent,
     SignInComponent,
     NavbarComponent,
-    OrderedProductsConvertorPipe,
-    GroupByPipe
   ],
   imports: [
     BrowserModule,
@@ -58,7 +55,7 @@ const routes: Routes = [
     HttpClientModule
 
   ],
-  providers: [FirebaseService, SocialAuthService, HttpService, ConvertService, ManagerService, GroupByPipe],
+  providers: [SocialAuthService, HttpService, ConvertService, ManagerService, DateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

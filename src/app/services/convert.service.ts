@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Manager} from '../domains/manager.model';
-import {FirebaseService} from './firebase.service';
 import {ScheduleItem} from '../domains/ScheduleItem';
 import {ManagerClient} from '../domains/client.modetl';
+import {DateService} from './date-service.service';
+import {OrderedProducts} from '../domains/OrderedProducts.model';
+import {RecommendedOrders} from '../domains/recomendedOrder.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConvertService {
 
-  constructor(private firebaseService: FirebaseService) {
+  constructor(private date: DateService) {
   }
 
   intoManagers(res, managers): Manager[] {
@@ -26,9 +28,10 @@ export class ConvertService {
   intoScheduleItems(res, result): ScheduleItem[] {
     res.forEach(item => result.push(
       new ScheduleItem(
-        item['managerId'], this.getClientsByDay(item['Monday']),
-        this.getClientsByDay(item['Tuesday']), this.getClientsByDay(item['Wednesday']),
-        this.getClientsByDay(item['Thursday']), this.getClientsByDay(item['Friday']), this.getClientsByDay(item['AnyDay']))));
+        item['managerId'], this.getClientsByDay(item[this.date.getMonday()]),
+        this.getClientsByDay(item[this.date.getTuesday()]), this.getClientsByDay(item[this.date.getWednesday()]),
+        this.getClientsByDay(item[this.date.getThursday()]), this.getClientsByDay(item[this.date.getFriday()]),
+        this.getClientsByDay(item['AnyDay']))));
     return result;
   }
 
@@ -40,4 +43,18 @@ export class ConvertService {
     return clients;
   }
 
+  intoRecommendedOrders(res, result): RecommendedOrders[] {
+    res.forEach(item => {
+      result.push(new RecommendedOrders(item['creationDate'], this.getOrderedProducts(item['orderProducts']), item['user1cId']));
+    });
+    return result;
+  }
+
+  getOrderedProducts(Products: {}): OrderedProducts[] {
+    const orderedProducts: OrderedProducts[] = [];
+    for (const val in Products) {
+      orderedProducts.push(new OrderedProducts(Products[val].count, Products[val].price, Products[val].summarycode));
+    }
+    return orderedProducts;
+  }
 }

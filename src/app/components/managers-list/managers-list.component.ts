@@ -6,7 +6,8 @@ import {ShowedManager} from '../../domains/showed-manager';
 import {DataSource } from '@angular/cdk/table';
 import {map} from 'rxjs/operators';
 import {Observable, of as observableOf, merge} from 'rxjs';
-import {GroupByPipe} from '../../pipes/group-by.pipe';
+import {RecommendedOrders} from '../../domains/recomendedOrder.model';
+import {ConvertService} from '../../services/convert.service';
 
 @Component({
   selector: 'app-managers-list',
@@ -16,18 +17,20 @@ import {GroupByPipe} from '../../pipes/group-by.pipe';
 export class ManagersListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
   dataSource: DataTableDataSource | null;
+
   data: ShowedManager[] = [];
+  recOrders: RecommendedOrders[] = [];
 
   displayedColumns: string[] = ['position', 'direction', 'name', 'Monday', 'Tuesday',
                                 'Wednesday', 'Thursday', 'Friday', 'AnyDay'];
 
-  constructor(private managerService: ManagerService, private httpService: HttpService) {}
+  constructor(private managerService: ManagerService, private httpService: HttpService, private convert: ConvertService) {}
 
   ngOnInit() {
+    this.recOrders = this.httpService.getRecommendedOrders();
     this.httpService.getApiData().subscribe(res => {
-      this.data = this.managerService.convertIntoShowManagers(res[0], res[1]);
+      this.data = this.managerService.convertIntoShowManagers(res[0], res[1], this.recOrders);
       this.dataSource = new DataTableDataSource(this.paginator, this.sort, this.data);
     });
   }
