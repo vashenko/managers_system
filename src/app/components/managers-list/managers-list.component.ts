@@ -7,7 +7,8 @@ import {DataSource } from '@angular/cdk/table';
 import {map} from 'rxjs/operators';
 import {Observable, of as observableOf, merge} from 'rxjs';
 import {RecommendedOrders} from '../../domains/recomendedOrder.model';
-import {ConvertService} from '../../services/convert.service';
+import {DateService} from '../../services/date-service.service';
+
 
 @Component({
   selector: 'app-managers-list',
@@ -17,15 +18,16 @@ import {ConvertService} from '../../services/convert.service';
 export class ManagersListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  dataSource: DataTableDataSource | null;
 
+  dataSource: DataTableDataSource | null;
   data: ShowedManager[] = [];
+
   recOrders: RecommendedOrders[] = [];
 
   displayedColumns: string[] = ['position', 'direction', 'name', 'Monday', 'Tuesday',
                                 'Wednesday', 'Thursday', 'Friday', 'AnyDay'];
 
-  constructor(private managerService: ManagerService, private httpService: HttpService, private convert: ConvertService) {}
+  constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService) {}
 
   ngOnInit() {
     this.recOrders = this.httpService.getRecommendedOrders();
@@ -72,15 +74,16 @@ export class DataTableDataSource extends DataSource<ShowedManager> {
       switch (this.sort.active) {
         case 'position': return compare(+a.position, +b.position, isAsc);
         case 'direction': return compare(a.direction, b.direction, isAsc);
-        case 'name': return compare(a.name, b.name, isAsc);
+        case 'name': return compare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase(), isAsc);
         default: return 0;
       }
     });
   }
 }
-
 function compare(a, b, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
+
+
 
 

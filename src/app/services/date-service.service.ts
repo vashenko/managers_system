@@ -7,7 +7,7 @@ export class DateService {
   public date = new Date();
   public weekDay = this.date.getDay();
   public day = this.date.getDate();
-  private options = {weekday: 'long'};
+  public options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
   constructor() { }
 
@@ -38,5 +38,10 @@ export class DateService {
 
   transfromIntoStringDate(date: string) {
     return new Date(date).toLocaleDateString('en-US', this.options);
+  }
+
+  getF() {
+    const friday = this.day - this.weekDay + (this.day === 0 ? -6 : 5);
+    return new Date(this.date.setDate(friday)).toLocaleDateString( 'en-US', this.options);
   }
 }

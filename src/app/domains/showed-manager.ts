@@ -11,7 +11,7 @@ export class ShowedManager {
               @Optional() public Wednesday: ClientsAndRecOrdersCount,
               @Optional() public Thursday: ClientsAndRecOrdersCount,
               @Optional() public Friday: ClientsAndRecOrdersCount,
-              @Optional() public AnyDay: ClientsAndRecOrdersCount) {
+              @Optional() public AnyDay: ClientsAndRecOrdersCount,) {
 
   }
 }

@@ -28,9 +28,9 @@ export class ConvertService {
   intoScheduleItems(res, result): ScheduleItem[] {
     res.forEach(item => result.push(
       new ScheduleItem(
-        item['managerId'], this.getClientsByDay(item[this.date.getMonday()]),
-        this.getClientsByDay(item[this.date.getTuesday()]), this.getClientsByDay(item[this.date.getWednesday()]),
-        this.getClientsByDay(item[this.date.getThursday()]), this.getClientsByDay(item[this.date.getFriday()]),
+        item['managerId'], this.getClientsByDay(item['Monday']),
+        this.getClientsByDay(item['Tuesday']), this.getClientsByDay(item['Wednesday']),
+        this.getClientsByDay(item['Thursday']), this.getClientsByDay(item['Friday']),
         this.getClientsByDay(item['AnyDay']))));
     return result;
   }
@@ -45,7 +45,9 @@ export class ConvertService {
 
   intoRecommendedOrders(res, result): RecommendedOrders[] {
     res.forEach(item => {
-      result.push(new RecommendedOrders(item['creationDate'], this.getOrderedProducts(item['orderProducts']), item['user1cId']));
+      result.push(new RecommendedOrders(this.date.transfromIntoStringDate(item['creationDate']),
+                                        this.getOrderedProducts(item['orderProducts']),
+                                        item['user1cId']));
     });
     return result;
   }
@@ -53,7 +55,9 @@ export class ConvertService {
   getOrderedProducts(Products: {}): OrderedProducts[] {
     const orderedProducts: OrderedProducts[] = [];
     for (const val in Products) {
-      orderedProducts.push(new OrderedProducts(Products[val].count, Products[val].price, Products[val].summarycode));
+      orderedProducts.push(new OrderedProducts(Products[val].count,
+                                               Products[val].price,
+                                               Products[val].summarycode));
     }
     return orderedProducts;
   }
