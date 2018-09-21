@@ -1,10 +1,25 @@
 mat-table {
   width: 100%;
   overflow: auto;
-  max-height: 800px;
+  height: auto;;
 }
 .mat-header-cell {
   font-size: 1em;
   padding-right: 5em;
   color: black;
+}
+
+.mat-header-row {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background-color: inherit;
+}
+
+.hide {
+  display: none;
+}
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
 }

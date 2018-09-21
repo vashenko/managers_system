@@ -3,7 +3,7 @@ import {BehaviorSubject, merge, Observable, of as observableOf} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MatPaginator, MatSort} from '@angular/material';
 import {DataSource} from '@angular/cdk/table';
-import {DataBase} from './managers-list.component';
+import {DataBase} from './data-base';
 
 export class  DataTableDataSource extends DataSource<ShowedManager> {
   filterChange = new BehaviorSubject('');
@@ -35,7 +35,6 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
         let searchStr = (item.name + item.direction).toLocaleLowerCase();
         return searchStr.indexOf(this.filter.toLocaleLowerCase()) !== - 1;
       });
-
       const sortedData = this.sortData(this.filteredData.slice());
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
       this.renderedData = sortedData.splice(startIndex, this.paginator.pageSize);
@@ -51,18 +50,70 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
     };
 
     return data.sort((a, b) => {
-      let propertyA: number|string = '';
-      let propertyB: number|string = '';
-
+      const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
-        case 'direction': [propertyA, propertyB] = [a.direction, b.direction]; break;
-
+        case 'position': return compare(+a.position, +b.position, isAsc);
+        case 'direction': return compare(a.direction, b.direction, isAsc);
+        case 'name': return compare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase(), isAsc);
+        default: return 0;
       }
-      let valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      let valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-      return (valueA < valueB ? -1 : 1) * (this.sort.direction === 'asc' ? 1 : -1);
     });
   }
 }
+
+function compare(a, b, isAsc) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+
+// import {ShowedManager} from '../../domains/showed-manager';
+// import {merge, Observable, of as observableOf} from 'rxjs';
+// import {map} from 'rxjs/operators';
+// import {MatPaginator, MatSort} from '@angular/material';
+// import {DataSource} from '@angular/cdk/table';
+//
+// export class DataTableDataSource extends DataSource<ShowedManager> {
+//   constructor(private paginator: MatPaginator, private sort: MatSort, private data: ShowedManager[]) {
+//     super();
+//   }
+//
+//   connect(): Observable<ShowedManager[]> {
+//     const dataMutations = [
+//       observableOf(this.data),
+//       this.paginator.page,
+//       this.sort.sortChange
+//     ];
+//
+//     this.paginator.length = this.data.length;
+//
+//     return merge(...dataMutations).pipe(map(() => {
+//       return this.getPagedData(this.getSortedData([...this.data]));
+//     }));
+//   }
+//
+//   disconnect() {}
+//
+//   getPagedData(data: ShowedManager[]) {
+//     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+//     return data.splice(startIndex, this.paginator.pageSize);
+//   }
+//
+//   private getSortedData(data: ShowedManager[]) {
+//     if (!this.sort.active || this.sort.direction === '') {
+//       return data;
+//     }
+//
+//     return data.sort((a, b) => {
+//       const isAsc = this.sort.direction === 'asc';
+//       switch (this.sort.active) {
+//         case 'position': return compare(+a.position, +b.position, isAsc);
+//         case 'direction': return compare(a.direction, b.direction, isAsc);
+//         case 'name': return compare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase(), isAsc);
+//         default: return 0;
+//       }
+//     });
+//   }
+// }
+// function compare(a, b, isAsc) {
+//   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+// }

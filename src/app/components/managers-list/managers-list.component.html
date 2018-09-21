@@ -1,6 +1,6 @@
-<div class="mat-elevation-z8 data-table">
-
+<div class="mat-elevation-z8 data-table" [}>
   <mat-form-field floatPlaceholder="never">
+    <input matInput #filter placeholder="Filter Managers">
     <input matInput #filter placeholder="Filter Managers">
   </mat-form-field>
 
@@ -57,8 +57,13 @@
                                              RecOrders: {{row.AnyDay.recOrdersCount}}</td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <ng-container matFooterCellDef="loading">
+         <td mat-footer-cell *matFooterCellDef> Loading data... </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': dataSource !== null }"></tr>
   </mat-table>
 
   <mat-paginator #paginator
