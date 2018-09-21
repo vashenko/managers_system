@@ -5,6 +5,6 @@ mat-table {
 }
 .mat-header-cell {
   font-size: 1em;
-  padding: 0 1em;
+  padding-right: 5em;
   color: black;
 }

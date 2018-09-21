@@ -1,14 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort} from '@angular/material';
 import {HttpService} from '../../services/http.service';
 import {ManagerService} from '../../services/manager-service.service';
 import {ShowedManager} from '../../domains/showed-manager';
-import {DataSource } from '@angular/cdk/table';
-import {map} from 'rxjs/operators';
-import {Observable, of as observableOf, merge} from 'rxjs';
 import {RecommendedOrders} from '../../domains/recomendedOrder.model';
+import {DataTableDataSource} from './data-table-data-source';
+import {debounceTime, distinctUntilChanged, switchMap, map} from 'rxjs/operators';
+import {BehaviorSubject, fromEvent, merge, Observable} from 'rxjs';
 import {DateService} from '../../services/date-service.service';
-
 
 @Component({
   selector: 'app-managers-list',
@@ -18,11 +17,10 @@ import {DateService} from '../../services/date-service.service';
 export class ManagersListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('filter') filter: ElementRef;
 
   dataSource: DataTableDataSource | null;
-  data: ShowedManager[] = [];
-
-  recOrders: RecommendedOrders[] = [];
+  dataBase: DataBase;
 
   displayedColumns: string[] = ['position', 'direction', 'name', 'Monday', 'Tuesday',
                                 'Wednesday', 'Thursday', 'Friday', 'AnyDay'];
@@ -30,60 +28,42 @@ export class ManagersListComponent implements OnInit {
   constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService) {}
 
   ngOnInit() {
+    this.dataBase = new DataBase(this.managerService, this.httpService);
+    this.dataSource = new DataTableDataSource(this.dataBase, this.paginator, this.sort);
+
+    // this.searchField = new FormControl();
+    // this.recOrders = this.httpService.getRecommendedOrders();
+    // this.httpService.getApiData().subscribe(res => {
+    //   this.data = this.managerService.convertIntoShowManagers(res[0], res[1], this.recOrders);
+    //   this.dataSource = new DataTableDataSource(this.paginator, this.sort, this.data);
+    // });
+    // const obs = fromEvent(this.filter.nativeElement, 'keyup').pipe(
+    //   map((e: any) => e.target.value),
+    //   debounceTime(250),
+    //   distinctUntilChanged()
+    // ).subscribe(() => {
+    // })
+
+  }
+}
+
+export class DataBase {
+  showedManagers: ShowedManager[] = [];
+  recOrders: RecommendedOrders[] = [];
+
+  dataChange: BehaviorSubject<ShowedManager[]> = new BehaviorSubject<ShowedManager[]>([]);
+  get data(): ShowedManager[] {
+    return this.dataChange.value ;
+  };
+
+  constructor(private managerService: ManagerService, private httpService: HttpService) {
     this.recOrders = this.httpService.getRecommendedOrders();
     this.httpService.getApiData().subscribe(res => {
-      this.data = this.managerService.convertIntoShowManagers(res[0], res[1], this.recOrders);
-      this.dataSource = new DataTableDataSource(this.paginator, this.sort, this.data);
+      this.showedManagers = this.managerService.convertIntoShowManagers(res[0], res[1], this.recOrders);
+      this.dataChange.next(this.showedManagers);
     });
   }
 }
-
-export class DataTableDataSource extends DataSource<ShowedManager> {
-  constructor(private paginator: MatPaginator, private sort: MatSort, private data: ShowedManager[]) {
-    super();
-  }
-
-  connect(): Observable<ShowedManager[]> {
-    const dataMutations = [
-      observableOf(this.data),
-      this.paginator.page,
-      this.sort.sortChange
-    ];
-
-    this.paginator.length = this.data.length;
-
-    return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.data]));
-    }));
-  }
-
-  disconnect() {}
-
-  getPagedData(data: ShowedManager[]) {
-    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-    return data.splice(startIndex, this.paginator.pageSize);
-  }
-
-  private getSortedData(data: ShowedManager[]) {
-    if (!this.sort.active || this.sort.direction === '') {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      const isAsc = this.sort.direction === 'asc';
-      switch (this.sort.active) {
-        case 'position': return compare(+a.position, +b.position, isAsc);
-        case 'direction': return compare(a.direction, b.direction, isAsc);
-        case 'name': return compare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase(), isAsc);
-        default: return 0;
-      }
-    });
-  }
-}
-function compare(a, b, isAsc) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}
-
 
 
 

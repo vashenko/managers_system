@@ -27,6 +27,8 @@ import {ConvertService} from './services/convert.service';
 import {ManagerService} from './services/manager-service.service';
 import {DateService} from './services/date-service.service';
 
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 const routes: Routes = [
   { path: '', redirectTo: 'log-in', pathMatch: 'full' },
   { path: 'log-in', component: SignInComponent},
@@ -39,7 +41,7 @@ const routes: Routes = [
     ManagerComponent,
     ManagersListComponent,
     SignInComponent,
-    NavbarComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
 
   ],
   providers: [SocialAuthService, HttpService, ConvertService, ManagerService, DateService],
