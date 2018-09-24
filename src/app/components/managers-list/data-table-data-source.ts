@@ -44,26 +44,34 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
 
   disconnect() {}
 
-  sortData(data: ShowedManager[]): ShowedManager[] {
-    if (this.sort.active || this.sort.direction === '') {
+  private sortData(data: ShowedManager[]) {
+    if (!this.sort.active || this.sort.direction === '') {
       return data;
-    };
+    }
 
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
         case 'position': return compare(+a.position, +b.position, isAsc);
-        case 'direction': return compare(a.direction, b.direction, isAsc);
-        case 'name': return compare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase(), isAsc);
+        case 'direction': return compareString(a.direction, b.direction, isAsc);
+        case 'name': return compareString(a.name, b.name, isAsc);
         default: return 0;
       }
     });
   }
 }
 
+function compareString(a, b, isAsc) {
+  const convertedA = a.replace(/\d+/g, '').replace(/\./g, '').toLowerCase(),
+        convertedB = b.replace(/\d+/g, '').replace(/\./g, '').toLowerCase();
+  return (convertedA < convertedB ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
 function compare(a, b, isAsc) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
+
+
 
 
 // import {ShowedManager} from '../../domains/showed-manager';
@@ -98,22 +106,5 @@ function compare(a, b, isAsc) {
 //     return data.splice(startIndex, this.paginator.pageSize);
 //   }
 //
-//   private getSortedData(data: ShowedManager[]) {
-//     if (!this.sort.active || this.sort.direction === '') {
-//       return data;
-//     }
-//
-//     return data.sort((a, b) => {
-//       const isAsc = this.sort.direction === 'asc';
-//       switch (this.sort.active) {
-//         case 'position': return compare(+a.position, +b.position, isAsc);
-//         case 'direction': return compare(a.direction, b.direction, isAsc);
-//         case 'name': return compare(a.name.toLocaleLowerCase(), b.name.toLocaleLowerCase(), isAsc);
-//         default: return 0;
-//       }
-//     });
-//   }
 // }
-// function compare(a, b, isAsc) {
-//   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-// }
+

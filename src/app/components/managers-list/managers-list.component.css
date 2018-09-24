@@ -1,25 +1,41 @@
-mat-table {
+table {
   width: 100%;
   overflow: auto;
-  height: auto;;
 }
 .mat-header-cell {
   font-size: 1em;
-  padding-right: 5em;
   color: black;
 }
 
-.mat-header-row {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  background-color: inherit;
+.weekDay {
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.hide {
-  display: none;
+.clientsBorder {
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
 }
-mat-footer-row mat-footer-cell {
-  justify-content: center;
-  font-style: italic;
+
+.ordersBorder {
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-header-cell {
+  font-size: 1em;
+  padding: 0 0.4em;
+  color: black;
+  border-bottom: none;
+}
+
+.mat-header-cell.centered {
+  text-align: center;
+}
+
+td.mat-cell.centered {
+  text-align: center;
 }

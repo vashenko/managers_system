@@ -7,6 +7,7 @@ import {debounceTime, distinctUntilChanged, switchMap, map} from 'rxjs/operators
 import {DateService} from '../../services/date-service.service';
 import {DataBase} from './data-base';
 import {fromEvent} from 'rxjs';
+import {st} from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-managers-list',
@@ -22,8 +23,13 @@ export class ManagersListComponent implements OnInit {
   dataSource: DataTableDataSource | null;
   dataBase: DataBase;
 
-  displayedColumns: string[] = ['position', 'direction', 'name', 'Monday', 'Tuesday',
-                                'Wednesday', 'Thursday', 'Friday', 'AnyDay'];
+  displayedColumns: string[] = ['position', 'direction', 'name',
+                                'MondayClients', 'MondayRecOrders', 'TuesdayClients', 'TuesdayRecOrders',
+                                'WednesdayClients', 'WednesdayRecOrders', 'ThursdayClients', 'ThursdayRecOrders',
+                                'FridayClients', 'FridayRecOrders', 'AnyDayClients', 'AnyDayRecOrders'];
+
+  weekDays: string[] = ['empty', 'Monday', 'Tuesday', 'Wednesday',
+                        'Thursday', 'Friday', 'AnyDay'];
 
   constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService) {}
 
@@ -40,9 +46,8 @@ export class ManagersListComponent implements OnInit {
     });
   }
 
-
 }
 
-
-
+//
+// {{this.date.getTuesday() | date:'EEEE dd.MM'}}
 
