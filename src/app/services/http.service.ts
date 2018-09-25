@@ -10,7 +10,6 @@ import {AngularFireDatabase} from 'angularfire2/database';
 
 @Injectable()
 export class HttpService {
-
   private managers_url = 'http://srv-dev-01.kt.local/Hryshenchuk/hs/ut/managers/';
   private schedule_url = 'http://erp.kt.ua/API_UT/hs/ut/baseSchedulers/';
   constructor(private http: HttpClient, private convert: ConvertService, private firebase: AngularFireDatabase) {

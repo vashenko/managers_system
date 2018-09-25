@@ -1,12 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {SocialAuthService} from './services/social-auth.service';
-
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabaseModule} from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment.prod';
 
@@ -26,13 +23,15 @@ import {HttpService} from './services/http.service';
 import {ConvertService} from './services/convert.service';
 import {ManagerService} from './services/manager-service.service';
 import {DateService} from './services/date-service.service';
+import {AuthService} from './auth.service';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FirebaseAuthGuard} from './guards/firebase-auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'log-in', pathMatch: 'full' },
+  { path: '', redirectTo: 'managers', pathMatch: 'full' },
   { path: 'log-in', component: SignInComponent},
-  { path: 'managers', component: ManagersListComponent}
+  { path: 'managers', component: ManagersListComponent, canActivate: [FirebaseAuthGuard]}
 ];
 
 @NgModule({
@@ -48,7 +47,6 @@ const routes: Routes = [
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence(),
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     MaterialModule,
@@ -57,7 +55,7 @@ const routes: Routes = [
     ReactiveFormsModule
 
   ],
-  providers: [SocialAuthService, HttpService, ConvertService, ManagerService, DateService],
+  providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

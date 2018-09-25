@@ -3,11 +3,10 @@ import {MatPaginator, MatSort} from '@angular/material';
 import {HttpService} from '../../services/http.service';
 import {ManagerService} from '../../services/manager-service.service';
 import {DataTableDataSource} from './data-table-data-source';
-import {debounceTime, distinctUntilChanged, switchMap, map} from 'rxjs/operators';
-import {DateService} from '../../services/date-service.service';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {DataBase} from './data-base';
 import {fromEvent} from 'rxjs';
-import {st} from '@angular/core/src/render3';
+import {DateService} from '../../services/date-service.service';
 
 @Component({
   selector: 'app-managers-list',
@@ -19,7 +18,7 @@ export class ManagersListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('filter') filter: ElementRef;
 
-  isLoadingResults = true;
+  loading = true;
   dataSource: DataTableDataSource | null;
   dataBase: DataBase;
 
@@ -36,7 +35,6 @@ export class ManagersListComponent implements OnInit {
   ngOnInit() {
     this.dataBase = new DataBase(this.managerService, this.httpService);
     this.dataSource = new DataTableDataSource(this.dataBase, this.paginator, this.sort);
-
     fromEvent(this.filter.nativeElement, 'keyup').pipe(
       debounceTime(450),
       distinctUntilChanged(),

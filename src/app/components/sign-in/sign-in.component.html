@@ -1,0 +1,25 @@
+<div class="signInForm">
+  <form class="signIn" novalidate [formGroup]="logInForm">
+    <h2 class="signInHeader">Sign In</h2>
+  		<div class="signInGroup">
+  			<input name="email" type="text" placeholder="Email" class="signInInput" formControlName="email">
+        <div class="feedback" *ngIf="logInEmail.errors && (logInEmail.dirty || logInEmail.touched)">
+          <p *ngIf="logInEmail.errors.required">Email is required</p>
+          <p *ngIf="logInEmail.errors.pattern">Email should be on this format "youraddres@gmail.com"</p>
+        </div>
+  		</div>
+  		<div>
+  			<input name="password" type="password" placeholder="Password" class="signInInput" formControlName="password">
+        <div class="feedback" *ngIf="logInPassword.errors && (logInPassword.dirty || logInPassword.touched)">
+          <div class="feedback" *ngIf="logInPassword.errors && (logInPassword.dirty || logInPassword.touched)">
+            <p *ngIf="logInPassword.errors.required">Password is required</p>
+            <p *ngIf="logInPassword.errors.minlength">Min length is equal 8 symbols</p>
+          </div>
+        </div>
+  		</div>
+  		<div>
+  		  <span class="error" *ngIf="error">{{error}}</span>
+  			<button type="button" class="signInSubmit" (click)="signIn()" [disabled]="!logInForm.valid">Log In</button>
+  		</div>
+  </form>
+</div>

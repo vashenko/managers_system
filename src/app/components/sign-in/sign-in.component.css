@@ -1,0 +1,53 @@
+.signInForm .signIn {
+  background: #fff;
+  padding: 4em 4em 2em;
+  max-width: 600px;
+  margin: 3em auto;
+  box-shadow: 0 0 1em #222;
+  border-radius: 2px;
+}
+
+.signIn .signInHeader {
+  margin:0 0 50px 0;
+  padding: .6em;
+  text-align:center;
+  font-size: 1.8em;
+  border-bottom:solid 1px #e5e5e5;
+}
+
+.signIn .signInGroup {
+  margin: 0 0 3em 0;
+  position: relative;
+}
+.signIn .signInInput {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #dbdbdb;
+  font-size: 1.6em;
+  padding: .5em .5em;
+  border-radius: 2px;
+}
+
+.signInSubmit[type="button"] {
+  background: rgba(148,186,101,0.7);
+  width: 100%;
+  border-radius: 2px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 2em;
+  line-height: 1.6em;
+  margin: 1.5em 0 0;
+  outline: none;
+  padding: .8em 0;
+  text-shadow: 0 1px #68B25B;
+}
+
+.feedback, .error {
+  color: red;
+  margin-top: 0.5em;
+}
+
+
+
