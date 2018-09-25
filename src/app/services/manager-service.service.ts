@@ -31,12 +31,11 @@ export class ManagerService {
     const clientsCount = this.getClientsCount(schedules, id, day);
     const recOrdersCount = this.getRecOrdersCount(recOrders, user1cid, day);
     return new ClientsAndRecOrdersCount(clientsCount, recOrdersCount);
-  };
+  }
 
   getClientsCount(schedules: ScheduleItem[], id: string, date: string): number {
     let len: number;
     const weekDay = date.split(', ')[0];
-
     const result = schedules.filter(item => {
       return item.managerId === id;
     });
@@ -48,13 +47,13 @@ export class ManagerService {
     } else {
       return 0;
     }
-  };
+  }
 
   getRecOrdersCount(recommendedOrders: RecommendedOrders[], user1cId: string, day: string) {
     const result = recommendedOrders.filter(item => {
       return item.user1cId === user1cId && item.creationDate === day;
     });
     return result.length;
-  };
+  }
 }
 

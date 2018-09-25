@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
-import {AuthService} from '../../auth.service';
-import {User} from '../../domains/user.model';
+import {AuthService} from '../../services/auth.service';
+import {HttpService} from '../../services/http.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,16 +16,15 @@ export class SignInComponent implements OnInit {
   private logInPassword: FormControl;
   error: string;
 
-  constructor(private router: Router, private authService: AuthService) {
-    if (this.authService.authenticated) {
-      this.router.navigate(['/managers']);
-    }
+  constructor(private router: Router, private authService: AuthService, private httpService: HttpService) {
   }
 
   ngOnInit() {
     this.initControls();
     this.initForm();
-    console.log(this.authService.authenticated);
+    if (this.authService.authenticated) {
+      this.router.navigate(['/managers']);
+    }
   }
 
   initForm() {
@@ -36,22 +35,44 @@ export class SignInComponent implements OnInit {
   }
 
   initControls() {
-    this.logInEmail = new FormControl('',
-      [Validators.required,
-                     Validators.pattern("^[a-z0-9](\\.?[a-z0-9]){5,}@g(oogle)?mail\\.com$")]);
-    this.logInPassword = new FormControl('', [Validators.required, Validators.minLength(8)]);
+    this.logInEmail = new FormControl('');
+      // [Validators.required,
+      //                Validators.pattern("^[a-z0-9](\\.?[a-z0-9]){5,}@kt\\.ua$")]);
+    this.logInPassword = new FormControl('', [Validators.required, Validators.minLength(1)]);
   }
+
+  // signIn() {
+  //   if (this.logInForm.valid) {
+  //     this.authService.signInWithEmailAndPassword(this.logInEmail.value, this.logInPassword.value)
+  //       .then(() => this.router.navigate(['/managers']))
+  //       .catch(err => {
+  //         this.error = err.message;
+  //         setTimeout(() => {
+  //           this.error = '';
+  //         }, 5500);
+  //       });
+  //   }
+  // }
 
   signIn() {
     if (this.logInForm.valid) {
-      this.authService.signInWithEmailAndPassword(this.logInEmail.value, this.logInPassword.value)
-        .then(() => this.router.navigate(['/managers']))
-        .catch(err => {
-          this.error = err.message;
-          setTimeout(() => {
-            this.error = '';
-          }, 5500);
-        });
+      let token: string;
+      this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).subscribe(res => {
+        token = res;
+        this.authService.signInWithCustomToken(token)
+          .then(() => this.router.navigate(['/managers']))
+          .catch(err => {
+            this.error = err.message;
+            setTimeout(() => {
+              this.error = '';
+            }, 5500);
+          });
+      }, err => {
+        this.error = err.error;
+        setTimeout(() => {
+          this.error = '';
+        }, 5500);
+      });
     }
   }
 }

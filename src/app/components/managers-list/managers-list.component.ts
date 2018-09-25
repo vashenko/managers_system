@@ -18,7 +18,6 @@ export class ManagersListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('filter') filter: ElementRef;
 
-  loading = true;
   dataSource: DataTableDataSource | null;
   dataBase: DataBase;
 
@@ -46,6 +45,4 @@ export class ManagersListComponent implements OnInit {
 
 }
 
-//
-// {{this.date.getTuesday() | date:'EEEE dd.MM'}}
 

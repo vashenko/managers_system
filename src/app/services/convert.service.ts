@@ -28,9 +28,12 @@ export class ConvertService {
   intoScheduleItems(res, result): ScheduleItem[] {
     res.forEach(item => result.push(
       new ScheduleItem(
-        item['managerId'], this.getClientsByDay(item['Monday']),
-        this.getClientsByDay(item['Tuesday']), this.getClientsByDay(item['Wednesday']),
-        this.getClientsByDay(item['Thursday']), this.getClientsByDay(item['Friday']),
+        item['managerId'],
+        this.getClientsByDay(item[this.date.getMonday().split(', ')[0]]),
+        this.getClientsByDay(item[this.date.getTuesday().split(', ')[0]]),
+        this.getClientsByDay(item[this.date.getWednesday().split(', ')[0]]),
+        this.getClientsByDay(item[this.date.getThursday().split(', ')[0]]),
+        this.getClientsByDay(item[this.date.getFriday().split(', ')[0]]),
         this.getClientsByDay(item['AnyDay']))));
     return result;
   }

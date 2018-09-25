@@ -1,18 +1,19 @@
 import {ShowedManager} from '../../domains/showed-manager';
-import {BehaviorSubject, merge, Observable, of as observableOf} from 'rxjs';
+import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MatPaginator, MatSort} from '@angular/material';
 import {DataSource} from '@angular/cdk/table';
 import {DataBase} from './data-base';
 
 export class  DataTableDataSource extends DataSource<ShowedManager> {
+
   filterChange = new BehaviorSubject('');
   get filter(): string {
     return this.filterChange.value;
-  };
+  }
   set filter(filter: string) {
     this.filterChange.next(filter);
-  };
+  }
 
   filteredData: ShowedManager[] = [];
   renderedData: ShowedManager[] = [];
@@ -32,7 +33,7 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
 
     return merge(...displayDataChanges).pipe(map(() => {
       this.filteredData = this.dataBase.data.slice().filter((item: ShowedManager) => {
-        let searchStr = (item.name + item.direction).toLocaleLowerCase();
+        const searchStr = (item.name + item.direction).toLocaleLowerCase();
         return searchStr.indexOf(this.filter.toLocaleLowerCase()) !== - 1;
       });
       const sortedData = this.sortData(this.filteredData.slice());
@@ -52,7 +53,7 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'position': return compare(+a.position, +b.position, isAsc);
+        case 'position': return compare(a.position, b.position, isAsc);
         case 'direction': return compareString(a.direction, b.direction, isAsc);
         case 'name': return compareString(a.name, b.name, isAsc);
         default: return 0;
@@ -68,7 +69,7 @@ function compareString(a, b, isAsc) {
 }
 
 function compare(a, b, isAsc) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  return (a < b ? 1 : -1) * (isAsc ? 1 : -1);
 }
 
 

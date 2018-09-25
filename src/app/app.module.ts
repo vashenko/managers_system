@@ -23,7 +23,7 @@ import {HttpService} from './services/http.service';
 import {ConvertService} from './services/convert.service';
 import {ManagerService} from './services/manager-service.service';
 import {DateService} from './services/date-service.service';
-import {AuthService} from './auth.service';
+import {AuthService} from './services/auth.service';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FirebaseAuthGuard} from './guards/firebase-auth.guard';

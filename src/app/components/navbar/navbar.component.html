@@ -5,7 +5,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" [routerLink]="['/log-in']" *ngIf="!this.authService.currentUser">Sign In</a>
+      <a class="nav-item nav-link" [routerLink]="['/log-in']" *ngIf="!this.authService.authenticated">Sign In</a>
       <a class="nav-item nav-link" [routerLink]="['/managers']">Managers</a>
       <a class="nav-item nav-link" (click)="logOut()">Log Out</a>
       <a class="userName nav-item nav-link" *ngIf="currentUserName"><h4>Hello {{this.currentUserName}}</h4></a>
