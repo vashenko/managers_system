@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {HttpService} from '../../services/http.service';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,21 +11,23 @@ import {HttpService} from '../../services/http.service';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-
   private logInForm: FormGroup;
   private logInEmail: FormControl;
   private logInPassword: FormControl;
   error: string;
 
-  constructor(private router: Router, private authService: AuthService, private httpService: HttpService) {
+  constructor(private router: Router, private authService: AuthService, private httpService: HttpService,
+              private fireAuth: AngularFireAuth) {
   }
 
   ngOnInit() {
     this.initControls();
     this.initForm();
-    if (this.authService.authenticated) {
-      this.router.navigate(['/managers']);
-    }
+    this.fireAuth.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.router.navigate(['/managers']);
+      }
+    });
   }
 
   initForm() {
@@ -41,25 +44,12 @@ export class SignInComponent implements OnInit {
     this.logInPassword = new FormControl('', [Validators.required, Validators.minLength(1)]);
   }
 
-  // signIn() {
-  //   if (this.logInForm.valid) {
-  //     this.authService.signInWithEmailAndPassword(this.logInEmail.value, this.logInPassword.value)
-  //       .then(() => this.router.navigate(['/managers']))
-  //       .catch(err => {
-  //         this.error = err.message;
-  //         setTimeout(() => {
-  //           this.error = '';
-  //         }, 5500);
-  //       });
-  //   }
-  // }
-
   signIn() {
     if (this.logInForm.valid) {
-      let token: string;
+      let serverToken: string;
       this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).subscribe(res => {
-        token = res;
-        this.authService.signInWithCustomToken(token)
+        serverToken = res;
+        this.authService.signInWithCustomToken(serverToken)
           .then(() => this.router.navigate(['/managers']))
           .catch(err => {
             this.error = err.message;

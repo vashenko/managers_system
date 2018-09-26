@@ -38,15 +38,10 @@ export class ManagerService {
     const weekDay = date.split(', ')[0];
     const result = schedules.filter(item => {
       return item.managerId === id;
-    });
-    result.forEach(i => {
+    }).forEach(i => {
       return len = i[weekDay].length;
     });
-    if (len) {
-      return len;
-    } else {
-      return 0;
-    }
+   return len ? len : 0;
   }
 
   getRecOrdersCount(recommendedOrders: RecommendedOrders[], user1cId: string, day: string) {

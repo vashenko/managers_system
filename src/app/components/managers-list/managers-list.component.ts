@@ -7,6 +7,7 @@ import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {DataBase} from './data-base';
 import {fromEvent} from 'rxjs';
 import {DateService} from '../../services/date-service.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-managers-list',
@@ -29,7 +30,8 @@ export class ManagersListComponent implements OnInit {
   weekDays: string[] = ['empty', 'Monday', 'Tuesday', 'Wednesday',
                         'Thursday', 'Friday', 'AnyDay'];
 
-  constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService) {}
+  constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService,
+              private auth: AuthService) {}
 
   ngOnInit() {
     this.dataBase = new DataBase(this.managerService, this.httpService);

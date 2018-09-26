@@ -11,7 +11,7 @@ export class DataBase {
   dataChange: BehaviorSubject<ShowedManager[]> = new BehaviorSubject<ShowedManager[]>([]);
   get data(): ShowedManager[] {
     return this.dataChange.value ;
-  };
+  }
 
   constructor(private managerService: ManagerService, private httpService: HttpService) {
     this.recOrders = this.httpService.getRecommendedOrders();
