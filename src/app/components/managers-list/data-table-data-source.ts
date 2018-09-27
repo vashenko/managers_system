@@ -1,12 +1,11 @@
 import {ShowedManager} from '../../domains/showed-manager';
+import {DataSource} from '@angular/cdk/table';
+import {MatPaginator, MatSort} from '@angular/material';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {MatPaginator, MatSort} from '@angular/material';
-import {DataSource} from '@angular/cdk/table';
 import {DataBase} from './data-base';
 
 export class  DataTableDataSource extends DataSource<ShowedManager> {
-
   filterChange = new BehaviorSubject('');
   get filter(): string {
     return this.filterChange.value;
@@ -43,7 +42,8 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
     }));
   }
 
-  disconnect() {}
+  disconnect() {
+  }
 
   private sortData(data: ShowedManager[]) {
     if (!this.sort.active || this.sort.direction === '') {
@@ -72,40 +72,4 @@ function compare(a, b, isAsc) {
   return (a < b ? 1 : -1) * (isAsc ? 1 : -1);
 }
 
-
-
-
-// import {ShowedManager} from '../../domains/showed-manager';
-// import {merge, Observable, of as observableOf} from 'rxjs';
-// import {map} from 'rxjs/operators';
-// import {MatPaginator, MatSort} from '@angular/material';
-// import {DataSource} from '@angular/cdk/table';
-//
-// export class DataTableDataSource extends DataSource<ShowedManager> {
-//   constructor(private paginator: MatPaginator, private sort: MatSort, private data: ShowedManager[]) {
-//     super();
-//   }
-//
-//   connect(): Observable<ShowedManager[]> {
-//     const dataMutations = [
-//       observableOf(this.data),
-//       this.paginator.page,
-//       this.sort.sortChange
-//     ];
-//
-//     this.paginator.length = this.data.length;
-//
-//     return merge(...dataMutations).pipe(map(() => {
-//       return this.getPagedData(this.getSortedData([...this.data]));
-//     }));
-//   }
-//
-//   disconnect() {}
-//
-//   getPagedData(data: ShowedManager[]) {
-//     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-//     return data.splice(startIndex, this.paginator.pageSize);
-//   }
-//
-// }
 

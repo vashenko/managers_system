@@ -87,23 +87,23 @@
       </ng-container>
 
       <ng-container matColumnDef="Monday">
-        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.getMonday() | date:'EEEE dd.MM'}}</th>
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Monday | date:'EEEE dd.MM'}}</th>
       </ng-container>
 
       <ng-container matColumnDef="Tuesday">
-        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.getTuesday() | date:'EEEE dd.MM'}}</th>
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Tuesday | date:'EEEE dd.MM'}}</th>
       </ng-container>
 
       <ng-container matColumnDef="Wednesday">
-        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.getWednesday() | date:'EEEE dd.MM'}}</th>
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Wednesday | date:'EEEE dd.MM'}}</th>
       </ng-container>
 
       <ng-container matColumnDef="Thursday">
-        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.getThursday() | date:'EEEE dd.MM'}}</th>
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Thursday | date:'EEEE dd.MM'}}</th>
       </ng-container>
 
       <ng-container matColumnDef="Friday">
-        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.getFriday() | date:'EEEE dd.MM'}}</th>
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Friday | date:'EEEE dd.MM'}}</th>
       </ng-container>
 
       <ng-container matColumnDef="AnyDay">
@@ -119,7 +119,19 @@
   [length]="dataSource?.filteredData.length"
   [pageIndex]="0"
   [pageSize]="10"
-  [pageSizeOptions]="[5, 10, 25, 100]"
+  [pageSizeOptions]="[5, 10, 25, 50]"
   >
   </mat-paginator>
+</div>
+
+<mat-card *ngIf="dataBase.isLoading"
+   style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</mat-card>
+
+<div class="example-rate-limit-reached" *ngIf="dataBase.isRateLimitReached">
+  API rate limit has been reached.
 </div>

@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {HttpService} from '../../services/http.service';
-import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,18 +15,13 @@ export class SignInComponent implements OnInit {
   private logInPassword: FormControl;
   error: string;
 
-  constructor(private router: Router, private authService: AuthService, private httpService: HttpService,
-              private fireAuth: AngularFireAuth) {
+  constructor(private router: Router, private authService: AuthService, private httpService: HttpService) {
   }
 
   ngOnInit() {
+    this.authService.checkOnLoggedUser();
     this.initControls();
     this.initForm();
-    this.fireAuth.auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.router.navigate(['/managers']);
-      }
-    });
   }
 
   initForm() {
@@ -38,10 +32,16 @@ export class SignInComponent implements OnInit {
   }
 
   initControls() {
-    this.logInEmail = new FormControl('');
-      // [Validators.required,
-      //                Validators.pattern("^[a-z0-9](\\.?[a-z0-9]){5,}@kt\\.ua$")]);
+    this.logInEmail = new FormControl('', [Validators.required]);
+                          // Validators.pattern("^[a-z0-9](\\.?[a-z0-9]){5,}@kt\\.ua$")]);
     this.logInPassword = new FormControl('', [Validators.required, Validators.minLength(1)]);
+  }
+
+  errosHandler(err: string) {
+    this.error = err;
+    setTimeout(() => {
+      this.error = '';
+    }, 4500);
   }
 
   signIn() {
@@ -51,18 +51,9 @@ export class SignInComponent implements OnInit {
         serverToken = res;
         this.authService.signInWithCustomToken(serverToken)
           .then(() => this.router.navigate(['/managers']))
-          .catch(err => {
-            this.error = err.message;
-            setTimeout(() => {
-              this.error = '';
-            }, 5500);
-          });
-      }, err => {
-        this.error = err.error;
-        setTimeout(() => {
-          this.error = '';
-        }, 5500);
-      });
+          .catch(err => this.errosHandler(err.message));
+      },
+    (err) => this.errosHandler(err.error));
     }
   }
 }

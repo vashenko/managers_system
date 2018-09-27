@@ -39,3 +39,9 @@ table {
 td.mat-cell.centered {
   text-align: center;
 }
+
+.example-rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}

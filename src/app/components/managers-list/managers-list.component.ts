@@ -1,13 +1,12 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort} from '@angular/material';
-import {HttpService} from '../../services/http.service';
-import {ManagerService} from '../../services/manager-service.service';
 import {DataTableDataSource} from './data-table-data-source';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {DataBase} from './data-base';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {fromEvent} from 'rxjs';
-import {DateService} from '../../services/date-service.service';
-import {AuthService} from '../../services/auth.service';
+import {HttpService} from '../../services/http.service';
+import {ManagerService} from '../../services/manager.service';
+import {DateService} from '../../services/date.service';
 
 @Component({
   selector: 'app-managers-list',
@@ -30,21 +29,27 @@ export class ManagersListComponent implements OnInit {
   weekDays: string[] = ['empty', 'Monday', 'Tuesday', 'Wednesday',
                         'Thursday', 'Friday', 'AnyDay'];
 
-  constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService,
-              private auth: AuthService) {}
+  constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService) {}
 
   ngOnInit() {
+    this.initDataBase();
+    this.findManagers();
+  }
+
+  initDataBase() {
     this.dataBase = new DataBase(this.managerService, this.httpService);
     this.dataSource = new DataTableDataSource(this.dataBase, this.paginator, this.sort);
+  }
+
+  findManagers() {
     fromEvent(this.filter.nativeElement, 'keyup').pipe(
       debounceTime(450),
       distinctUntilChanged(),
     ).subscribe(() => {
-      if (!this.dataSource) {return;}
+      if (!this.dataSource) { return; }
       this.dataSource.filter = this.filter.nativeElement.value;
     });
   }
-
 }
 
 

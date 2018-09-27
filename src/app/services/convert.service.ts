@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Manager} from '../domains/manager.model';
 import {ScheduleItem} from '../domains/ScheduleItem';
 import {ManagerClient} from '../domains/client.modetl';
-import {DateService} from './date-service.service';
+import {DateService} from './date.service';
 import {OrderedProducts} from '../domains/OrderedProducts.model';
 import {RecommendedOrders} from '../domains/recomendedOrder.model';
 
@@ -29,16 +29,16 @@ export class ConvertService {
     res.forEach(item => result.push(
       new ScheduleItem(
         item['managerId'],
-        this.getClientsByDay(item[this.date.getMonday().split(', ')[0]]),
-        this.getClientsByDay(item[this.date.getTuesday().split(', ')[0]]),
-        this.getClientsByDay(item[this.date.getWednesday().split(', ')[0]]),
-        this.getClientsByDay(item[this.date.getThursday().split(', ')[0]]),
-        this.getClientsByDay(item[this.date.getFriday().split(', ')[0]]),
-        this.getClientsByDay(item['AnyDay']))));
+        this.getClientsByWeekDay(item[this.date.Monday.split(', ')[0]]),
+        this.getClientsByWeekDay(item[this.date.Tuesday.split(', ')[0]]),
+        this.getClientsByWeekDay(item[this.date.Wednesday.split(', ')[0]]),
+        this.getClientsByWeekDay(item[this.date.Thursday.split(', ')[0]]),
+        this.getClientsByWeekDay(item[this.date.Friday.split(', ')[0]]),
+        this.getClientsByWeekDay(item['AnyDay']))));
     return result;
   }
 
-  getClientsByDay(ClientsArray: {}): ManagerClient[] {
+  getClientsByWeekDay(ClientsArray: {}): ManagerClient[] {
     const clients: ManagerClient[] = [];
     for (const v in ClientsArray) {
       clients.push(new ManagerClient(ClientsArray[v].clientName, ClientsArray[v].clientId));

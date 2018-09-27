@@ -45,5 +45,15 @@ export class AuthService {
     }));
   }
 
+  checkOnLoggedUser() {
+    setTimeout(() => {
+      this.fireAuth.auth.onAuthStateChanged((user) => {
+        if (user) {
+          this.router.navigate(['/managers']);
+        }
+      });
+    }, 1000);
+  }
+
 }
 

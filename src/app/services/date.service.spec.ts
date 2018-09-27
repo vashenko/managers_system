@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { DateServiceService } from './date-service.service';
+import { DateServiceService } from './date.service';
 
 describe('DateServiceService', () => {
   beforeEach(() => {

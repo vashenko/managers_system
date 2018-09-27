@@ -21,8 +21,8 @@ import { HttpClientModule} from '@angular/common/http';
 
 import {HttpService} from './services/http.service';
 import {ConvertService} from './services/convert.service';
-import {ManagerService} from './services/manager-service.service';
-import {DateService} from './services/date-service.service';
+import {ManagerService} from './services/manager.service';
+import {DateService} from './services/date.service';
 import {AuthService} from './services/auth.service';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';

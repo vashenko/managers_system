@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ManagerServiceService } from './manager-service.service';
+import { ManagerServiceService } from './manager.service';
 
 describe('ManagerServiceService', () => {
   beforeEach(() => {

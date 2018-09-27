@@ -11,27 +11,27 @@ export class DateService {
 
   constructor() { }
 
-  getMonday() {
+  get Monday() {
     const monday = this.day - this.weekDay + (this.day === 0 ? -6 : 1);
     return new Date(this.date.setDate(monday)).toLocaleDateString( 'en-US', this.options);
   }
 
-  getTuesday() {
+  get Tuesday() {
     const tuesday = this.day - this.weekDay + (this.day === 0 ? -6 : 2);
     return new Date(this.date.setDate(tuesday)).toLocaleDateString( 'en-US', this.options);
   }
 
-  getWednesday() {
+  get Wednesday() {
     const wednesday = this.day - this.weekDay + (this.day === 0 ? -6 : 3);
     return new Date(this.date.setDate(wednesday)).toLocaleDateString( 'en-US', this.options);
   }
 
-  getThursday() {
+  get Thursday() {
     const thursday = this.day - this.weekDay + (this.day === 0 ? -6 : 4);
     return new Date(this.date.setDate(thursday)).toLocaleDateString( 'en-US', this.options);
   }
 
-  getFriday() {
+  get Friday() {
     const friday = this.day - this.weekDay + (this.day === 0 ? -6 : 5);
     return new Date(this.date.setDate(friday)).toLocaleDateString( 'en-US', this.options);
   }
