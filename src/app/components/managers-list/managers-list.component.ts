@@ -21,10 +21,9 @@ export class ManagersListComponent implements OnInit {
   dataSource: DataTableDataSource | null;
   dataBase: DataBase;
 
-  displayedColumns: string[] = ['position', 'direction', 'name',
-                                'MondayClients', 'MondayRecOrders', 'TuesdayClients', 'TuesdayRecOrders',
-                                'WednesdayClients', 'WednesdayRecOrders', 'ThursdayClients', 'ThursdayRecOrders',
-                                'FridayClients', 'FridayRecOrders', 'AnyDayClients', 'AnyDayRecOrders'];
+  displayedColumns: string[] = ['direction', 'MondayClients', 'MondayOrders', 'TuesdayClients', 'TuesdayOrders',
+                                'WednesdayClients', 'WednesdayOrders', 'ThursdayClients', 'ThursdayOrders',
+                                'FridayClients', 'FridayOrders', 'AnyDayClients', 'AnyDayOrders'];
 
   weekDays: string[] = ['empty', 'Monday', 'Tuesday', 'Wednesday',
                         'Thursday', 'Friday', 'AnyDay'];
@@ -46,7 +45,7 @@ export class ManagersListComponent implements OnInit {
       debounceTime(450),
       distinctUntilChanged(),
     ).subscribe(() => {
-      if (!this.dataSource) { return; }
+      if (!this.dataSource) {return;}
       this.dataSource.filter = this.filter.nativeElement.value;
     });
   }

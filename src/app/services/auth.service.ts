@@ -24,7 +24,7 @@ export class AuthService {
 
   logOut(): void {
     this.fireAuth.auth.signOut();
-    localStorage.clear();
+    localStorage.removeItem('User');
     this.authState = null;
     this.router.navigate(['/log-in']);
   }
@@ -49,7 +49,7 @@ export class AuthService {
     setTimeout(() => {
       this.fireAuth.auth.onAuthStateChanged((user) => {
         if (user) {
-          this.router.navigate(['/managers']);
+          this.router.navigate(['/direction']);
         }
       });
     }, 1000);

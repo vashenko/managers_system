@@ -17,11 +17,5 @@ export class Manager {
               public user1cId: string,
               public user1cName: string,
               ) {
-              // public Monday: ManagerClient[],
-              // public Tuesday: ManagerClient[],
-              // public Wednesday: ManagerClient[],
-              // public Thursday: ManagerClient[],
-              // public Friday: ManagerClient[],
-              // public AnyDay: ManagerClient[]) {
   }
 }

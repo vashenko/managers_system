@@ -12,7 +12,8 @@ import {AuthService} from './auth.service';
 @Injectable()
 export class HttpService {
   private managers_url = 'http://srv-dev-01.kt.local/Hryshenchuk/hs/ut/managers/';
-  private schedule_url = 'http://erp.kt.ua/API_UT/hs/ut/baseSchedulers/';
+  private schedule_url = 'http://srv-dev-01.kt.local/Hryshenchuk/hs/ut/baseSchedulers/';
+  // private schedule_url = 'http://erp.kt.ua/API_UT/hs/ut/baseSchedulers/'; production
   private auth_url = 'https://webwork.kt.ua:11443/auth-firebase-user';
   token: string;
 

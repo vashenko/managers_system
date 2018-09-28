@@ -27,11 +27,19 @@ import {AuthService} from './services/auth.service';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FirebaseAuthGuard} from './guards/firebase-auth.guard';
+import { TreeComponent } from './components/tree/tree.component';
+
+import { GroupByPipe } from './pipes/group-by.pipe';
+import {GetClientsPipe} from './pipes/get-clients';
+import { GetOrdersPipe } from './pipes/get-orders.pipe';
+
+import {DevExtremeModule, DxDataGridModule, DxTemplateModule} from 'devextreme-angular';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'managers', pathMatch: 'full' },
+  { path: '', redirectTo: 'direction', pathMatch: 'full' },
   { path: 'log-in', component: SignInComponent},
-  { path: 'managers', component: ManagersListComponent, canActivate: [FirebaseAuthGuard]}
+  { path: 'direction', component: ManagersListComponent, canActivate: [FirebaseAuthGuard]},
+  { path: 'direction_table', component: TreeComponent}
 ];
 
 @NgModule({
@@ -40,7 +48,11 @@ const routes: Routes = [
     ManagerComponent,
     ManagersListComponent,
     SignInComponent,
-    NavbarComponent
+    NavbarComponent,
+    GroupByPipe,
+    GetClientsPipe,
+    GetOrdersPipe,
+    TreeComponent
   ],
   imports: [
     BrowserModule,
@@ -52,8 +64,10 @@ const routes: Routes = [
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    DevExtremeModule,
+    DxDataGridModule,
+    DxTemplateModule
   ],
   providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard],
   bootstrap: [AppComponent]

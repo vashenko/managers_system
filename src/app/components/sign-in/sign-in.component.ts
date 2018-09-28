@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {HttpService} from '../../services/http.service';
+import {User} from '../../domains/user.model';
 
 @Component({
   selector: 'app-sign-in',
@@ -46,14 +47,16 @@ export class SignInComponent implements OnInit {
 
   signIn() {
     if (this.logInForm.valid) {
-      let serverToken: string;
-      this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).subscribe(res => {
-        serverToken = res;
-        this.authService.signInWithCustomToken(serverToken)
-          .then(() => this.router.navigate(['/managers']))
+      this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).subscribe(token => {
+        this.authService.signInWithCustomToken(token)
+          .then(() => {
+            this.authService.getUserTokenId()
+              .then((idToken) => localStorage.setItem('User', JSON.stringify(new User(idToken))));
+          })
+          .then(() => this.router.navigate(['/direction']))
           .catch(err => this.errosHandler(err.message));
       },
-    (err) => this.errosHandler(err.error));
+    err => this.errosHandler(err.error));
     }
   }
 }

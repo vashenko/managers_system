@@ -14,7 +14,7 @@ export class FirebaseAuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if (this.authService.authenticated) { return true; }
+      if (this.authService.authenticated && localStorage.getItem('User')) { return true; }
       console.log('access denied');
       this.router.navigate(['/log-in']);
       return false;

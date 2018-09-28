@@ -1,5 +1,4 @@
-import {Component, Input, OnInit, HostBinding} from '@angular/core';
-import { Manager } from '../../domains/manager.model';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-manager',
@@ -7,16 +6,37 @@ import { Manager } from '../../domains/manager.model';
   styleUrls: ['./manager.component.css']
 })
 export class ManagerComponent implements OnInit {
+  private myArray: object[] = [];
+  constructor() {
 
-  @Input() manager: Manager[];
-  @Input() index: number;
-  @HostBinding('attr.class') cssClass = 'col-lg-12 col-md-12 col-sm-12 col-xs-12';
-  // dataSource = this.manager;
-  // displayedColumns: string[] = ['Manager Name'];
+    console.log()
+  }
 
-  constructor() { }
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.myArray = [
+    {
+      name: "Apple",
+      color: "Green"
+    },
+    {
+      name: "Banana",
+      color: "Yellow"
+    },
+    {
+      name: "Grape",
+      color: "Green"
+    },
+    {
+      name: "Melon",
+      color: "Yellow"
+    },
+    {
+      name: "Orange",
+      color: "Orange"
+    }
+  ];
+    console.log(this.myArray);
+  }
 
 }
 

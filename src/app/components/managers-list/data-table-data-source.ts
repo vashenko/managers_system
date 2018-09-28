@@ -1,11 +1,11 @@
-import {ShowedManager} from '../../domains/showed-manager';
 import {DataSource} from '@angular/cdk/table';
 import {MatPaginator, MatSort} from '@angular/material';
 import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DataBase} from './data-base';
+import {GroupedByDirection} from '../../domains/grouped-direction.model';
 
-export class  DataTableDataSource extends DataSource<ShowedManager> {
+export class  DataTableDataSource extends DataSource<GroupedByDirection> {
   filterChange = new BehaviorSubject('');
   get filter(): string {
     return this.filterChange.value;
@@ -14,15 +14,17 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
     this.filterChange.next(filter);
   }
 
-  filteredData: ShowedManager[] = [];
-  renderedData: ShowedManager[] = [];
+  isLoading = true;
+  filteredData: GroupedByDirection[] = [];
+  renderedData: GroupedByDirection[] = [];
 
   constructor(private dataBase: DataBase, private paginator: MatPaginator, private sort: MatSort) {
     super();
     this.filterChange.subscribe(() => this.paginator.pageIndex = 0);
   }
 
-  connect(): Observable<ShowedManager[]> {
+  connect(): Observable<GroupedByDirection[]> {
+    this.isLoading = false;
     const displayDataChanges = [
       this.dataBase.dataChange,
       this.sort.sortChange,
@@ -31,8 +33,8 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
     ];
 
     return merge(...displayDataChanges).pipe(map(() => {
-      this.filteredData = this.dataBase.data.slice().filter((item: ShowedManager) => {
-        const searchStr = (item.name + item.direction).toLocaleLowerCase();
+      this.filteredData = this.dataBase.data.slice().filter((item: GroupedByDirection) => {
+        const searchStr = (item.direction).toLocaleLowerCase();
         return searchStr.indexOf(this.filter.toLocaleLowerCase()) !== - 1;
       });
       const sortedData = this.sortData(this.filteredData.slice());
@@ -45,7 +47,7 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
   disconnect() {
   }
 
-  private sortData(data: ShowedManager[]) {
+  private sortData(data: GroupedByDirection[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -53,9 +55,7 @@ export class  DataTableDataSource extends DataSource<ShowedManager> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'position': return compare(a.position, b.position, isAsc);
         case 'direction': return compareString(a.direction, b.direction, isAsc);
-        case 'name': return compareString(a.name, b.name, isAsc);
         default: return 0;
       }
     });
