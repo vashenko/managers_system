@@ -14,7 +14,8 @@ export class ConvertService {
   constructor(private date: DateService) {
   }
 
-  intoManagers(res, managers): Manager[] {
+  intoManagers(res): Manager[] {
+    const managers: Manager[] = [];
     res.forEach(item => {
       managers.push(new Manager(item['active'], item['directionId'], item['directionName'], item['email'], item['headId'],
         item['headName'], item['managerId'], item['managerName'], item['salesManager'], item['unitId'],
@@ -25,8 +26,9 @@ export class ConvertService {
     });
   }
 
-  intoScheduleItems(res, result): ScheduleItem[] {
-    res.forEach(item => result.push(
+  intoScheduleItems(res): ScheduleItem[] {
+    const schedules: ScheduleItem[] = [];
+    res.forEach(item => schedules.push(
       new ScheduleItem(
         item['managerId'],
         this.getClientsByWeekDay(item[this.date.Monday.split(', ')[0]]),
@@ -35,7 +37,7 @@ export class ConvertService {
         this.getClientsByWeekDay(item[this.date.Thursday.split(', ')[0]]),
         this.getClientsByWeekDay(item[this.date.Friday.split(', ')[0]]),
         this.getClientsByWeekDay(item['AnyDay']))));
-    return result;
+    return schedules;
   }
 
   getClientsByWeekDay(ClientsArray: {}): ManagerClient[] {

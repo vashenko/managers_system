@@ -1,0 +1,92 @@
+<dx-data-grid
+    id="gridContainer"
+    [dataSource]="data"
+    [masterDetail]="{ enabled: true, template: 'showedManagers'}"
+    [showBorders]="true"
+    [columnAutoWidth]="true"
+    [noDataText]="dataLoadingText"
+    [sorting]="false"
+    (onContentReady)="onContentReady($event)">
+    <dxo-search-panel [visible]="true"></dxo-search-panel>
+    <dxi-column dataField="direction" caption="Direction" class="direction"></dxi-column>
+    <dxi-column caption="{{this.date.Monday | date:'EEEE dd.MM'}}">
+      <dxi-column caption="All Clients" dataField="MondayClientsSummaray"></dxi-column>
+      <dxi-column caption="All Orders" dataField="MondayOrdersSummaray"></dxi-column>
+    </dxi-column>
+    <dxi-column caption="{{this.date.Tuesday | date:'EEEE dd.MM'}}">
+      <dxi-column caption="All Clients" dataField="TuesdayClientsSummaray"></dxi-column>
+      <dxi-column caption="All Orders" dataField="TuesdayOrdersSummaray"></dxi-column>
+    </dxi-column>
+    <dxi-column caption="{{this.date.Wednesday | date:'EEEE dd.MM'}}">
+      <dxi-column caption="All Clients" dataField="WednesdayClientsSummaray"></dxi-column>
+      <dxi-column caption="All Orders" dataField="WednesdayOrdersSummaray"></dxi-column>
+    </dxi-column>
+    <dxi-column caption="{{this.date.Thursday | date:'EEEE dd.MM'}}">
+      <dxi-column caption="All Clients" dataField="ThursdayClientsSummaray"></dxi-column>
+      <dxi-column caption="All Orders" dataField="ThursdayOrdersSummaray"></dxi-column>
+    </dxi-column>
+    <dxi-column caption="{{this.date.Monday | date:'EEEE dd.MM'}}">
+      <dxi-column caption="All Clients" dataField="FridayClientsSummaray"></dxi-column>
+      <dxi-column caption="All Orders" dataField="FridayOrdersSummaray"></dxi-column>
+    </dxi-column>
+    <dxi-column caption="Any day">
+      <dxi-column caption="All Clients" dataField="AnyDayClientsSummaray"></dxi-column>
+      <dxi-column caption="All Orders" dataField="AnyDayOrdersSummaray"></dxi-column>
+    </dxi-column>
+    <div *dxTemplate="let manager of 'showedManagers'">
+          <dx-data-grid
+              [dataSource]="manager.data.managers"
+              [showBorders]="true"
+              [columnAutoWidth]="true"
+              [sorting]="false">
+                  <dxi-column dataField="name" caption="Managers"></dxi-column>
+                  <dxi-column caption="{{this.date.Monday | date:'EEEE dd.MM'}}">
+                    <dxi-column dataField="Monday.clientsCount" caption="Clients"></dxi-column>
+                    <dxi-column dataField="Monday.recOrdersCount" caption="Orders"></dxi-column>
+                  </dxi-column>
+
+                  <dxi-column caption="{{this.date.Tuesday | date:'EEEE dd.MM'}}">
+                    <dxi-column dataField="Tuesday.clientsCount" caption="Clients"></dxi-column>
+                    <dxi-column dataField="Tuesday.recOrdersCount" caption="Orders"></dxi-column>
+                  </dxi-column>
+
+                  <dxi-column caption="{{this.date.Wednesday | date:'EEEE dd.MM'}}">
+                    <dxi-column dataField="Wednesday.clientsCount" caption="Clients"></dxi-column>
+                    <dxi-column dataField="Wednesday.recOrdersCount" caption="Orders"></dxi-column>
+                  </dxi-column>
+
+                  <dxi-column caption="{{this.date.Thursday | date:'EEEE dd.MM'}}">
+                    <dxi-column dataField="Thursday.clientsCount" caption="Clients"></dxi-column>
+                    <dxi-column dataField="Thursday.recOrdersCount" caption="Orders"></dxi-column>
+                  </dxi-column>
+
+                  <dxi-column caption="{{this.date.Friday | date:'EEEE dd.MM'}}">
+                    <dxi-column dataField="Friday.clientsCount" caption="Clients"></dxi-column>
+                    <dxi-column dataField="Friday.recOrdersCount" caption="Orders"></dxi-column>
+                  </dxi-column>
+
+                  <dxi-column caption="Any day">
+                    <dxi-column dataField="AnyDay.clientsCount" caption="Clients"></dxi-column>
+                    <dxi-column dataField="AnyDay.recOrdersCount" caption="Orders"></dxi-column>
+                  </dxi-column>
+          </dx-data-grid>
+      </div>
+      <dxo-paging [pageSize]="5"></dxo-paging>
+      <dxo-pager
+          [showPageSizeSelector]="true"
+          [allowedPageSizes]="[5, 10, 15, 25]"
+          [showNavigationButtons]="true"
+          [showInfo]="true"
+      ></dxo-pager>
+</dx-data-grid>
+<dx-load-panel
+    #loadPanel
+    shadingColor="rgba(0,0,0,0.4)"
+    [position]="{ of: '#gridContainer' }"
+    [(visible)]="loadingVisible"
+    [showIndicator]="true"
+    [showPane]="true"
+    [shading]="true"
+    [closeOnOutsideClick]="false"
+    (onShowing)="Shown()">
+</dx-load-panel>

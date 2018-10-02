@@ -16,7 +16,7 @@ export class ManagerService {
   convertIntoShowedManagers(schedules: ScheduleItem[], managers: Manager[], recOrders: RecommendedOrders[]): ShowedManager[] {
     const showedManagers: ShowedManager[] = [];
     managers.forEach((manager, index) => {
-      showedManagers.push(new ShowedManager(index + 1, manager.name, manager.unitName, manager.id,
+      showedManagers.push(new ShowedManager(manager.name, manager.unitName, manager.id,
                               this.getClientsAndRecOrdersCount(schedules, recOrders, manager.id, manager.user1cId, this.date.Monday),
                               this.getClientsAndRecOrdersCount(schedules, recOrders, manager.id, manager.user1cId, this.date.Tuesday),
                               this.getClientsAndRecOrdersCount(schedules, recOrders, manager.id, manager.user1cId, this.date.Wednesday),

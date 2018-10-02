@@ -12,6 +12,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AppComponent } from './app.component';
 import { ManagerComponent } from './components/manager/manager.component';
+import { DirectionTableComponent} from './components/direction-table/direction-table.component';
 
 import { RouterModule, Routes} from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,19 +28,15 @@ import {AuthService} from './services/auth.service';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FirebaseAuthGuard} from './guards/firebase-auth.guard';
-import { TreeComponent } from './components/tree/tree.component';
-
-import { GroupByPipe } from './pipes/group-by.pipe';
-import {GetClientsPipe} from './pipes/get-clients';
-import { GetOrdersPipe } from './pipes/get-orders.pipe';
 
 import {DevExtremeModule, DxDataGridModule, DxTemplateModule} from 'devextreme-angular';
+import {GroupedDataService} from './services/grouped-data.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'direction', pathMatch: 'full' },
   { path: 'log-in', component: SignInComponent},
   { path: 'direction', component: ManagersListComponent, canActivate: [FirebaseAuthGuard]},
-  { path: 'direction_table', component: TreeComponent}
+  { path: 'direction_table', component: DirectionTableComponent, canActivate: [FirebaseAuthGuard]}
 ];
 
 @NgModule({
@@ -49,10 +46,7 @@ const routes: Routes = [
     ManagersListComponent,
     SignInComponent,
     NavbarComponent,
-    GroupByPipe,
-    GetClientsPipe,
-    GetOrdersPipe,
-    TreeComponent
+    DirectionTableComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +63,7 @@ const routes: Routes = [
     DxDataGridModule,
     DxTemplateModule
   ],
-  providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard],
+  providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard, GroupedDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
