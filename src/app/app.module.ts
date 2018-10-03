@@ -11,7 +11,6 @@ import { ManagersListComponent } from './components/managers-list/managers-list.
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AppComponent } from './app.component';
-import { ManagerComponent } from './components/manager/manager.component';
 import { DirectionTableComponent} from './components/direction-table/direction-table.component';
 
 import { RouterModule, Routes} from '@angular/router';
@@ -31,6 +30,7 @@ import {FirebaseAuthGuard} from './guards/firebase-auth.guard';
 
 import {DevExtremeModule, DxDataGridModule, DxTemplateModule} from 'devextreme-angular';
 import {GroupedDataService} from './services/grouped-data.service';
+import {PagerService} from './services/pager.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'direction', pathMatch: 'full' },
@@ -42,7 +42,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ManagerComponent,
     ManagersListComponent,
     SignInComponent,
     NavbarComponent,
@@ -63,7 +62,7 @@ const routes: Routes = [
     DxDataGridModule,
     DxTemplateModule
   ],
-  providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard, GroupedDataService],
+  providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard, GroupedDataService, PagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

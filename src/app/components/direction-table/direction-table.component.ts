@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ShowedManager} from '../../domains/showed-manager';
 import {RecommendedOrders} from '../../domains/recomendedOrder.model';
 import {GroupedByDirection} from '../../domains/grouped-direction.model';
+import {DxDataGridComponent} from 'devextreme-angular';
 import {ManagerService} from '../../services/manager.service';
 import {HttpService} from '../../services/http.service';
 import {DateService} from '../../services/date.service';
+import {PagerService} from '../../services/pager.service';
 import {GroupedDataService} from '../../services/grouped-data.service';
 
 @Component({
@@ -13,15 +15,14 @@ import {GroupedDataService} from '../../services/grouped-data.service';
   styleUrls: ['./direction-table.component.css']
 })
 export class DirectionTableComponent implements OnInit {
+  @ViewChild(DxDataGridComponent) viewDataGrid: DxDataGridComponent;
   showedManagers: ShowedManager[] = [];
   recOrders: RecommendedOrders[] = [];
-  data: GroupedByDirection[] = [];
-  dataLoadingText = 'Data is Loading...';
-  lastPageIndex = -1;
-  loadingVisible: boolean;
+  dataSource: GroupedByDirection[] = [];
+  dataIsLoading = true;
 
   constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService,
-              private groupedDataService: GroupedDataService ) {
+              private groupedDataService: GroupedDataService, private pager: PagerService) {
   }
   ngOnInit() {
     this.initTableData();
@@ -31,26 +32,20 @@ export class DirectionTableComponent implements OnInit {
     this.recOrders = this.httpService.getRecommendedOrders();
     this.httpService.getApiData().subscribe(res => {
       this.showedManagers = this.managerService.convertIntoShowedManagers(res[0], res[1], this.recOrders);
-      this.data = this.groupedDataService.getGroupedByDirectionData(this.showedManagers, 'direction');
+      this.dataIsLoading = false;
+      this.dataSource = this.groupedDataService.GroupByDirectionData(this.showedManagers, 'direction');
     });
   }
 
-  Shown() {
+  shown() {
     setTimeout(() => {
-      this.loadingVisible = false;
+      this.pager.loadingVisible = false;
     }, 500);
   }
 
-  onContentReady(e:any): void {
-    const dataGrid = e.component;
-    const currentPageIndex = dataGrid.pageIndex();
-    if (this.lastPageIndex === -1) {
-      this.lastPageIndex = currentPageIndex;
-    } else {
-      if ( this.lastPageIndex !== currentPageIndex) {
-        this.loadingVisible = true;
-        this.lastPageIndex = currentPageIndex;
-      }
-    }
+  pagerHandler(event: any): void {
+    const dataGrid = event.component;
+    this.pager.onPageChanged(dataGrid);
+    this.pager.onPageSizeChanged(dataGrid, this.viewDataGrid);
   }
 }

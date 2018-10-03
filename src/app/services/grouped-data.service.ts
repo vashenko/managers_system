@@ -10,16 +10,16 @@ export class GroupedDataService {
 
   constructor(private date: DateService) { }
 
-  getGroupedByDirectionData(managers: ShowedManager[], place: string) {
+  GroupByDirectionData(managers: ShowedManager[], key: string) {
     const groupedByDirection: GroupedByDirection[] = [];
     if (!managers) {
       return null;
     }
     const groupedCollection = managers.reduce((previous, current) => {
-      if(!previous[current[place]]) {
-        previous[current[place]] = [current];
+      if (!previous[current[key]]) {
+        previous[current[key]] = [current];
       } else {
-        previous[current[place]].push(current);
+        previous[current[key]].push(current);
       }
       return previous;
     }, {});
@@ -40,7 +40,6 @@ export class GroupedDataService {
                                   this.getTotalOrdersCountByWeekDay(groupedCollection[direction], this.date.Friday),
                                   this.getTotalOrdersCountByWeekDay(groupedCollection[direction], 'AnyDay')));
     });
-    console.log(groupedByDirection);
     return groupedByDirection;
   }
 

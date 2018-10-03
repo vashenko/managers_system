@@ -33,8 +33,7 @@ export class SignInComponent implements OnInit {
 
   initControls() {
     this.logInEmail = new FormControl('', [Validators.required]);
-                          // Validators.pattern("^[a-z0-9](\\.?[a-z0-9]){5,}@kt\\.ua$")]);
-    this.logInPassword = new FormControl('', [Validators.required, Validators.minLength(1)]);
+    this.logInPassword = new FormControl('', [Validators.required]);
   }
 
   errosHandler(err: string) {
@@ -50,7 +49,7 @@ export class SignInComponent implements OnInit {
         this.authService.signInWithCustomToken(token)
           .then(() => {
             this.authService.getUserTokenId()
-              .then((idToken) => localStorage.setItem('User', JSON.stringify(this.authService.currentUser.uid)));
+              .then((idToken) => localStorage.setItem('User', idToken));
           })
           .then(() => this.router.navigate(['/direction_table']))
           .catch(err => this.errosHandler(err.message));

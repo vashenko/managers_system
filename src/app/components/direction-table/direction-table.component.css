@@ -1,3 +1,7 @@
+dx-data-grid > table {
+  width: 100% !important;
+}
+
 ::ng-deep #gridContainer {
   height: auto;
 }
@@ -7,24 +11,15 @@
   font-size: 1.15em;
 }
 
-::ng-deep #gridContainer >.dx-datagrid-content table > tbody tr > td .dx-datagrid-headers
-  table > tbody > tr > td:not(:first-child),
-::ng-deep #gridContainer > .dx-datagrid-content table > tbody tr > td .dx-datagrid-content
-  table > tbody > tr > td:not(:first-child),
-::ng-deep #gridContainer .dx-datagrid-headers > .dx-datagrid-content > table tbody > tr > td,
-::ng-deep #gridContainer .dx-datagrid-content > table > tbody tr > td:not(.direction) {
-  text-align: center !important;
-}
+/*::ng-deep #gridContainer >.dx-datagrid-content table > tbody tr > td .dx-datagrid-headers*/
+  /*table > tbody > tr > td:not(:first-child),*/
+/*::ng-deep #gridContainer > .dx-datagrid-content table > tbody tr > td .dx-datagrid-content*/
+  /*table > tbody > tr > td:not(:first-child),*/
+/*::ng-deep #gridContainer .dx-datagrid-headers > .dx-datagrid-content > table tbody > tr > td,*/
+/*::ng-deep #gridContainer .dx-datagrid-content > table > tbody tr > td {*/
+  /*text-align: center !important;*/
+/*}*/
 
 ::ng-deep #gridContainer .dx-datagrid-content table tbody tr > td {
   padding: 1em;
-}
-
-::ng-deep #gridContainer .dx-datagrid-header-panel > .dx-toolbar > .dx-toolbar-items-container > .dx-toolbar-after > .dx-item >
- .dx-item-content > .dx-datagrid-search-panel {
-  width: 220px !important;
-}
-
-::ng-deep #gridContainer .dx-datagrid-content table tbody tr > td {
-
 }

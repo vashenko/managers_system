@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DateService {
-  public date = new Date();
-  public weekDay = this.date.getDay();
-  public day = this.date.getDate();
-  public options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+  private date = new Date();
+  private weekDay = this.date.getDay();
+  private day = this.date.getDate();
+  private options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
   constructor() { }
 

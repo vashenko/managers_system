@@ -5,7 +5,6 @@
   			<input name="email" type="text" placeholder="Email" class="signInInput" formControlName="email">
         <div class="feedback" *ngIf="logInEmail.errors && (logInEmail.dirty || logInEmail.touched)">
           <p *ngIf="logInEmail.errors.required">Email is required</p>
-          <p *ngIf="logInEmail.errors.pattern">Email should be on this format "youraddres@kt.ua"</p>
         </div>
   		</div>
   		<div>
@@ -13,7 +12,6 @@
         <div class="feedback" *ngIf="logInPassword.errors && (logInPassword.dirty || logInPassword.touched)">
           <div class="feedback" *ngIf="logInPassword.errors && (logInPassword.dirty || logInPassword.touched)">
             <p *ngIf="logInPassword.errors.required">Password is required</p>
-            <p *ngIf="logInPassword.errors.minlength">Min length is equal 1 symbols</p>
           </div>
         </div>
   		</div>
