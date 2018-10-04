@@ -13,28 +13,28 @@
     <dxo-search-panel [visible]="true" [width]="240"></dxo-search-panel>
     <dxi-column dataField="direction" caption="Direction" class="direction"></dxi-column>
     <dxi-column caption="{{this.date.Monday | date:'EEEE dd.MM'}}" alignment="center">
-      <dxi-column caption="All Clients" dataField="MondayClientsSummaray" alignment="center"></dxi-column>
-      <dxi-column caption="All Orders" dataField="MondayOrdersSummaray" alignment="center"></dxi-column>
+      <dxi-column caption="All Clients" dataField="MondayClientsAndOrdersSummary.clientsSummary" alignment="center"></dxi-column>
+      <dxi-column caption="All Orders" dataField="MondayClientsAndOrdersSummary.ordersSummary" alignment="center"></dxi-column>
     </dxi-column>
     <dxi-column caption="{{this.date.Tuesday | date:'EEEE dd.MM'}}" alignment="center">
-      <dxi-column caption="All Clients" dataField="TuesdayClientsSummaray" alignment="center"></dxi-column>
-      <dxi-column caption="All Orders" dataField="TuesdayOrdersSummaray" alignment="center"></dxi-column>
+      <dxi-column caption="All Clients" dataField="TuesdayClientsAndOrdersSummary.clientsSummary" alignment="center"></dxi-column>
+      <dxi-column caption="All Orders" dataField="TuesdayClientsAndOrdersSummary.ordersSummary" alignment="center"></dxi-column>
     </dxi-column>
     <dxi-column caption="{{this.date.Wednesday | date:'EEEE dd.MM'}}" alignment="center">
-      <dxi-column caption="All Clients" dataField="WednesdayClientsSummaray" alignment="center"></dxi-column>
-      <dxi-column caption="All Orders" dataField="WednesdayOrdersSummaray" alignment="center"></dxi-column>
-    </dxi-column>
-    <dxi-column caption="{{this.date.Thursday | date:'EEEE dd.MM'}}" alignment="center">
-      <dxi-column caption="All Clients" dataField="ThursdayClientsSummaray" alignment="center"></dxi-column>
-      <dxi-column caption="All Orders" dataField="ThursdayOrdersSummaray" alignment="center"></dxi-column>
+      <dxi-column caption="All Clients" dataField="WednesdayClientsAndOrdersSummary.clientsSummary" alignment="center"></dxi-column>
+      <dxi-column caption="All Orders" dataField="WednesdayClientsAndOrdersSummary.ordersSummary" alignment="center"></dxi-column>
     </dxi-column>
     <dxi-column caption="{{this.date.Friday | date:'EEEE dd.MM'}}" alignment="center">
-      <dxi-column caption="All Clients" dataField="FridayClientsSummaray" alignment="center"></dxi-column>
-      <dxi-column caption="All Orders" dataField="FridayOrdersSummaray" alignment="center"></dxi-column>
+      <dxi-column caption="All Clients" dataField="ThursdayClientsAndOrdersSummary.clientsSummary" alignment="center"></dxi-column>
+      <dxi-column caption="All Orders" dataField="ThursdayClientsAndOrdersSummary.ordersSummary" alignment="center"></dxi-column>
+    </dxi-column>
+    <dxi-column caption="{{this.date.Thursday | date:'EEEE dd.MM'}}" alignment="center">
+      <dxi-column caption="All Clients" dataField="FridayClientsAndOrdersSummary.clientsSummary" alignment="center"></dxi-column>
+      <dxi-column caption="All Orders" dataField="FridayClientsAndOrdersSummary.ordersSummary" alignment="center"></dxi-column>
     </dxi-column>
     <dxi-column caption="Any day" alignment="center">
-      <dxi-column caption="All Clients" dataField="AnyDayClientsSummaray" alignment="center"></dxi-column>
-      <dxi-column caption="All Orders" dataField="AnyDayOrdersSummaray" alignment="center"></dxi-column>
+      <dxi-column caption="All Clients" dataField="AnyDayClientsAndOrdersSummary.clientsSummary" alignment="center"></dxi-column>
+      <dxi-column caption="All Orders" dataField="AnyDayClientsAndOrdersSummary.ordersSummary" alignment="center"></dxi-column>
     </dxi-column>
     <div *dxTemplate="let manager of 'showedManagers'">
           <dx-data-grid

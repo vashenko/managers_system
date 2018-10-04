@@ -1,0 +1,115 @@
+<div class="mat-elevation-z8 data-table">
+  <div class="example-loading-shade"
+       *ngIf="dataBase.isLoading">
+    <mat-spinner *ngIf="dataBase.isLoading"></mat-spinner>
+  </div>
+  <div class="search-div">
+    <mat-form-field class="search-form-field" floatLabel="never" style="width: 25%; margin-left: .8em">
+      <input matInput #filter placeholder="Find Subdivision">
+    </mat-form-field>
+  </div>
+  <table mat-table #table [dataSource]="dataSource" matSort multiTemplateDataRows>
+      <ng-container matColumnDef="direction">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="clientsBorder">Direction</th>
+        <td mat-cell *matCellDef="let row" class="clientsBorder">{{row.direction}}</td>
+      </ng-container>
+      <ng-container matColumnDef="MondayClientsSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Clients</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.MondayClientsAndOrdersSummary.clientsSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="MondayOrdersSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Orders</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.MondayClientsAndOrdersSummary.ordersSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="TuesdayClientsSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Clients</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.TuesdayClientsAndOrdersSummary.clientsSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="TuesdayOrdersSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Orders</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.TuesdayClientsAndOrdersSummary.ordersSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="WednesdayClientsSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Clients</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.WednesdayClientsAndOrdersSummary.clientsSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="WednesdayOrdersSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Orders</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.WednesdayClientsAndOrdersSummary.ordersSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="ThursdayClientsSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Clients</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.ThursdayClientsAndOrdersSummary.clientsSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="ThursdayOrdersSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Orders</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.ThursdayClientsAndOrdersSummary.ordersSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="FridayClientsSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Clients</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.FridayClientsAndOrdersSummary.clientsSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="FridayOrdersSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Orders</th>
+        <td mat-cell *matCellDef="let row"class="centered clientsBorder">{{row.FridayClientsAndOrdersSummary.ordersSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="AnyDayClientsSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Clients</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.AnyDayClientsAndOrdersSummary.clientsSummary}}</td>
+      </ng-container>
+      <ng-container matColumnDef="AnyDayOrdersSummary">
+        <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">All Orders</th>
+        <td mat-cell *matCellDef="let row" class="centered clientsBorder">{{row.AnyDayClientsAndOrdersSummary.ordersSummary}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="empty">
+        <th mat-header-cell *matHeaderCellDef colspan="1"></th>
+      </ng-container>
+      <ng-container matColumnDef="Monday">
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="centered">{{this.date.Monday | date:'EEEE dd.MM'}}</th>
+      </ng-container>
+      <ng-container matColumnDef="Tuesday">
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="centered">{{this.date.Tuesday | date:'EEEE dd.MM'}}</th>
+      </ng-container>
+      <ng-container matColumnDef="Wednesday">
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="centered">{{this.date.Wednesday | date:'EEEE dd.MM'}}</th>
+      </ng-container>
+      <ng-container matColumnDef="Thursday">
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="centered">{{this.date.Thursday | date:'EEEE dd.MM'}}</th>
+      </ng-container>
+      <ng-container matColumnDef="Friday">
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="centered">{{this.date.Friday | date:'EEEE dd.MM'}}</th>
+      </ng-container>
+      <ng-container matColumnDef="AnyDay">
+        <th mat-header-cell *matHeaderCellDef colspan="2" class="centered">AnyDay</th>
+      </ng-container>
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+          <div class="example-element-detail"
+               [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-description">
+              <app-subdivisions-managers [managers]="row.managers" style="width: 100%"></app-subdivisions-managers>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="weekDays;"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === row"
+          (click)="expendRow(row)">
+      </tr>
+     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+
+    <mat-paginator #paginator
+    [length]="dataSource?.filteredData.length"
+    [pageIndex]="0"
+    [pageSize]="7"
+    [pageSizeOptions]="[7, 14, 21]"
+    >
+    </mat-paginator>
+</div>
+

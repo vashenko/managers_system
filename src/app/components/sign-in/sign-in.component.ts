@@ -51,7 +51,7 @@ export class SignInComponent implements OnInit {
             this.authService.getUserTokenId()
               .then((idToken) => localStorage.setItem('User', idToken));
           })
-          .then(() => this.router.navigate(['/direction_table']))
+          .then(() => this.router.navigate(['/subdivisions']))
           .catch(err => this.errosHandler(err.message));
       },
     err => this.errosHandler(err.error));

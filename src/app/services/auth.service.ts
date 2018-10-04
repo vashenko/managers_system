@@ -49,7 +49,7 @@ export class AuthService {
     setTimeout(() => {
       this.fireAuth.auth.onAuthStateChanged((user) => {
         if (user) {
-          this.router.navigate(['/direction_table']);
+          this.router.navigate(['/subdivisions']);
         }
       });
     }, 1000);

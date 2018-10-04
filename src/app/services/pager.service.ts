@@ -10,6 +10,30 @@ export class PagerService {
 
   constructor() { }
 
+  static hidePager(dataGrid: any): void {
+    dataGrid.instance.option({
+      pager: {
+        visible: false
+      },
+    });
+  }
+
+  static showPager(dataGrid: any): void {
+    dataGrid.instance.option({
+      pager: {
+        visible: true
+      },
+    });
+  }
+
+  static pagerToggler(pageSize: number, dataGrid: any): void {
+    if (pageSize < 5) {
+      PagerService.hidePager(dataGrid);
+    } else {
+      PagerService.showPager(dataGrid);
+    }
+  }
+
   onPageChanged(e: any): void {
     const currentPageIndex = e.pageIndex();
     if (this.lastPageIndex === -1) {
@@ -30,32 +54,8 @@ export class PagerService {
       if (this.lastPageSize !== currentVisibleRows) {
         this.loadingVisible = true;
         this.lastPageSize = currentVisibleRows;
-        this.pagerToggler(this.lastPageSize, viewDataGrid);
+        PagerService.pagerToggler(this.lastPageSize, viewDataGrid);
       }
     }
-  }
-
-  pagerToggler(pageSize: number, dataGrid: any): void {
-    if (pageSize < 5) {
-      this.hidePager(dataGrid);
-    } else {
-      this.showPager(dataGrid);
-    }
-  }
-
-  hidePager(dataGrid: any): void {
-    dataGrid.instance.option({
-      pager: {
-        visible: false
-      },
-    });
-  }
-
-  showPager(dataGrid: any): void {
-    dataGrid.instance.option({
-      pager: {
-        visible: true
-      },
-    });
   }
 }

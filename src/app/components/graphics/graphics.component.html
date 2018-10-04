@@ -1,0 +1,15 @@
+<div class="grafanData" *ngIf="!dataIsLoading">
+  <div class="empty"></div>
+  <iframe src="https://grafana.kt.ua/d/WjhQor0ik/information?orgId=1&from=1538524800000&to=1538611199999&refresh=5m&var-TT=All"
+  frameborder="0"
+  class="selling"
+  ></iframe>
+</div>
+<mat-card *ngIf="dataIsLoading"
+   style="display: flex; justify-content: center; align-items: center; flex-flow: column nowrap">
+  <h4>Graphics are Loading...</h4>
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</mat-card>

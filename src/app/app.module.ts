@@ -7,7 +7,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { environment } from '../environments/environment.prod';
 
-import { ManagersListComponent } from './components/managers-list/managers-list.component';
+import { SubdivisionsListComponent} from './components/subdivisions-list/subdivisions-list.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AppComponent } from './app.component';
@@ -28,24 +28,28 @@ import {AuthService} from './services/auth.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FirebaseAuthGuard} from './guards/firebase-auth.guard';
 
-import {DevExtremeModule, DxDataGridModule, DxTemplateModule} from 'devextreme-angular';
-import {GroupedDataService} from './services/grouped-data.service';
+import {DevExtremeModule, DxDataGridModule, DxPieChartModule, DxTemplateModule} from 'devextreme-angular';
+import {SubdivisionService} from './services/subdivision.service';
 import {PagerService} from './services/pager.service';
+import { GraphicsComponent } from './components/graphics/graphics.component';
+import { SubdivisionsManagersComponent } from './components/subdivisions-managers/subdivisions-managers.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'direction', pathMatch: 'full' },
   { path: 'log-in', component: SignInComponent},
-  { path: 'direction', component: ManagersListComponent, canActivate: [FirebaseAuthGuard]},
+  { path: 'graphics', component: GraphicsComponent, canActivate: [FirebaseAuthGuard]},
+  { path: 'subdivisions', component: SubdivisionsListComponent, canActivate: [FirebaseAuthGuard]},
   { path: 'direction_table', component: DirectionTableComponent, canActivate: [FirebaseAuthGuard]}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ManagersListComponent,
+    SubdivisionsListComponent,
     SignInComponent,
     NavbarComponent,
-    DirectionTableComponent
+    DirectionTableComponent,
+    GraphicsComponent,
+    SubdivisionsManagersComponent
   ],
   imports: [
     BrowserModule,
@@ -60,9 +64,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     DevExtremeModule,
     DxDataGridModule,
-    DxTemplateModule
+    DxTemplateModule,
+    DxPieChartModule
   ],
-  providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard, GroupedDataService, PagerService],
+  providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard, SubdivisionService, PagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
