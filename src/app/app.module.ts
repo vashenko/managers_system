@@ -12,6 +12,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AppComponent } from './app.component';
 import { DirectionTableComponent} from './components/direction-table/direction-table.component';
+import { SubdivisionsManagersComponent } from './components/subdivisions-managers/subdivisions-managers.component';
 
 import { RouterModule, Routes} from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,15 +25,14 @@ import {ConvertService} from './services/convert.service';
 import {ManagerService} from './services/manager.service';
 import {DateService} from './services/date.service';
 import {AuthService} from './services/auth.service';
-
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {PagerService} from './services/pager.service';
+import {SubdivisionService} from './services/subdivision.service';
 import {FirebaseAuthGuard} from './guards/firebase-auth.guard';
 
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 import {DevExtremeModule, DxDataGridModule, DxPieChartModule, DxTemplateModule} from 'devextreme-angular';
-import {SubdivisionService} from './services/subdivision.service';
-import {PagerService} from './services/pager.service';
 import { GraphicsComponent } from './components/graphics/graphics.component';
-import { SubdivisionsManagersComponent } from './components/subdivisions-managers/subdivisions-managers.component';
 
 const routes: Routes = [
   { path: 'log-in', component: SignInComponent},
