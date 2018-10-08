@@ -9,7 +9,6 @@ import { environment } from '../environments/environment.prod';
 
 import { SubdivisionsListComponent} from './components/subdivisions-list/subdivisions-list.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { AppComponent } from './app.component';
 import { DirectionTableComponent} from './components/direction-table/direction-table.component';
 import { SubdivisionsManagersComponent } from './components/subdivisions-managers/subdivisions-managers.component';
@@ -33,9 +32,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {DevExtremeModule, DxDataGridModule, DxPieChartModule, DxTemplateModule} from 'devextreme-angular';
 import { GraphicsComponent } from './components/graphics/graphics.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { TestComponent } from './components/test/test.component';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', component: SignInComponent},
   { path: 'log-in', component: SignInComponent},
+  { path: 'test', component: TestComponent},
   { path: 'graphics', component: GraphicsComponent, canActivate: [FirebaseAuthGuard]},
   { path: 'subdivisions', component: SubdivisionsListComponent, canActivate: [FirebaseAuthGuard]},
   { path: 'direction_table', component: DirectionTableComponent, canActivate: [FirebaseAuthGuard]}
@@ -46,10 +51,11 @@ const routes: Routes = [
     AppComponent,
     SubdivisionsListComponent,
     SignInComponent,
-    NavbarComponent,
     DirectionTableComponent,
     GraphicsComponent,
-    SubdivisionsManagersComponent
+    SubdivisionsManagersComponent,
+    NavbarComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +71,13 @@ const routes: Routes = [
     DevExtremeModule,
     DxDataGridModule,
     DxTemplateModule,
-    DxPieChartModule
+    DxPieChartModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard, SubdivisionService, PagerService],
   bootstrap: [AppComponent]

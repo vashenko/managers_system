@@ -1,93 +1,64 @@
 <div class="mat-elevation-z8 data-table">
-  <div class="search-div">
-    <mat-form-field class="search-form-field" floatLabel="never" style="width: 25%; margin-left: .8em">
-      <input matInput #filter placeholder="Find Managers">
-    </mat-form-field>
-  </div>
   <table mat-table #table [dataSource]="dataSource" multiTemplateDataRows matSort>
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="clientsBorder">Name</th>
-      <td mat-cell *matCellDef="let manager" class="clientsBorder">{{manager.name}}</td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager">{{manager.name}}</td>
     </ng-container>
     <ng-container matColumnDef="MondayClients">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Clients</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Monday.clientsCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Monday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="MondayOrders">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Orders</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Monday.recOrdersCount}} </td>
+      <th mat-header-cell *matHeaderCellDef ></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Monday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="TuesdayClients">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Clients</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Tuesday.clientsCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Tuesday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="TuesdayOrders">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Orders</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Tuesday.recOrdersCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Tuesday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="WednesdayClients">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Clients</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Wednesday.clientsCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Wednesday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="WednesdayOrders">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Orders</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Wednesday.recOrdersCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Wednesday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="ThursdayClients">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Clients</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Thursday.clientsCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Thursday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="ThursdayOrders">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Orders</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Thursday.recOrdersCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Thursday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="FridayClients">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Clients</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Friday.clientsCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Friday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="FridayOrders">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Orders</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.Friday.recOrdersCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Friday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="AnyDayClients">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Clients</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.AnyDay.clientsCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.AnyDay.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="AnyDayOrders">
-      <th mat-header-cell *matHeaderCellDef class="centered clientsBorder">Orders</th>
-      <td mat-cell *matCellDef="let manager" class="centered clientsBorder"> {{manager.AnyDay.recOrdersCount}} </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.AnyDay.recOrdersCount}} </td>
     </ng-container>
-
-    <ng-container matColumnDef="empty">
-      <th mat-header-cell *matHeaderCellDef colspan="1"></th>
-    </ng-container>
-    <ng-container matColumnDef="Monday">
-      <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Monday | date:'EEEE dd.MM'}}</th>
-    </ng-container>
-    <ng-container matColumnDef="Tuesday">
-      <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Tuesday | date:'EEEE dd.MM'}}</th>
-    </ng-container>
-    <ng-container matColumnDef="Wednesday">
-      <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Wednesday | date:'EEEE dd.MM'}}</th>
-    </ng-container>
-    <ng-container matColumnDef="Thursday">
-      <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Thursday | date:'EEEE dd.MM'}}</th>
-    </ng-container>
-    <ng-container matColumnDef="Friday">
-      <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">{{this.date.Friday | date:'EEEE dd.MM'}}</th>
-    </ng-container>
-    <ng-container matColumnDef="AnyDay">
-      <th mat-header-cell *matHeaderCellDef colspan="2" class="weekDay centered">AnyDay</th>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="weekDays;"></tr>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let manager; columns: displayedColumns;"></tr>
   </table>
   <mat-paginator #paginator
   [length]="dataSource?.filteredData.length"
   [pageIndex]="0"
-  [pageSize]="5"
+  [pageSize]="10"
   [pageSizeOptions]="[5, 10, 20]"
   >
   </mat-paginator>

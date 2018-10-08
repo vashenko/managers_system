@@ -1,6 +1,6 @@
 table {
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
 }
 .mat-header-cell {
   font-size: 1em;
@@ -64,58 +64,47 @@ tr.example-detail-row {
   overflow: auto;
 }
 
-.loading {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-flow: column nowrap;
-}
 
-.loading .loadingTitle {
-  margin: 2em 0;
-}
-
-
-@media screen and (max-width: 1715px) {
-  td.mat-cell:first-of-type {
-    width: 18%;
-  }
-}
-
-@media screen and (max-width: 1440px) {
-  td.mat-cell.centered {
-    text-align: center;
-    width: 6%;
+@media screen and (max-width: 960px) {
+  .mat-table {
+    border: 0;
+    vertical-align: middle
   }
 
-  td.mat-cell:first-of-type {
-    width: 20%;
-  }
-}
 
-@media screen and (max-width: 1150px) {
-  td.mat-cell.centered {
-    text-align: center;
-    width: 6%;
-  }
+  /*  Enable this to hide header
+  .mat-table .mat-header-cell {
 
-  td.mat-cell:first-of-type {
-    width: 15%;
+    border: 10px solid;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
   }
-
-  .mat-header-cell {
-    padding: 0 .2em;
+  */
+  .mat-table .mat-row {
+    border-bottom: 5px solid #ddd;
+    display: block;
   }
-}
-
-@media screen and (max-width: 1030px) {
-  .mat-header-cell.weekday {
-    font-size: .9em;
+  /*
+  .mat-table .mat-row:nth-child(even) {background: #CCC}
+  .mat-table .mat-row:nth-child(odd) {background: #FFF}
+  */
+  .mat-table .mat-cell {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1em;
+    text-align: right;
+    font-weight: bold;
+    height:30px;
+    margin-bottom: 4%;
   }
-}
-
-@media screen and (max-width: 970px) {
-  td.mat-cell:first-of-type {
-    width: 15%;
+  .mat-table .mat-cell:last-child {
+    border-bottom: 0;
+  }
+  .mat-table .mat-cell:first-child {
+    margin-top: 4%;
   }
 }

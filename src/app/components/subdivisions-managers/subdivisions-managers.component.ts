@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import {ShowedManager} from '../../domains/showed-manager';
 import {DateService} from '../../services/date.service';
 import {MatPaginator, MatSort} from '@angular/material';
@@ -27,23 +27,8 @@ export class SubdivisionsManagersComponent implements OnInit {
   constructor(private date: DateService) { }
 
   ngOnInit() {
-    this.initDataSource();
-    this.findManager();
-  }
-
-  initDataSource() {
     this.dataBase = new SubdivisionsManagersDataBase(this.managers);
     this.dataSource = new SubdivisionsManagersDataSource(this.dataBase, this.paginator, this.sort);
-  }
-
-  findManager() {
-    fromEvent(this.filter.nativeElement, 'keyup').pipe(
-      debounceTime(450),
-      distinctUntilChanged(),
-    ).subscribe(() => {
-      if (!this.dataSource) { return; }
-      this.dataSource.filter = this.filter.nativeElement.value;
-    });
   }
 }
 

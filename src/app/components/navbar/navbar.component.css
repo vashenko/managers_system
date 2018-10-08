@@ -1,3 +1,31 @@
-.nav-item {
-  cursor: pointer;
+.sidenav-container {
+  height: 100%;
 }
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav-container {
+  background: white;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+}
+
+.mat-toolbar {
+  background: #3f51b5;
+}
+.anchorNavItem {
+  font-size: 1em;
+  padding: 0 1em;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.mat-toolbar .mat-icon-button {
+  display: none;
+}
+

@@ -4,7 +4,7 @@
       <input matInput #filter placeholder="Find Subdivision">
     </mat-form-field>
   </div>
-  <table mat-table #table [dataSource]="dataSource" matSort multiTemplateDataRows>
+  <table mat-table #table [dataSource]="subdivisions" matSort multiTemplateDataRows>
       <ng-container matColumnDef="direction">
         <th mat-header-cell *matHeaderCellDef mat-sort-header class="clientsBorder">Direction</th>
         <td mat-cell *matCellDef="let row" class="clientsBorder">{{row.direction}}</td>
@@ -90,7 +90,7 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="weekDays;  sticky: true"></tr>
+      <tr mat-header-row *matHeaderRowDef="weekDays"></tr>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"
           class="example-element-row"
@@ -99,16 +99,5 @@
       </tr>
      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
+</div>
 
-    <mat-paginator #paginator
-    [length]="dataSource?.filteredData.length"
-    [pageIndex]="0"
-    [pageSize]="7"
-    [pageSizeOptions]="[7, 14, 21]"
-    >
-    </mat-paginator>
-</div>
-<div class="loading" *ngIf="dataBase.isLoading">
-  <h4 class="loadingTitle">Table is Loading...</h4>
-  <mat-spinner *ngIf="dataBase.isLoading"></mat-spinner>
-</div>

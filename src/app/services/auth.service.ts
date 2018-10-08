@@ -23,10 +23,11 @@ export class AuthService {
   }
 
   logOut(): void {
-    this.fireAuth.auth.signOut();
-    localStorage.removeItem('User');
-    this.authState = null;
-    this.router.navigate(['/log-in']);
+    this.fireAuth.auth.signOut()
+      .then(() => {
+        localStorage.removeItem('User');
+        this.router.navigate(['/log-in']);
+      });
   }
 
   signInWithCustomToken(token: string) {

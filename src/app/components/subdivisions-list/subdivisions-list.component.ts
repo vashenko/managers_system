@@ -41,7 +41,9 @@ export class SubdivisionsListComponent implements OnInit {
                         'Thursday', 'Friday', 'AnyDay'];
 
   constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService,
-              private subdivisionService: SubdivisionService) {}
+              private subdivisionService: SubdivisionService) {
+
+  }
   ngOnInit() {
     this.initDataBase();
     this.findManagers();
@@ -50,7 +52,6 @@ export class SubdivisionsListComponent implements OnInit {
   initDataBase() {
     this.dataBase = new DataBase(this.managerService, this.httpService, this.subdivisionService);
     this.dataSource = new DataTableDataSource(this.dataBase, this.paginator, this.sort);
-    // observableOf(this.dataSource.isLoading).subscribe(val => console.log(val));
   }
 
   findManagers(): void {

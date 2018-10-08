@@ -3,19 +3,18 @@ table {
   overflow: auto;
 }
 
-.mat-header-cell {
-  font-size: 1em;
-  color: black;
-}
-
 .clientsBorder {
   border-left: 1px solid rgba(0, 0, 0, 0.12);
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.ordersBorder {
+.rightBorder {
   border-right: 1px solid rgba(0, 0, 0, 0.12);
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mat-header-cell {
+  font-size: 1em;
+  color: black;
 }
 
 .mat-form-field {
@@ -23,17 +22,77 @@ table {
   width: 100%;
 }
 
-.mat-header-cell {
-  font-size: 1em;
-  padding: 0 0.4em;
-  color: black;
-  border-bottom: none;
+@media screen and (max-width: 1920px) {
+  td.mat-cell:first-child {
+    width: 22.5%;
+  }
+
+  td.mat-cell.centered {
+    text-align: center;
+    width: 6.20%;
+  }
+
 }
 
-.mat-header-cell.centered {
-  text-align: center;
+@media screen and (max-width: 1880px){
+  td.mat-cell:first-child {
+    width: 20%;
+  }
 }
 
-td.mat-cell.centered {
-  text-align: center;
+@media screen and (max-width: 1820px){
+  td.mat-cell:first-child {
+    width: 17.5%;
+  }
 }
+
+@media screen and (max-width: 1765px){
+  td.mat-cell:first-child {
+    width: 15%;
+  }
+}
+
+@media screen and (max-width: 1440px){
+  td.mat-cell:first-child {
+    width: 18.5%;
+  }
+
+  td.mat-cell.centered {
+    text-align: center;
+    width: 6%;
+  }
+}
+
+@media screen and (max-width: 1440px){
+  td.mat-cell:first-child {
+    width: 18.5%;
+  }
+
+  td.mat-cell.centered {
+    text-align: center;
+    width: 6%;
+  }
+}
+
+@media screen and (max-width: 1150px){
+  td.mat-cell:first-of-type {
+    padding-left: 0;
+  }
+
+  td.mat-cell:first-child {
+    width: 11%;
+  }
+
+  td.mat-cell.centered {
+    width: 5%;
+  }
+
+}
+
+@media screen and (max-width: 970px) {
+  td.mat-cell.centered {
+    width: 5.5%;
+  }
+}
+
+

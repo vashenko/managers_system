@@ -1,0 +1,13 @@
+.nav-item {
+  cursor: pointer;
+}
+
+mat-menu.navMenu {
+  color: red;
+  height: 3em;
+  background: green;
+}
+
+.navbarItems {
+  display: flex;
+}
