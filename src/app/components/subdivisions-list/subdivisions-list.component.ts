@@ -28,6 +28,7 @@ export class SubdivisionsListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('filter') filter: ElementRef;
 
+  subdivisionsCells: HTMLCollection[];
   expandedElement: Subdivision;
   dataSource: DataTableDataSource | null;
   dataBase: DataBase;
@@ -39,6 +40,7 @@ export class SubdivisionsListComponent implements OnInit {
                                 'AnyDayClientsSummary', 'AnyDayOrdersSummary'];
   weekDays: string[] = ['empty', 'Monday', 'Tuesday', 'Wednesday',
                         'Thursday', 'Friday', 'AnyDay'];
+  empty: string[] = ['empt'];
 
   constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService,
               private subdivisionService: SubdivisionService) {
@@ -71,6 +73,7 @@ export class SubdivisionsListComponent implements OnInit {
       this.expandedElement = element;
     }
   }
+
 }
 
 

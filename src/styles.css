@@ -3,3 +3,37 @@ body {
   margin: 0;
 }
 
+
+/* general mat-table styles*/
+
+.mat-header-cell {
+  font-size: 1em;
+  color: black;
+}
+
+.clientsBorder {
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+/*mat-loading styles*/
+
+.loading {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.loading .loadingTitle {
+  margin: 2em 0;
+}
