@@ -26,7 +26,7 @@ import {Subdivision} from '../../domains/subdivision.model';
 export class SubdivisionsListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('filter') filter: ElementRef
+  @ViewChild('filter') filter: ElementRef;
   expandedElement: Subdivision;
   dataSource: DataTableDataSource | null;
   dataBase: DataBase;
@@ -42,7 +42,6 @@ export class SubdivisionsListComponent implements OnInit {
 
   constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService,
               private subdivisionService: SubdivisionService) {
-
   }
   ngOnInit() {
     this.initDataBase();

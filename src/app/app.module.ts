@@ -35,6 +35,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TestComponent } from './components/test/test.component';
+import { ClientsMapsComponent } from './components/clients-maps/clients-maps.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SignInComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'test', component: TestComponent},
   { path: 'graphics', component: GraphicsComponent, canActivate: [FirebaseAuthGuard]},
   { path: 'subdivisions', component: SubdivisionsListComponent, canActivate: [FirebaseAuthGuard]},
+  { path: 'map', component: ClientsMapsComponent, canActivate: [FirebaseAuthGuard]}
 ];
 
 @NgModule({
@@ -52,16 +54,17 @@ const routes: Routes = [
     GraphicsComponent,
     SubdivisionsManagersComponent,
     NavbarComponent,
-    TestComponent
+    TestComponent,
+    ClientsMapsComponent
   ],
   imports: [
-    BrowserModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB_sXuJ_dCkwGUOkAiwdOh7L8o94HIhaBw'
     }),
+    BrowserModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     MaterialModule,

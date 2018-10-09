@@ -1,8 +1,8 @@
 <div class="navbar-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar">
-     <a  mat-list-item class="anchorNavItem" [routerLink]="['/log-in']" *ngIf="!this.authService.authenticated">Sign In</a>
      <a  mat-list-item class="anchorNavItem" [routerLink]="['/subdivisions']">Subdivisions</a>
      <a  mat-list-item class="anchorNavItem" [routerLink]="['/graphics']">Graphics</a>
+     <a  mat-list-item class="anchorNavItem" [routerLink]="['/map']">Clients map</a>
      <a  mat-list-item class="anchorNavItem logOut" (click)="logOut()" *ngIf="this.authService.authenticated">Log Out</a>
      <a  mat-list-item class="anchorNavItem" *ngIf="currentUserName"><h4>Hello {{this.currentUserName}}</h4></a>
   </mat-toolbar>

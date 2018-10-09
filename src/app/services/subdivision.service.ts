@@ -32,7 +32,7 @@ export class SubdivisionService {
   }
 
   getSubdivisions(managers: ShowedManager[], key: string) {
-    const groupedByDirection: Subdivision[] = [];
+    const subdivisions: Subdivision[] = [];
     if (!managers) {
       return null;
     }
@@ -46,7 +46,7 @@ export class SubdivisionService {
     }, {});
 
     Object.keys(groupedCollection).map(direction => {
-      groupedByDirection.push(new Subdivision(
+      subdivisions.push(new Subdivision(
                                   direction, groupedCollection[direction],
                                   SubdivisionService.getClientsAndOrdersSummaryByWeekDay(groupedCollection[direction], this.date.Monday),
                                   SubdivisionService.getClientsAndOrdersSummaryByWeekDay(groupedCollection[direction], this.date.Tuesday),
@@ -55,6 +55,6 @@ export class SubdivisionService {
                                   SubdivisionService.getClientsAndOrdersSummaryByWeekDay(groupedCollection[direction], this.date.Friday),
                                   SubdivisionService.getClientsAndOrdersSummaryByWeekDay(groupedCollection[direction], 'AnyDay')));
     });
-    return groupedByDirection;
+    return subdivisions;
   }
 }
