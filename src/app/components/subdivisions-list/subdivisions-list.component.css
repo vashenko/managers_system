@@ -76,6 +76,11 @@ tr.example-element-row:not(.example-expanded-row):active {
     width: 6%;
   }
 
+  td.mat-cell.centered {
+    width: 6%;
+    padding: 0;
+  }
+
 }
 
 @media (min-width: 1025px) and (max-width: 1280px) {
@@ -101,6 +106,14 @@ tr.example-element-row:not(.example-expanded-row):active {
 
   .mat-header-cell {
     width: 6%;
+  }
+
+  table {
+    font-size: .8em;
+  }
+
+  .mat-header-cell {
+    padding: 0 .2em;
   }
 }
 

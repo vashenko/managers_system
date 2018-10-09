@@ -16,7 +16,7 @@ export class  SubdivisionsManagersDataSource extends DataSource<ShowedManager> {
   //   this.filterChange.next(filter);
   // }
 
-  constructor(private dataBase: SubdivisionsManagersDataBase, private paginator: MatPaginator, private sort: MatSort) {
+  constructor(private dataBase: SubdivisionsManagersDataBase) {
     super();
     // this.filterChange.subscribe(() => this.paginator.pageIndex = 0);
   }

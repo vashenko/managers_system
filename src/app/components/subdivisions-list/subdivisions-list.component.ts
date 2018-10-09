@@ -26,9 +26,7 @@ import {Subdivision} from '../../domains/subdivision.model';
 export class SubdivisionsListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('filter') filter: ElementRef;
-
-  subdivisionsCells: HTMLCollection[];
+  @ViewChild('filter') filter: ElementRef
   expandedElement: Subdivision;
   dataSource: DataTableDataSource | null;
   dataBase: DataBase;

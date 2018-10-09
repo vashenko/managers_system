@@ -3,8 +3,12 @@ td.mat-cell.centered {
 }
 
 @media (min-width: 1281px) {
-  td.mat-cell:first-of-type {
+  th.mat-header-cell:first-of-type {
     width: 20%;
+  }
+
+  .mat-header-cell {
+    width: 6%;
   }
 
   td.mat-cell.centered {
@@ -22,6 +26,10 @@ td.mat-cell.centered {
   td.mat-cell:first-of-type {
     width: 20%;
   }
+  
+  td.mat-cell:last-of-type {
+    padding-right: 0;
+  }
 
   td.mat-cell.centered {
     width: 6%;
@@ -31,11 +39,13 @@ td.mat-cell.centered {
 
 @media (min-width: 768px) and (max-width: 1024px) {
   td.mat-cell:first-of-type {
-    width: 17.5%;
+    width: 21.5%;
+    font-size: .9em;
   }
 
   td.mat-cell.centered {
     width: 6%;
+    font-size: .9em;
   }
 }
 

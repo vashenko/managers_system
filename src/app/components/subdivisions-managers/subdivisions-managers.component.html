@@ -1,56 +1,56 @@
 <div class="mat-elevation-z8 data-table">
   <table mat-table #table [dataSource]="dataSource" multiTemplateDataRows matSort>
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef></th>
+      <th mat-header-cell *matHeaderCellDef>Managers</th>
       <td mat-cell *matCellDef="let manager">{{manager.name}}</td>
     </ng-container>
     <ng-container matColumnDef="MondayClients">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Monday.clientsCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 2px"> {{manager.Monday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="MondayOrders">
       <th mat-header-cell *matHeaderCellDef ></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Monday.recOrdersCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 10px"> {{manager.Monday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="TuesdayClients">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Tuesday.clientsCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 14px"> {{manager.Tuesday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="TuesdayOrders">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Tuesday.recOrdersCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 18px"> {{manager.Tuesday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="WednesdayClients">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Wednesday.clientsCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 22px"> {{manager.Wednesday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="WednesdayOrders">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Wednesday.recOrdersCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 26px"> {{manager.Wednesday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="ThursdayClients">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Thursday.clientsCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 28px"> {{manager.Thursday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="ThursdayOrders">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Thursday.recOrdersCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 28px"> {{manager.Thursday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="FridayClients">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Friday.clientsCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 32px"> {{manager.Friday.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="FridayOrders">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.Friday.recOrdersCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 34px"> {{manager.Friday.recOrdersCount}} </td>
     </ng-container>
     <ng-container matColumnDef="AnyDayClients">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.AnyDay.clientsCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 37px"> {{manager.AnyDay.clientsCount}} </td>
     </ng-container>
     <ng-container matColumnDef="AnyDayOrders">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let manager" class="centered"> {{manager.AnyDay.recOrdersCount}} </td>
+      <td mat-cell *matCellDef="let manager" class="centered" style="padding-left: 40px"> {{manager.AnyDay.recOrdersCount}} </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let manager; columns: displayedColumns;"></tr>

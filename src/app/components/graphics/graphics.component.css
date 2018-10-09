@@ -2,5 +2,9 @@
   width: 100%;
   height: 800px;
   border: none;
+  margin-top: 4em;
 }
 
+.graphicsLoading {
+  margin-top: 4em;
+}

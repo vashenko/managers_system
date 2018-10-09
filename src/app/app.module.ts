@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AgmCoreModule } from '@agm/core';
 
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabaseModule} from 'angularfire2/database';
@@ -10,7 +11,6 @@ import { environment } from '../environments/environment.prod';
 import { SubdivisionsListComponent} from './components/subdivisions-list/subdivisions-list.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { AppComponent } from './app.component';
-import { DirectionTableComponent} from './components/direction-table/direction-table.component';
 import { SubdivisionsManagersComponent } from './components/subdivisions-managers/subdivisions-managers.component';
 
 import { RouterModule, Routes} from '@angular/router';
@@ -30,7 +30,6 @@ import {FirebaseAuthGuard} from './guards/firebase-auth.guard';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {DevExtremeModule, DxDataGridModule, DxPieChartModule, DxTemplateModule} from 'devextreme-angular';
 import { GraphicsComponent } from './components/graphics/graphics.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
@@ -43,7 +42,6 @@ const routes: Routes = [
   { path: 'test', component: TestComponent},
   { path: 'graphics', component: GraphicsComponent, canActivate: [FirebaseAuthGuard]},
   { path: 'subdivisions', component: SubdivisionsListComponent, canActivate: [FirebaseAuthGuard]},
-  { path: 'direction_table', component: DirectionTableComponent, canActivate: [FirebaseAuthGuard]}
 ];
 
 @NgModule({
@@ -51,7 +49,6 @@ const routes: Routes = [
     AppComponent,
     SubdivisionsListComponent,
     SignInComponent,
-    DirectionTableComponent,
     GraphicsComponent,
     SubdivisionsManagersComponent,
     NavbarComponent,
@@ -62,16 +59,15 @@ const routes: Routes = [
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyB_sXuJ_dCkwGUOkAiwdOh7L8o94HIhaBw'
+    }),
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    DevExtremeModule,
-    DxDataGridModule,
-    DxTemplateModule,
-    DxPieChartModule,
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
