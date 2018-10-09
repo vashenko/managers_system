@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import {ShowedManager} from '../../domains/showed-manager';
 import {DateService} from '../../services/date.service';
 import {MatPaginator, MatSort} from '@angular/material';
@@ -12,7 +12,6 @@ import {SubdivisionsManagersDataSource} from './subdivisions-managers-data-sourc
 })
 export class SubdivisionsManagersComponent implements OnInit {
   @Input() managers: ShowedManager[];
-  @Input() cells: HTMLCollection[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('filter') filter: ElementRef;
@@ -29,7 +28,6 @@ export class SubdivisionsManagersComponent implements OnInit {
     this.dataBase = new SubdivisionsManagersDataBase(this.managers);
     this.dataSource = new SubdivisionsManagersDataSource(this.dataBase, this.paginator, this.sort);
   }
-
 }
 
 

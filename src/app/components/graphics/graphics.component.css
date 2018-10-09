@@ -1,8 +1,3 @@
-.flex-container {
-  display: flex;
-  flex-flow: row nowrap;
-}
-
 .grafanData .selling {
   width: 100%;
   height: 800px;
