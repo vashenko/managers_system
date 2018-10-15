@@ -20,26 +20,21 @@ export class NavbarComponent implements OnDestroy{
 
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService,
               changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    if (this.authService.authenticated) {
-      this.currentUserName = this.authService.currentUser.displayName;
-    }
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.displayCurrentUserName();
   }
 
   logOut() {
     this.authService.logOut();
   }
 
+  displayCurrentUserName() {
+    return this.authService.authenticated ? this.currentUserName = this.authService.currentUser.displayName : '';
+  }
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 }
-
-
-// <a  [routerLink]="['/log-in']" *ngIf="!this.authService.authenticated">Sign In</a>
-// <a  mat-list-item class="anchorNavItem" [routerLink]="['/subdivisions']">Subdivisions</a>
-//   <a  mat-list-item class="anchorNavItem" [routerLink]="['/graphics']">Graphics</a>
-//   <a  mat-list-item class="anchorNavItem" (click)="logOut()" *ngIf="this.authService.authenticated">Log Out</a>
-// <a  mat-list-item class="anchorNavItem" *ngIf="currentUserName"><h4>Hello {{this.currentUserName}}</h4></a>

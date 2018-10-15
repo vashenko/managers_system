@@ -46,6 +46,7 @@ export class SignInComponent implements OnInit {
   signIn() {
     if (this.logInForm.valid) {
       this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).subscribe(token => {
+        console.log(token);
         this.authService.signInWithCustomToken(token)
           .then(() => {
             this.authService.getUserTokenId()

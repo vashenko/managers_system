@@ -1,6 +1,6 @@
-import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
-import {ShowedManager} from '../../domains/showed-manager';
-import {DateService} from '../../services/date.service';
+import {Component, OnInit, Input} from '@angular/core';
+import {ShowedManager} from '../../../domains/showed-manager';
+import {DateService} from '../../../services/date.service';
 import {SubdivisionsManagersDataBase} from './subdivisions-managers-data-base';
 import {SubdivisionsManagersDataSource} from './subdivisions-managers-data-source';
 
@@ -16,8 +16,6 @@ export class SubdivisionsManagersComponent implements OnInit {
   displayedColumns: string[] = ['name', 'MondayClients', 'MondayOrders', 'TuesdayClients', 'TuesdayOrders',
                                 'WednesdayClients', 'WednesdayOrders', 'ThursdayClients', 'ThursdayOrders',
                                 'FridayClients', 'FridayOrders', 'AnyDayClients', 'AnyDayOrders'];
-  weekDays: string[] = ['empty', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'AnyDay'];
-
   constructor(private date: DateService) { }
 
   ngOnInit() {

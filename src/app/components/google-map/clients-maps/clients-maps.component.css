@@ -1,0 +1,9 @@
+agm-map {
+  width: 100%;
+  height: 630px;
+}
+
+.googleMapContainer {
+  margin-top: 4em;
+  width: 100%;
+}

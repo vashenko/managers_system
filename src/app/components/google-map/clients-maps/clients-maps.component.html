@@ -1,0 +1,19 @@
+<div class="googleMapContainer">
+ <agm-map
+     [zoom]="6"
+     [latitude]="marker.lat"
+     [longitude]="marker.lng">
+   <agm-marker
+     [latitude]="marker.lat"
+     [longitude]="marker.lng"
+     [markerDraggable]="true"
+     *ngIf="googleMapService.showMark"
+     (dragEnd)="googleMapService.replaceMarker($event, this.marker)">
+   </agm-marker>
+   <app-google-map-wrapper (mapLoad)='getMap($event)'></app-google-map-wrapper>
+ </agm-map>
+ <mat-form-field class="example-full-width">
+     <input matInput placeholder="Clients direction" #direction>
+ </mat-form-field>
+ <button mat-button (click)="googleMapService.showOnMap(direction.value, this.marker, this.map)">Click me!</button>
+</div>

@@ -34,7 +34,7 @@ export class HttpService {
       })),
       this.http.get(this.managers_url).pipe(map(res => {
         return this.convert.intoManagers(res);
-      })),
+      }))
     );
   }
 

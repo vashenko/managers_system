@@ -1,9 +1,8 @@
 import {DataSource} from '@angular/cdk/table';
-import {MatPaginator, MatSort} from '@angular/material';
-import {BehaviorSubject, merge, Observable} from 'rxjs';
+import {merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SubdivisionsManagersDataBase} from './subdivisions-managers-data-base';
-import {ShowedManager} from '../../domains/showed-manager';
+import {ShowedManager} from '../../../domains/showed-manager';
 
 export class  SubdivisionsManagersDataSource extends DataSource<ShowedManager> {
   // filteredData: ShowedManager[] = [];

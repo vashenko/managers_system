@@ -1,6 +1,5 @@
 .subdivisions-data-table {
   height: auto;
-  width: 100%;
 }
 
 .search-form-field {
@@ -23,13 +22,10 @@
   border-bottom: none;
 }
 
-.mat-header-cell.centered {
+.mat-header-cell.centered, td.mat-cell.centered{
   text-align: center;
 }
 
-td.mat-cell.centered {
-  text-align: center;
-}
 
 td.mat-cell:last-of-type {
   padding-right: 0;
@@ -102,6 +98,11 @@ tr.example-element-row:not(.example-expanded-row):active {
 @media (min-width: 768px) and (max-width: 1024px) {
   th.mat-header-cell:first-of-type {
     width: 21.5%;
+    font-size: .9em;
+  }
+
+  td.mat-cell:first-of-type {
+    font-size: .9em;
   }
 
   .mat-header-cell {
@@ -109,7 +110,7 @@ tr.example-element-row:not(.example-expanded-row):active {
   }
 
   table {
-    font-size: .8em;
+    font-size: .9em;
   }
 
   .mat-header-cell {

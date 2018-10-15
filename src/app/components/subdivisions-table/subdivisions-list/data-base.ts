@@ -1,10 +1,10 @@
 import {BehaviorSubject} from 'rxjs';
-import {ManagerService} from '../../services/manager.service';
-import {RecommendedOrders} from '../../domains/recomendedOrder.model';
-import {HttpService} from '../../services/http.service';
-import {ShowedManager} from '../../domains/showed-manager';
-import {Subdivision} from '../../domains/subdivision.model';
-import {SubdivisionService} from '../../services/subdivision.service';
+import {ManagerService} from '../../../services/manager.service';
+import {RecommendedOrders} from '../../../domains/recomendedOrder.model';
+import {HttpService} from '../../../services/http.service';
+import {ShowedManager} from '../../../domains/showed-manager';
+import {Subdivision} from '../../../domains/subdivision.model';
+import {SubdivisionService} from '../../../services/subdivision.service';
 
 export class DataBase {
   showedManagers: ShowedManager[] = [];

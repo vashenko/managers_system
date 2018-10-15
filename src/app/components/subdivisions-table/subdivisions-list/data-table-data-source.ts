@@ -3,7 +3,7 @@ import {MatPaginator, MatSort} from '@angular/material';
 import {BehaviorSubject, merge, of as observableOf, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DataBase} from './data-base';
-import {Subdivision} from '../../domains/subdivision.model';
+import {Subdivision} from '../../../domains/subdivision.model';
 
 export class  DataTableDataSource extends DataSource<Subdivision> {
   filterChange = new BehaviorSubject('');

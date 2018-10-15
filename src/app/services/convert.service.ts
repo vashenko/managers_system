@@ -25,9 +25,7 @@ export class ConvertService {
   static getOrderedProducts(Products: {}): OrderedProducts[] {
     const orderedProducts: OrderedProducts[] = [];
     for (const val in Products) {
-      orderedProducts.push(new OrderedProducts(Products[val].count,
-        Products[val].price,
-        Products[val].summarycode));
+      orderedProducts.push(new OrderedProducts(Products[val].count, Products[val].price, Products[val].summarycode));
     }
     return orderedProducts;
   }

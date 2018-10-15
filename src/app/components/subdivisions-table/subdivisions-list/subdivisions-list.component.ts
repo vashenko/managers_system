@@ -4,12 +4,12 @@ import {DataTableDataSource} from './data-table-data-source';
 import {DataBase} from './data-base';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {fromEvent} from 'rxjs';
-import {HttpService} from '../../services/http.service';
-import {ManagerService} from '../../services/manager.service';
-import {DateService} from '../../services/date.service';
-import {SubdivisionService} from '../../services/subdivision.service';
+import {HttpService} from '../../../services/http.service';
+import {ManagerService} from '../../../services/manager.service';
+import {DateService} from '../../../services/date.service';
+import {SubdivisionService} from '../../../services/subdivision.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Subdivision} from '../../domains/subdivision.model';
+import {Subdivision} from '../../../domains/subdivision.model';
 
 @Component({
   selector: 'app-subdivisions-list',
@@ -44,11 +44,11 @@ export class SubdivisionsListComponent implements OnInit {
               private subdivisionService: SubdivisionService) {
   }
   ngOnInit() {
-    this.initDataBase();
+    this.initDataSource();
     this.findManagers();
   }
 
-  initDataBase() {
+  initDataSource() {
     this.dataBase = new DataBase(this.managerService, this.httpService, this.subdivisionService);
     this.dataSource = new DataTableDataSource(this.dataBase, this.paginator, this.sort);
   }

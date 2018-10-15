@@ -33,6 +33,7 @@ td.mat-cell.centered {
 
   td.mat-cell.centered {
     width: 6%;
+    padding-left: 0 !important;
   }
 
 }

@@ -1,6 +1,3 @@
-import {ManagerClient} from './client.modetl';
-import {Subscription} from 'rxjs';
-
 export class Manager {
   constructor(
               public active: boolean,
