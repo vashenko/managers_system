@@ -8,38 +8,41 @@ import {google} from 'google-maps';
 })
 export class GoogleMapsService {
   geocoder: any;
-  showMark = false;
-  constructor(private googleMapsAPi: MapsAPILoader) { }
-
-  static changeZoom(types: string[], map: any) {
-    types.forEach(i => {
-      if (i === 'premise' || i === 'street_address' || i === 'route') {
-        map.setZoom(18);
-      } else if (i === 'locality') {
-        map.setZoom(8);
-        console.log(map.getZoom());
-      } else if (i === 'country') {
-        console.log('i am here');
-        map.setZoom(4);
-      }
-    });
+  showDestination = false;
+  currentPosition: any;
+  destination: any;
+  constructor(private googleMapsAPi: MapsAPILoader) {
+    this.getCurrentUserLcoation();
   }
+
+  // static changeZoom(types: string[], map: any) {
+  //   types.forEach(i => {
+  //     if (i === 'premise' || i === 'street_address' || i === 'route') {
+  //       map.setZoom(18);
+  //     } else if (i === 'locality') {
+  //       map.setZoom(8);
+  //       console.log(map.getZoom());
+  //     } else if (i === 'country') {
+  //       console.log('i am here');
+  //       map.setZoom(4);
+  //     }
+  //   });
+  // }
 
  static deleteSymbolInAdress(adress: string): string {
     return adress.includes('№') ? adress.replace('№', '') : adress;
   }
 
-  showOnMap(adress: string, mark: Object, map: any) {
+  showOnMap(adress: string, map: any) {
     this.googleMapsAPi.load().then(() => {
       this.geocoder = new google.maps.Geocoder();
       this.codeAddress(GoogleMapsService.deleteSymbolInAdress(adress)).subscribe(res => {
-        mark['lat'] = res[0].geometry.location.lat();
-        mark['lng'] = res[0].geometry.location.lng();
-        console.log(res);
-        console.log(mark['lat']);
-        console.log(mark['lng']);
+        this.destination = {lat: res[0].geometry.location.lat(), lng: res[0].geometry.location.lng() };
+        console.log(this.destination.lat);
+        console.log(this.destination.lng);
         console.log(res[0].formatted_address);
-        GoogleMapsService.changeZoom(res[0].types, map);
+        map.setCenter({lat: this.destination.lat, lng: this.destination.lng});
+        map.setZoom(8);
       });
     });
   }
@@ -49,7 +52,7 @@ export class GoogleMapsService {
       this.geocoder.geocode({ address: address }, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
           if (status === google.maps.GeocoderStatus.OK) {
-            this.showMark = true;
+            this.showDestination = true;
             observer.next(results);
             observer.complete();
           } else {
@@ -57,7 +60,6 @@ export class GoogleMapsService {
               'Geocoding service: geocode was not successful for the following reason: '
               + status
             );
-            this.showMark = false;
             observer.error(status);
           }
         })
@@ -68,6 +70,16 @@ export class GoogleMapsService {
   replaceMarker(event: any, mark: Object): void {
     mark['lat'] = event.coords.lat;
     mark['lng'] = event.coords.lng;
+  }
+
+  getCurrentUserLcoation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
+      });
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+    }
   }
 
 }

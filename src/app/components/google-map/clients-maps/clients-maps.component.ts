@@ -8,7 +8,8 @@ import {GoogleMapsService} from '../../../services/google-maps.service';
 })
 export class ClientsMapsComponent implements OnInit {
   map: any;
-  marker = {
+  deafultMarker = {
+    show: false,
     lat: 48.379433,
     lng: 31.16557990000001
   };
@@ -22,6 +23,8 @@ export class ClientsMapsComponent implements OnInit {
 
   ngOnInit() {
   }
+
+
 }
 
 

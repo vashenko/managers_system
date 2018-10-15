@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AngularFireModule} from 'angularfire2';
@@ -66,6 +67,7 @@ const routes: Routes = [
       apiKey: 'AIzaSyB_sXuJ_dCkwGUOkAiwdOh7L8o94HIhaBw',
       language: 'uk'
     }),
+    AgmDirectionModule,
     BrowserModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
