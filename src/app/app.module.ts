@@ -37,7 +37,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { TestComponent } from './components/test/test.component';
 import { ClientsMapsComponent } from './components/google-map/clients-maps/clients-maps.component';
 import { GoogleMapWrapperComponent } from './components/google-map/google-map-wrapper/google-map-wrapper.component';
-import {GoogleStreetViewService} from './services/google-street-view.service';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SignInComponent},
@@ -84,7 +83,7 @@ const routes: Routes = [
     MatListModule
   ],
   providers: [HttpService, ConvertService, ManagerService, DateService, AuthService, FirebaseAuthGuard,
-              SubdivisionService, GoogleMapsAPIWrapper, GoogleStreetViewService],
+              SubdivisionService, GoogleMapsAPIWrapper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

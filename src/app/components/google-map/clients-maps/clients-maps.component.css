@@ -1,14 +1,19 @@
 .googleMapContainer {
   margin-top: 4em;
   width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+::ng-deep .agm-map-container-inner {
+  position: absolute;
 }
 
 agm-map {
-  width: 100%;
+  width: 67%;
   height: 630px;
 }
 
 #street-view {
-  height: 500px;
-  width: 100%;
+  width: 33%;
 }

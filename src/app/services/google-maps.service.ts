@@ -2,14 +2,14 @@ import {ElementRef, Injectable} from '@angular/core';
 import {Observer, Observable} from 'rxjs';
 import {MapsAPILoader} from '@agm/core';
 import {google} from 'google-maps';
-import {GoogleStreetViewService} from './google-street-view.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapsService {
-  directionsService: google.maps.DirectionsService;
-  directionsDisplay: google.maps.DirectionsRenderer;
+  private directionsService: google.maps.DirectionsService;
+  private directionsDisplay: google.maps.DirectionsRenderer;
+  // private googleStreetView: google.maps.StreetViewPanorama;
   private origin: object;
   private destination: any;
 
@@ -17,7 +17,7 @@ export class GoogleMapsService {
   private geocoder: any;
   private showDestination = false;
 
-  constructor(private googleMapsAPi: MapsAPILoader, private streetViewService: GoogleStreetViewService) {
+  constructor(private googleMapsAPi: MapsAPILoader) {
     this.getCurrentUserLcoation();
   }
 
@@ -30,7 +30,7 @@ export class GoogleMapsService {
       this.geocoder = new google.maps.Geocoder();
       this.codeAddress(GoogleMapsService.deleteSymbolInAdress(adress)).subscribe(res => {
         this.destination = {lat: res[0].geometry.location.lat(), lng: res[0].geometry.location.lng() };
-        this.streetViewService.initStreetViewPanorama(this.destination, streetViewNode.nativeElement);
+        this.initStreetViewPanorama(this.destination, streetViewNode.nativeElement);
         this.displayRoutes(this.origin, this.destination, this.directionsService, this.directionsDisplay);
         this.map.setCenter({lat: this.destination.lat, lng: this.destination.lng});
         this.map.setZoom(8);
@@ -87,5 +87,14 @@ export class GoogleMapsService {
     }, (response, status) => {
       return status === 'OK' ? display.setDirections(response) : console.log('Could not display directions due to: ' + status);
     });
+  }
+
+  initStreetViewPanorama(destination, node: HTMLDivElement) {
+    const options = {
+      position: destination,
+      pov: {heading: 165, pitch: 0},
+      zoom: 1
+    };
+    const panorama = new google.maps.StreetViewPanorama(node, options);
   }
 }
