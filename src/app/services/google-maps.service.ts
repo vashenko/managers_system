@@ -9,7 +9,6 @@ import {google} from 'google-maps';
 export class GoogleMapsService {
   private directionsService: google.maps.DirectionsService;
   private directionsDisplay: google.maps.DirectionsRenderer;
-  // private googleStreetView: google.maps.StreetViewPanorama;
   private origin: object;
   private destination: any;
 
@@ -18,22 +17,60 @@ export class GoogleMapsService {
   private showDestination = false;
 
   constructor(private googleMapsAPi: MapsAPILoader) {
-    this.getCurrentUserLcoation();
+    this.getCurrentUserLocation();
   }
 
- static deleteSymbolInAdress(adress: string): string {
+  static deleteSymbolInAdress(adress: string): string {
     return adress.includes('№') ? adress.replace('№', '') : adress;
   }
 
+  initMap(map) {
+    this.googleMapsAPi.load().then(() => {
+      this.map = map;
+      this.directionsService = new google.maps.DirectionsService;
+      this.directionsDisplay = new google.maps.DirectionsRenderer({
+        draggable: true,
+        map: map
+      });
+    });
+  }
+
+  initStreetViewPanorama(destination, node: HTMLDivElement) {
+    const options = {
+      position: destination,
+      pov: {heading: 165, pitch: 0},
+      zoom: 1
+    };
+    const panorama = new google.maps.StreetViewPanorama(node, options);
+  }
+
+  displayRoutes(origin, destination, service, display) {
+    service.route({
+      origin: origin,
+      destination: destination,
+      travelMode: 'DRIVING',
+    }, (response, status) => {
+      return status === 'OK' ? display.setDirections(response) : console.log('Could not display directions due to: ' + status);
+    });
+  }
+
+  getCurrentUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.origin = {lat: position.coords.latitude, lng: position.coords.longitude};
+      });
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+    }
+  }
+
   showOnMap(adress: string, streetViewNode: ElementRef) {
-    this.googleMapsAPi.load().then((map) => {
+    this.googleMapsAPi.load().then(() => {
       this.geocoder = new google.maps.Geocoder();
       this.codeAddress(GoogleMapsService.deleteSymbolInAdress(adress)).subscribe(res => {
         this.destination = {lat: res[0].geometry.location.lat(), lng: res[0].geometry.location.lng() };
         this.initStreetViewPanorama(this.destination, streetViewNode.nativeElement);
         this.displayRoutes(this.origin, this.destination, this.directionsService, this.directionsDisplay);
-        this.map.setCenter({lat: this.destination.lat, lng: this.destination.lng});
-        this.map.setZoom(8);
       });
     });
   }
@@ -56,45 +93,5 @@ export class GoogleMapsService {
         })
       );
     });
-  }
-
-  getCurrentUserLcoation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.origin = {lat: position.coords.latitude, lng: position.coords.longitude};
-      });
-    } else {
-      console.log('Geolocation is not supported by this browser.');
-    }
-  }
-
-  initMap(map) {
-    this.googleMapsAPi.load().then(() => {
-      this.map = map;
-       this.directionsService = new google.maps.DirectionsService;
-       this.directionsDisplay = new google.maps.DirectionsRenderer({
-        draggable: true,
-        map: map
-      });
-    });
-  }
-
-  displayRoutes(origin, destination, service, display) {
-    service.route({
-      origin: origin,
-      destination: destination,
-      travelMode: 'DRIVING',
-    }, (response, status) => {
-      return status === 'OK' ? display.setDirections(response) : console.log('Could not display directions due to: ' + status);
-    });
-  }
-
-  initStreetViewPanorama(destination, node: HTMLDivElement) {
-    const options = {
-      position: destination,
-      pov: {heading: 165, pitch: 0},
-      zoom: 1
-    };
-    const panorama = new google.maps.StreetViewPanorama(node, options);
   }
 }

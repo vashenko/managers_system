@@ -6,9 +6,13 @@
      [streetViewControl]="true">
    <app-google-map-wrapper (mapLoad)='googleMapService.initMap($event)'></app-google-map-wrapper>
  </agm-map>
- <div id="street-view" #streetView ></div>
+ <aside class="googleMapAsideContainer">
+   <div class="googleMapAsideSearchInput">
+    <mat-form-field>
+        <input matInput placeholder="Clients direction" #direction>
+    </mat-form-field>
+    <button mat-button (click)="googleMapService.showOnMap(direction.value, streetViewNode)">Click me!</button>
+   </div>
+   <div id="street-view" #streetView ></div>
+ </aside>
 </div>
- <mat-form-field class="example-full-width">
-     <input matInput placeholder="Clients direction" #direction>
- </mat-form-field>
- <button mat-button (click)="googleMapService.showOnMap(direction.value, streetViewNode)">Click me!</button>
