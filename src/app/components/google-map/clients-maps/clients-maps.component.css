@@ -1,9 +1,14 @@
+.googleMapContainer {
+  margin-top: 4em;
+  width: 100%;
+}
+
 agm-map {
   width: 100%;
   height: 630px;
 }
 
-.googleMapContainer {
-  margin-top: 4em;
+#street-view {
+  height: 500px;
   width: 100%;
 }

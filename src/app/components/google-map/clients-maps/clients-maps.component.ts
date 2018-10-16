@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {GoogleMapsService} from '../../../services/google-maps.service';
 
 @Component({
@@ -7,24 +7,19 @@ import {GoogleMapsService} from '../../../services/google-maps.service';
   styleUrls: ['./clients-maps.component.css']
 })
 export class ClientsMapsComponent implements OnInit {
-  map: any;
-  deafultMarker = {
+  @ViewChild('streetView') streetViewNode: ElementRef;
+  defaultMarker = {
     show: false,
     lat: 48.379433,
     lng: 31.16557990000001
   };
+
   constructor(private googleMapService: GoogleMapsService) {
 
   }
 
-  getMap(map) {
-    this.map = map;
-  }
-
   ngOnInit() {
   }
-
-
 }
 
 

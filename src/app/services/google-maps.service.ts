@@ -1,48 +1,39 @@
-import { Injectable } from '@angular/core';
+import {ElementRef, Injectable} from '@angular/core';
 import {Observer, Observable} from 'rxjs';
 import {MapsAPILoader} from '@agm/core';
 import {google} from 'google-maps';
+import {GoogleStreetViewService} from './google-street-view.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleMapsService {
-  geocoder: any;
-  showDestination = false;
-  currentPosition: any;
-  destination: any;
-  constructor(private googleMapsAPi: MapsAPILoader) {
+  directionsService: google.maps.DirectionsService;
+  directionsDisplay: google.maps.DirectionsRenderer;
+  private origin: object;
+  private destination: any;
+
+  private map: any;
+  private geocoder: any;
+  private showDestination = false;
+
+  constructor(private googleMapsAPi: MapsAPILoader, private streetViewService: GoogleStreetViewService) {
     this.getCurrentUserLcoation();
   }
-
-  // static changeZoom(types: string[], map: any) {
-  //   types.forEach(i => {
-  //     if (i === 'premise' || i === 'street_address' || i === 'route') {
-  //       map.setZoom(18);
-  //     } else if (i === 'locality') {
-  //       map.setZoom(8);
-  //       console.log(map.getZoom());
-  //     } else if (i === 'country') {
-  //       console.log('i am here');
-  //       map.setZoom(4);
-  //     }
-  //   });
-  // }
 
  static deleteSymbolInAdress(adress: string): string {
     return adress.includes('№') ? adress.replace('№', '') : adress;
   }
 
-  showOnMap(adress: string, map: any) {
-    this.googleMapsAPi.load().then(() => {
+  showOnMap(adress: string, streetViewNode: ElementRef) {
+    this.googleMapsAPi.load().then((map) => {
       this.geocoder = new google.maps.Geocoder();
       this.codeAddress(GoogleMapsService.deleteSymbolInAdress(adress)).subscribe(res => {
         this.destination = {lat: res[0].geometry.location.lat(), lng: res[0].geometry.location.lng() };
-        console.log(this.destination.lat);
-        console.log(this.destination.lng);
-        console.log(res[0].formatted_address);
-        map.setCenter({lat: this.destination.lat, lng: this.destination.lng});
-        map.setZoom(8);
+        this.streetViewService.initStreetViewPanorama(this.destination, streetViewNode.nativeElement);
+        this.displayRoutes(this.origin, this.destination, this.directionsService, this.directionsDisplay);
+        this.map.setCenter({lat: this.destination.lat, lng: this.destination.lng});
+        this.map.setZoom(8);
       });
     });
   }
@@ -67,19 +58,34 @@ export class GoogleMapsService {
     });
   }
 
-  replaceMarker(event: any, mark: Object): void {
-    mark['lat'] = event.coords.lat;
-    mark['lng'] = event.coords.lng;
-  }
-
   getCurrentUserLcoation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
+        this.origin = {lat: position.coords.latitude, lng: position.coords.longitude};
       });
     } else {
       console.log('Geolocation is not supported by this browser.');
     }
   }
 
+  initMap(map) {
+    this.googleMapsAPi.load().then(() => {
+      this.map = map;
+       this.directionsService = new google.maps.DirectionsService;
+       this.directionsDisplay = new google.maps.DirectionsRenderer({
+        draggable: true,
+        map: map
+      });
+    });
+  }
+
+  displayRoutes(origin, destination, service, display) {
+    service.route({
+      origin: origin,
+      destination: destination,
+      travelMode: 'DRIVING',
+    }, (response, status) => {
+      return status === 'OK' ? display.setDirections(response) : console.log('Could not display directions due to: ' + status);
+    });
+  }
 }

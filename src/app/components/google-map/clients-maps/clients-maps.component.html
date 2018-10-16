@@ -1,17 +1,15 @@
 <div class="googleMapContainer">
  <agm-map
      [zoom]="6"
-     [latitude]="deafultMarker.lat"
-     [longitude]="deafultMarker.lng">
-   <agm-direction
-    [origin]="googleMapService.currentPosition"
-    [destination]="googleMapService.destination"
-    *ngIf="googleMapService.showDestination"
-    ></agm-direction>
-   <app-google-map-wrapper (mapLoad)='getMap($event)'></app-google-map-wrapper>
+     [latitude]="defaultMarker.lat"
+     [longitude]="defaultMarker.lng"
+     [streetViewControl]="true">
+   <app-google-map-wrapper (mapLoad)='googleMapService.initMap($event)'></app-google-map-wrapper>
  </agm-map>
+ <div id="'street-view'"></div>
  <mat-form-field class="example-full-width">
      <input matInput placeholder="Clients direction" #direction>
  </mat-form-field>
- <button mat-button (click)="googleMapService.showOnMap(direction.value, map)">Click me!</button>
+ <button mat-button (click)="googleMapService.showOnMap(direction.value, streetViewNode)">Click me!</button>
+ <div id="street-view" #streetView ></div>
 </div>
