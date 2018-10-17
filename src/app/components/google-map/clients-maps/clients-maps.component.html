@@ -1,9 +1,16 @@
 <div class="googleMapContainer">
  <agm-map
      [zoom]="6"
-     [latitude]="defaultMarker.lat"
-     [longitude]="defaultMarker.lng"
-     [streetViewControl]="true">
+     [latitude]="googleMapService.mark.lat"
+     [longitude]="googleMapService.mark.lng"
+     (mapClick)="googleMapService.replaceMarkerByClicking($event, streetViewNode.nativeElement)">
+   <agm-marker
+     [latitude]="googleMapService.mark.lat"
+     [longitude]="googleMapService.mark.lng"
+     [markerDraggable]="true"
+     *ngIf="googleMapService.showMark"
+     (dragEnd)="googleMapService.replaceMarkerByDragging($event, streetViewNode.nativeElement)">
+   </agm-marker>
    <app-google-map-wrapper (mapLoad)='googleMapService.initMap($event)'></app-google-map-wrapper>
  </agm-map>
  <aside class="googleMapAsideContainer">
@@ -11,8 +18,9 @@
     <mat-form-field>
         <input matInput placeholder="Clients direction" #direction>
     </mat-form-field>
-    <button mat-button (click)="googleMapService.showOnMap(direction.value, streetViewNode)">Click me!</button>
+    <button mat-button (click)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)">Click me!</button>
    </div>
-   <div id="street-view" #streetView ></div>
+   <div id="streetView" #streetView ></div>
  </aside>
 </div>
+

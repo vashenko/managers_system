@@ -10,12 +10,12 @@
 }
 
 agm-map {
-  width: 67%;
+  width: 75%;
   height: 630px;
 }
 
 .googleMapAsideContainer {
-  width: 33%;
+  width: 25%;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -25,7 +25,7 @@ agm-map {
   height: 20%;
 }
 
-.googleMapAsideContainer #street-view {
+.googleMapAsideContainer #streetView {
   width: 100%;
   height: 80%;
 }
