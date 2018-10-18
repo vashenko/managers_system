@@ -9,7 +9,7 @@ import {AuthService} from '../../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnDestroy{
+export class NavbarComponent implements OnDestroy {
   currentUserName: string;
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
@@ -26,11 +26,11 @@ export class NavbarComponent implements OnDestroy{
     this.displayCurrentUserName();
   }
 
-  logOut() {
+  logOut(): void {
     this.authService.logOut();
   }
 
-  displayCurrentUserName() {
+  displayCurrentUserName(): boolean {
     return this.authService.authenticated ? this.currentUserName = this.authService.currentUser.displayName : '';
   }
 

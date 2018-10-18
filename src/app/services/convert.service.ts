@@ -14,23 +14,23 @@ export class ConvertService {
   constructor(private date: DateService) {
   }
 
-  static getClientsByWeekDay(ClientsArray: {}): ManagerClient[] {
+  static getClientsByWeekDay(clientsArray: Object): ManagerClient[] {
     const clients: ManagerClient[] = [];
-    for (const v in ClientsArray) {
-      clients.push(new ManagerClient(ClientsArray[v].clientName, ClientsArray[v].clientId));
+    for (const v in clientsArray) {
+      clients.push(new ManagerClient(clientsArray[v].clientName, clientsArray[v].clientId));
     }
     return clients;
   }
 
-  static getOrderedProducts(Products: {}): OrderedProducts[] {
+  static getOrderedProducts(products: Object): OrderedProducts[] {
     const orderedProducts: OrderedProducts[] = [];
-    for (const val in Products) {
-      orderedProducts.push(new OrderedProducts(Products[val].count, Products[val].price, Products[val].summarycode));
+    for (const val in products) {
+      orderedProducts.push(new OrderedProducts(products[val].count, products[val].price, products[val].summarycode));
     }
     return orderedProducts;
   }
 
-  intoManagers(res): Manager[] {
+  public intoManagers(res: Object[]): Manager[] {
     const managers: Manager[] = [];
     res.forEach(item => {
       managers.push(new Manager(item['active'], item['directionId'], item['directionName'], item['email'], item['headId'],
@@ -42,7 +42,7 @@ export class ConvertService {
     });
   }
 
-  intoScheduleItems(res): ScheduleItem[] {
+  public intoScheduleItems(res: Object[]): ScheduleItem[] {
     const schedules: ScheduleItem[] = [];
     res.forEach(item => schedules.push(
       new ScheduleItem(
@@ -56,7 +56,7 @@ export class ConvertService {
     return schedules;
   }
 
-  intoRecommendedOrders(res, result): RecommendedOrders[] {
+  public intoRecommendedOrders(res: Object[], result: RecommendedOrders[]): RecommendedOrders[] {
     res.forEach(item => {
       result.push(new RecommendedOrders(this.date.transfromIntoStringDate(item['creationDate']),
                                         ConvertService.getOrderedProducts(item['orderProducts']),

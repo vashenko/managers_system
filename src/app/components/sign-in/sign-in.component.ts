@@ -24,29 +24,28 @@ export class SignInComponent implements OnInit {
     this.initForm();
   }
 
-  initForm() {
+  initForm(): void {
     this.logInForm = new FormGroup({
       'email': this.logInEmail,
       'password': this.logInPassword
     });
   }
 
-  initControls() {
+  initControls(): void {
     this.logInEmail = new FormControl('', [Validators.required]);
     this.logInPassword = new FormControl('', [Validators.required]);
   }
 
-  errosHandler(err: string) {
+  errosHandler(err: string): void {
     this.error = err;
     setTimeout(() => {
       this.error = '';
     }, 4500);
   }
 
-  signIn() {
+  signIn(): void {
     if (this.logInForm.valid) {
       this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).subscribe(token => {
-        console.log(token);
         this.authService.signInWithCustomToken(token)
           .then(() => {
             this.authService.getUserTokenId()

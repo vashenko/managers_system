@@ -31,14 +31,14 @@ export class ManagerService {
     return len ? len : 0;
   }
 
-  static getRecOrdersCount(recommendedOrders: RecommendedOrders[], user1cId: string, day: string) {
+  static getRecOrdersCount(recommendedOrders: RecommendedOrders[], user1cId: string, day: string): number {
     const result = recommendedOrders.filter(item => {
       return item.user1cId === user1cId && item.creationDate === day;
     });
     return result.length;
   }
 
-  convertIntoShowedManagers(schedules: ScheduleItem[], managers: Manager[], recOrders: RecommendedOrders[]): ShowedManager[] {
+  public convertIntoShowedManagers(schedules: ScheduleItem[], managers: Manager[], recOrders: RecommendedOrders[]): ShowedManager[] {
     const showedManagers: ShowedManager[] = [];
     managers.forEach(manager => {
       showedManagers.push(

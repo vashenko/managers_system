@@ -1,5 +1,19 @@
 <div class="googleMapContainer">
+ <div class="googleMapSearchContainer">
+  <div class="searchField">
+    <input
+      type="text"
+      placeholder="Find Location"
+      class="googleMapSearch" #direction
+      (keyup.enter)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)">
+    <i
+      class="fas fa-search"
+      (click)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)"
+      ></i>
+  </div>
+ </div>
  <agm-map
+     [ngStyle]="{'width': googleMapWidthHandler()}"
      [zoom]="6"
      [latitude]="googleMapService.mark.lat"
      [longitude]="googleMapService.mark.lng"
@@ -13,14 +27,8 @@
    </agm-marker>
    <app-google-map-wrapper (mapLoad)='googleMapService.initMap($event)'></app-google-map-wrapper>
  </agm-map>
- <aside class="googleMapAsideContainer">
-   <div class="googleMapAsideSearchInput">
-    <mat-form-field>
-        <input matInput placeholder="Clients direction" #direction>
-    </mat-form-field>
-    <button mat-button (click)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)">Click me!</button>
-   </div>
-   <div id="streetView" #streetView ></div>
+ <aside class="googleMapAsideContainer" [ngStyle]="{'display': showStreetViewPano()}">
+     <div id="streetView" #streetView ></div>
  </aside>
 </div>
 

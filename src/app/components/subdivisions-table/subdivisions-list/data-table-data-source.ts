@@ -47,7 +47,7 @@ export class  DataTableDataSource extends DataSource<Subdivision> {
     disconnect() {
   }
 
-  private sortData(data: Subdivision[]) {
+  private sortData(data: Subdivision[]): Subdivision[] {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }

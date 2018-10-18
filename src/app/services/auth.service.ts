@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {AngularFireAuth} from 'angularfire2/auth';
+import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,15 @@ export class AuthService {
     });
   }
 
-  get authenticated(): boolean {
+  public get authenticated(): boolean {
     return this.authState !== null;
   }
 
-  get currentUser(): any {
+  public get currentUser(): any {
       return this.authenticated ? this.authState : null;
   }
 
-  logOut(): void {
+  public logOut(): void {
     this.fireAuth.auth.signOut()
       .then(() => {
         localStorage.removeItem('User');
@@ -30,11 +31,11 @@ export class AuthService {
       });
   }
 
-  signInWithCustomToken(token: string) {
+  public signInWithCustomToken(token: string): Promise<UserCredential> {
     return this.fireAuth.auth.signInWithCustomToken(token);
   }
 
-  getUserTokenId(): Promise<string> {
+  public getUserTokenId(): Promise<string> {
     return new Promise((resolve => {
       this.fireAuth.auth.onAuthStateChanged((user) => {
         if (user) {
@@ -46,7 +47,7 @@ export class AuthService {
     }));
   }
 
-  checkOnLoggedUser() {
+  public checkOnLoggedUser(): void {
     setTimeout(() => {
       this.fireAuth.auth.onAuthStateChanged((user) => {
         if (user) {
