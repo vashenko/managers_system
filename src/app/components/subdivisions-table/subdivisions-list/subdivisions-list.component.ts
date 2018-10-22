@@ -41,7 +41,7 @@ export class SubdivisionsListComponent implements OnInit {
                         'Thursday', 'Friday', 'AnyDay'];
   empty: string[] = ['empt'];
 
-  constructor(private managerService: ManagerService, private httpService: HttpService, private date: DateService,
+  constructor(private managerService: ManagerService, private httpService: HttpService, public date: DateService,
               private subdivisionService: SubdivisionService) {
   }
   ngOnInit() {

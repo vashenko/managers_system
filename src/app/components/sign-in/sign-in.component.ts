@@ -10,10 +10,10 @@ import {HttpService} from '../../services/http.service';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  private logInForm: FormGroup;
-  private logInEmail: FormControl;
-  private logInPassword: FormControl;
-  error: string;
+  public logInForm: FormGroup;
+  public logInEmail: FormControl;
+  public logInPassword: FormControl;
+  public error: string;
 
   constructor(private router: Router, private authService: AuthService, private httpService: HttpService) {
   }
@@ -43,7 +43,7 @@ export class SignInComponent implements OnInit {
     }, 4500);
   }
 
-  private ignIn(): void {
+  public signIn(): void {
     if (this.logInForm.valid) {
       this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).subscribe(token => {
         this.authService.signInWithCustomToken(token)

@@ -18,7 +18,7 @@ export class NavbarComponent implements OnDestroy {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService,
+  constructor(private breakpointObserver: BreakpointObserver, public authService: AuthService,
               changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();

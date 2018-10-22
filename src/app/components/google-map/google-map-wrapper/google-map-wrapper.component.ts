@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { GoogleMapsAPIWrapper } from '@agm/core';
 
+
 @Component({
   selector: 'app-google-map-wrapper',
   templateUrl: './google-map-wrapper.component.html',

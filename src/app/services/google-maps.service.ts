@@ -5,7 +5,6 @@ import {google} from 'google-maps';
 import {Mark} from '../domains/google-mark.model';
 import StreetViewPanorama = google.maps.StreetViewPanorama;
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,8 +14,8 @@ export class GoogleMapsService {
   private geocoder: any;
   private googleMapWrapper: any;
 
-  public showMark = false;
-  public mark: Mark;
+  private showMark = false;
+  private mark: Mark;
 
   constructor(private googleMapsAPi: MapsAPILoader) {
     this.markerDataChange.subscribe(mark => {
@@ -45,7 +44,7 @@ export class GoogleMapsService {
     this.markerDataChange.next(new Mark(res.coords.lat, res.coords.lng));
   }
 
-  private initMap(googleMapWrapper): void {
+  public initMap(googleMapWrapper): void {
     this.googleMapsAPi.load().then(() => {
       this.googleMapWrapper = googleMapWrapper;
     });
@@ -94,7 +93,7 @@ export class GoogleMapsService {
     this.streetViewChange.next(new google.maps.StreetViewPanorama(node, options));
   }
 
-  public replaceMarkerByEvent(event: any, node: HTMLDivElement): void {
+  public replaceMark(event: any, node: HTMLDivElement): void {
     this.showMark = true;
     this.changeMarksLatAndLng(event);
     this.initGoogleStreetView(node);

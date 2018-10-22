@@ -36,8 +36,10 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatTreeModule
+  MatTreeModule,
 } from '@angular/material';
+
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   exports: [
@@ -78,6 +80,7 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    LayoutModule
   ]
 })
 export class MaterialModule {}

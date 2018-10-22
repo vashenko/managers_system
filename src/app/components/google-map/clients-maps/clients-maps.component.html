@@ -5,10 +5,10 @@
       type="text"
       placeholder="Find Location"
       class="googleMapSearch" #direction
-      (keyup.enter)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)">
+      (keyup.enter)="showOnMap(direction.value)">
     <i
       class="fas fa-search"
-      (click)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)">
+      (click)="showOnMap(direction.value)">
     </i>
   </div>
  </div>
@@ -17,13 +17,13 @@
      [zoom]="6"
      [latitude]="googleMapService.mark.lat"
      [longitude]="googleMapService.mark.lng"
-     (mapClick)="googleMapService.replaceMarkerByEvent($event, streetViewNode.nativeElement)">
+     (mapClick)="replaceMark($event)">
    <agm-marker
      [latitude]="googleMapService.mark.lat"
      [longitude]="googleMapService.mark.lng"
      [markerDraggable]="true"
      *ngIf="googleMapService.showMark"
-     (dragEnd)="googleMapService.replaceMarkerByEvent($event, streetViewNode.nativeElement)">
+     (dragEnd)="replaceMark($event)">
    </agm-marker>
    <app-google-map-wrapper (mapLoad)='googleMapService.initMap($event)'></app-google-map-wrapper>
  </agm-map>
