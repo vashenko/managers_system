@@ -14,8 +14,8 @@ export class GoogleMapsService {
   private geocoder: any;
   private googleMapWrapper: any;
 
-  private showMark = false;
-  private mark: Mark;
+  public showMark = false;
+  public mark: Mark;
 
   constructor(private googleMapsAPi: MapsAPILoader) {
     this.markerDataChange.subscribe(mark => {

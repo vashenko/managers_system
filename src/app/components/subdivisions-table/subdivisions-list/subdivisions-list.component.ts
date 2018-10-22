@@ -64,7 +64,7 @@ export class SubdivisionsListComponent implements OnInit {
     });
   }
 
-  private expendRow(element): void {
+  public expendRow(element): void {
     if (this.expandedElement === element) {
       this.expandedElement = undefined;
     } else {
