@@ -29,7 +29,7 @@ export class HttpService {
     return recommendedOrders;
   }
 
-  public getApiData(): Observable<[ScheduleItem[], Manager[] ]> {
+  public getApiData(): Observable<[ScheduleItem[], Manager[]]> {
     return forkJoin(
       this.http.get(this.schedule_url).pipe(map((res: Object[]) => {
         return this.convert.intoScheduleItems(res);

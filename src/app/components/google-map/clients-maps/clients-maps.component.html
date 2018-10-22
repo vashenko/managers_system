@@ -8,8 +8,8 @@
       (keyup.enter)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)">
     <i
       class="fas fa-search"
-      (click)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)"
-      ></i>
+      (click)="googleMapService.showOnMap(direction.value, streetViewNode.nativeElement)">
+    </i>
   </div>
  </div>
  <agm-map
@@ -17,13 +17,13 @@
      [zoom]="6"
      [latitude]="googleMapService.mark.lat"
      [longitude]="googleMapService.mark.lng"
-     (mapClick)="googleMapService.replaceMarkerByClicking($event, streetViewNode.nativeElement)">
+     (mapClick)="googleMapService.replaceMarkerByEvent($event, streetViewNode.nativeElement)">
    <agm-marker
      [latitude]="googleMapService.mark.lat"
      [longitude]="googleMapService.mark.lng"
      [markerDraggable]="true"
      *ngIf="googleMapService.showMark"
-     (dragEnd)="googleMapService.replaceMarkerByDragging($event, streetViewNode.nativeElement)">
+     (dragEnd)="googleMapService.replaceMarkerByEvent($event, streetViewNode.nativeElement)">
    </agm-marker>
    <app-google-map-wrapper (mapLoad)='googleMapService.initMap($event)'></app-google-map-wrapper>
  </agm-map>

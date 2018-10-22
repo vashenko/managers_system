@@ -5,6 +5,7 @@ import {google} from 'google-maps';
 import {Mark} from '../domains/google-mark.model';
 import StreetViewPanorama = google.maps.StreetViewPanorama;
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,8 +15,8 @@ export class GoogleMapsService {
   private geocoder: any;
   private googleMapWrapper: any;
 
-  private showMark = false;
-  private mark: Mark;
+  public showMark = false;
+  public mark: Mark;
 
   constructor(private googleMapsAPi: MapsAPILoader) {
     this.markerDataChange.subscribe(mark => {
@@ -50,7 +51,7 @@ export class GoogleMapsService {
     });
   }
 
-  private showOnMap(adress: string, node: HTMLDivElement): void {
+  public showOnMap(adress: string, node: HTMLDivElement): void {
     this.googleMapsAPi.load().then(() => {
       this.geocoder = new google.maps.Geocoder();
       this.codeAddress(GoogleMapsService.deleteSymbolInAdress(adress)).subscribe(res => {
@@ -93,15 +94,11 @@ export class GoogleMapsService {
     this.streetViewChange.next(new google.maps.StreetViewPanorama(node, options));
   }
 
-  private replaceMarkerByDragging(event: any, node: HTMLDivElement): void {
-    this.changeMarksLatAndLng(event);
-    this.initGoogleStreetView(node);
-  }
-
-  private replaceMarkerByClicking(event: any, node: HTMLDivElement): void {
+  public replaceMarkerByEvent(event: any, node: HTMLDivElement): void {
     this.showMark = true;
     this.changeMarksLatAndLng(event);
     this.initGoogleStreetView(node);
   }
+
 }
 

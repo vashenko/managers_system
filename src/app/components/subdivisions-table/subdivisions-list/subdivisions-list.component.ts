@@ -36,6 +36,7 @@ export class SubdivisionsListComponent implements OnInit {
                                 'ThursdayClientsSummary', 'ThursdayOrdersSummary',
                                 'FridayClientsSummary', 'FridayOrdersSummary',
                                 'AnyDayClientsSummary', 'AnyDayOrdersSummary'];
+
   weekDays: string[] = ['empty', 'Monday', 'Tuesday', 'Wednesday',
                         'Thursday', 'Friday', 'AnyDay'];
   empty: string[] = ['empt'];
@@ -48,12 +49,12 @@ export class SubdivisionsListComponent implements OnInit {
     this.findManagers();
   }
 
-  initDataSource() {
+  private initDataSource() {
     this.dataBase = new DataBase(this.managerService, this.httpService, this.subdivisionService);
     this.dataSource = new DataTableDataSource(this.dataBase, this.paginator, this.sort);
   }
 
-  findManagers(): void {
+  private findManagers(): void {
     fromEvent(this.filter.nativeElement, 'keyup').pipe(
       debounceTime(450),
       distinctUntilChanged(),
@@ -63,7 +64,7 @@ export class SubdivisionsListComponent implements OnInit {
     });
   }
 
-  expendRow(element): void {
+  private expendRow(element): void {
     if (this.expandedElement === element) {
       this.expandedElement = undefined;
     } else {

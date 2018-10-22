@@ -14,16 +14,16 @@ export class ClientsMapsComponent implements OnInit {
   ngOnInit() {
   }
 
+  private streetViewHasChildNodes() {
+    return this.streetViewNode.nativeElement.hasChildNodes();
+  }
+
    private showStreetViewPano(): string {
     return this.streetViewNode.nativeElement.hasChildNodes() ? 'block' : 'none';
   }
 
    private googleMapWidthHandler(): string {
-    return this.streetViewNode.nativeElement.hasChildNodes() ? 75 + '%' : 100 + '%';
-  }
-
-  check() {
-    console.log('da');
+    return this.streetViewNode.nativeElement.hasChildNodes() ? '75%' : '100%';
   }
 }
 

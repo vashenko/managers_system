@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   public get currentUser(): any {
-      return this.authenticated ? this.authState : null;
+    return this.authenticated ? this.authState : null;
   }
 
   public logOut(): void {
