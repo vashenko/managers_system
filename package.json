@@ -41,6 +41,7 @@
     "agm-direction": "^0.7.3",
     "angular-font-awesome": "^3.1.2",
     "angular-maps": "^6.0.1",
+    "angular2-moment": "^1.9.0",
     "angularfire2": "^5.0.1",
     "async": "^2.6.1",
     "bingmaps": "^2.0.3",

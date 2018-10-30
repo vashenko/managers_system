@@ -1,43 +1,37 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DateService {
-  private date = new Date();
-  private weekDay = this.date.getDay();
-  private day = this.date.getDate();
-  private options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-
-  constructor() { }
-
-  get Monday() {
-    const monday = this.day - this.weekDay + (this.day === 0 ? -6 : 1);
-    return new Date(this.date.setDate(monday)).toLocaleDateString( 'en-US', this.options);
+  private format: string;
+  constructor() {
+    this.format = 'dddd, MMMM D, YYYY';
   }
 
-  get Tuesday() {
-    const tuesday = this.day - this.weekDay + (this.day === 0 ? -6 : 2);
-    return new Date(this.date.setDate(tuesday)).toLocaleDateString( 'en-US', this.options);
+  public get Monday(): string {
+    return moment().weekday(1).format(this.format);
   }
 
-  get Wednesday() {
-    const wednesday = this.day - this.weekDay + (this.day === 0 ? -6 : 3);
-    return new Date(this.date.setDate(wednesday)).toLocaleDateString( 'en-US', this.options);
+  public get Tuesday(): string {
+    return moment().weekday(2).format(this.format);
   }
 
-  get Thursday() {
-    const thursday = this.day - this.weekDay + (this.day === 0 ? -6 : 4);
-    return new Date(this.date.setDate(thursday)).toLocaleDateString( 'en-US', this.options);
+  public get Wednesday(): string {
+    return moment().weekday(3).format(this.format);
   }
 
-  get Friday() {
-    const friday = this.day - this.weekDay + (this.day === 0 ? -6 : 5);
-    return new Date(this.date.setDate(friday)).toLocaleDateString( 'en-US', this.options);
+  public get Thursday(): string {
+    return moment().weekday(4).format(this.format);
   }
 
-  transfromIntoStringDate(date: string) {
-    return new Date(date).toLocaleDateString('en-US', this.options);
+  public get Friday(): string {
+    return moment().weekday(5).format(this.format);
+  }
+
+  public transfromIntoStringDate(date: string) {
+    return new Date(date).toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
   }
 
 }
