@@ -25,7 +25,7 @@
      *ngIf="googleMapService.showMark"
      (dragEnd)="replaceMark($event)">
    </agm-marker>
-   <app-google-map-wrapper (mapLoad)='googleMapService.initMap($event)'></app-google-map-wrapper>
+   <app-google-map-wrapper (mapLoad)='initMap($event)'></app-google-map-wrapper>
  </agm-map>
  <aside class="googleMapAsideContainer" [ngStyle]="{'display': showStreetViewPano()}">
      <div id="streetView" #streetView ></div>

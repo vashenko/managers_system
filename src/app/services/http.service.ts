@@ -14,7 +14,7 @@ export class HttpService {
   private managers_url = 'http://srv-dev-01.kt.local/Hryshenchuk/hs/ut/managers/';
   private schedule_url = 'http://srv-dev-01.kt.local/Hryshenchuk/hs/ut/baseSchedulers/';
   private auth_url = 'https://webwork.kt.ua:11443/auth-firebase-user';
-  token: string;
+  private token: string;
 
   constructor(private http: HttpClient, private convert: ConvertService, private firebase: AngularFireDatabase,
               private authService: AuthService) {

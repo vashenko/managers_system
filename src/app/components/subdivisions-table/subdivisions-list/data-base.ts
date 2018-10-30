@@ -1,4 +1,4 @@
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {ManagerService} from '../../../services/manager.service';
 import {RecommendedOrders} from '../../../domains/recomendedOrder.model';
 import {HttpService} from '../../../services/http.service';
@@ -7,11 +7,12 @@ import {Subdivision} from '../../../domains/subdivision.model';
 import {SubdivisionService} from '../../../services/subdivision.service';
 
 export class DataBase {
-  showedManagers: ShowedManager[] = [];
-  recOrders: RecommendedOrders[] = [];
-  subdivisions: Subdivision[] = [];
-  isLoading = true;
-  isRateLimitReached = false;
+  private showedManagers: ShowedManager[] = [];
+  private recOrders: RecommendedOrders[] = [];
+  private subdivisions: Subdivision[] = [];
+  public isLoading = true;
+  public isRateLimitReached = false;
+  public subscription: Subscription;
 
   dataChange: BehaviorSubject<Subdivision[]> = new BehaviorSubject<Subdivision[]>([]);
   get data(): Subdivision[] {
@@ -20,7 +21,7 @@ export class DataBase {
 
   constructor(private managerService: ManagerService, private httpService: HttpService, private subdivisionServics: SubdivisionService) {
     this.recOrders = this.httpService.getRecommendedOrders();
-    this.httpService.getApiData().subscribe(res => {
+    this.subscription = this.httpService.getApiData().subscribe(res => {
       this.showedManagers = this.managerService.convertIntoShowedManagers(res[0], res[1], this.recOrders);
       this.subdivisions = this.subdivisionServics.getSubdivisions(this.showedManagers, 'direction');
       this.dataChange.next(this.subdivisions);

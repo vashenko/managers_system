@@ -10,8 +10,8 @@ import {AuthService} from '../../services/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnDestroy {
-  currentUserName: string;
-  mobileQuery: MediaQueryList;
+  public currentUserName: string;
+  public mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -26,11 +26,11 @@ export class NavbarComponent implements OnDestroy {
     this.displayCurrentUserName();
   }
 
-  logOut(): void {
+  public logOut(): void {
     this.authService.logOut();
   }
 
-  displayCurrentUserName(): boolean {
+  public displayCurrentUserName(): boolean {
     return this.authService.authenticated ? this.currentUserName = this.authService.currentUser.displayName : '';
   }
 

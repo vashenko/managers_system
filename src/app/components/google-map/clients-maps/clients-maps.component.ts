@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GoogleMapsService} from '../../../services/google-maps.service';
 
 @Component({
@@ -6,12 +6,12 @@ import {GoogleMapsService} from '../../../services/google-maps.service';
   templateUrl: './clients-maps.component.html',
   styleUrls: ['./clients-maps.component.css']
 })
-export class ClientsMapsComponent implements OnInit {
+export class ClientsMapsComponent implements OnInit, OnDestroy {
   @ViewChild('streetView') streetViewNode: ElementRef;
 
   constructor(public googleMapService: GoogleMapsService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
   public showStreetViewPano(): string {
@@ -26,8 +26,16 @@ export class ClientsMapsComponent implements OnInit {
     this.googleMapService.showOnMap(adress, this.streetViewNode.nativeElement);
   }
 
-  public replaceMark(event) {
+  public replaceMark(event): void {
     this.googleMapService.replaceMark(event, this.streetViewNode.nativeElement);
+  }
+
+  public initMap(map): void {
+    this.googleMapService.initMap(map);
+  }
+
+  ngOnDestroy(): void {
+    this.googleMapService.clearAfterSubscription();
   }
 }
 

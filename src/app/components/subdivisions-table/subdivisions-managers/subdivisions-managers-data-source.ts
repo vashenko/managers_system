@@ -41,6 +41,7 @@ export class  SubdivisionsManagersDataSource extends DataSource<ShowedManager> {
   }
 
   disconnect() {
+
   }
 
   // private sortData(data: ShowedManager[]) {

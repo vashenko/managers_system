@@ -7,7 +7,7 @@ import UserCredential = firebase.auth.UserCredential;
   providedIn: 'root'
 })
 export class AuthService {
-  authState: any = null;
+  private authState: any = null;
 
   constructor(public fireAuth: AngularFireAuth, private router: Router) {
     this.fireAuth.authState.subscribe((auth) => {

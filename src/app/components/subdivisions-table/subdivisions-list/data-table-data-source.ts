@@ -1,6 +1,6 @@
 import {DataSource} from '@angular/cdk/table';
 import {MatPaginator, MatSort} from '@angular/material';
-import {BehaviorSubject, merge, of as observableOf, Observable} from 'rxjs';
+import {BehaviorSubject, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DataBase} from './data-base';
 import {Subdivision} from '../../../domains/subdivision.model';
@@ -27,8 +27,7 @@ export class  DataTableDataSource extends DataSource<Subdivision> {
       this.dataBase.dataChange,
       this.sort.sortChange,
       this.filterChange,
-      this.paginator.page,
-      observableOf(this.dataBase.isLoading)
+      this.paginator.page
     ];
 
     return merge(...displayDataChanges).pipe(
@@ -44,7 +43,8 @@ export class  DataTableDataSource extends DataSource<Subdivision> {
     }));
   }
 
-    disconnect() {
+  disconnect() {
+    this.dataBase.subscription.unsubscribe();
   }
 
   private sortData(data: Subdivision[]): Subdivision[] {

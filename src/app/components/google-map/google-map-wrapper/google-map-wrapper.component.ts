@@ -9,7 +9,6 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
 })
 export class GoogleMapWrapperComponent implements OnInit {
   @Output() mapLoad: EventEmitter<{}> = new EventEmitter<{}>();
-  public directionsDisplay: any;
   constructor(public gMaps: GoogleMapsAPIWrapper) {}
 
   ngOnInit() {

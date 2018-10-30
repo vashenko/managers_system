@@ -63,7 +63,7 @@ export class GoogleMapsService {
     });
   }
 
-  private codeAddress(address: string): Observable<google.maps.GeocoderResult[]> {
+  public codeAddress(address: string): Observable<google.maps.GeocoderResult[]> {
     return Observable.create((observer: Observer<google.maps.GeocoderResult[]>) => {
       this.geocoder.geocode({ address: address }, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
@@ -97,6 +97,11 @@ export class GoogleMapsService {
     this.showMark = true;
     this.changeMarksLatAndLng(event);
     this.initGoogleStreetView(node);
+  }
+
+  public clearAfterSubscription() {
+    this.markerDataChange.unsubscribe();
+    this.streetViewChange.unsubscribe();
   }
 
 }

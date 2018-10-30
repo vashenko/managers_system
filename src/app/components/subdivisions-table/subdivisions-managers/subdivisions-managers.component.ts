@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 import {ShowedManager} from '../../../domains/showed-manager';
 import {SubdivisionsManagersDataBase} from './subdivisions-managers-data-base';
 import {SubdivisionsManagersDataSource} from './subdivisions-managers-data-source';
@@ -6,6 +6,7 @@ import {SubdivisionsManagersDataSource} from './subdivisions-managers-data-sourc
 @Component({
   selector: 'app-subdivisions-managers',
   templateUrl: './subdivisions-managers.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./subdivisions-managers.component.css']
 })
 export class SubdivisionsManagersComponent implements OnInit {
