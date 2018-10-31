@@ -15,6 +15,7 @@ import {FirebaseModule} from './modules/firebase.module';
 import { MaterialModule } from './modules/shared/material.module.';
 import {GraphicsComponent} from './components/graphics/graphics.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

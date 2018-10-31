@@ -5,7 +5,7 @@ import {GraphicsComponent} from '../components/graphics/graphics.component';
 
 const routes: Routes = [
   {
-    path: '', pathMatch: 'full', component: GraphicsComponent
+    path: '', pathMatch: 'full', component: SignInComponent
   },
   {
     path: 'log-in', component: SignInComponent
@@ -20,6 +20,10 @@ const routes: Routes = [
   },
   {
     path: 'map',
+    loadChildren: '../components/google-map/clients-maps/clients-maps.module#ClientsMapsModule'
+  },
+  {
+    path: 'map/:address',
     loadChildren: '../components/google-map/clients-maps/clients-maps.module#ClientsMapsModule'
   }
 ];

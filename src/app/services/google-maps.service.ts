@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observer, Observable, BehaviorSubject} from 'rxjs';
+import {Observer, Observable, BehaviorSubject, Subscription} from 'rxjs';
 import {MapsAPILoader} from '@agm/core';
 import {google} from 'google-maps';
 import {Mark} from '../domains/google-mark.model';
 import StreetViewPanorama = google.maps.StreetViewPanorama;
+import {SubscriptionHandlerService} from './subscription-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,15 @@ export class GoogleMapsService {
   private streetViewChange: BehaviorSubject<StreetViewPanorama> = new BehaviorSubject<StreetViewPanorama>(null);
   private geocoder: any;
   private googleMapWrapper: any;
+  private subscriptions: Subscription[] = [];
+  private mark: Mark;
 
   public showMark = false;
-  public mark: Mark;
 
-  constructor(private googleMapsAPi: MapsAPILoader) {
-    this.markerDataChange.subscribe(mark => {
+  constructor(public googleMapsAPi: MapsAPILoader, private sh: SubscriptionHandlerService) {
+    this.subscriptions.push(this.markerDataChange.subscribe(mark => {
       this.mark = mark;
-    });
+    }));
   }
 
   static changeZoom(types: string[], map): void {
@@ -53,13 +55,15 @@ export class GoogleMapsService {
   public showOnMap(adress: string, node: HTMLDivElement): void {
     this.googleMapsAPi.load().then(() => {
       this.geocoder = new google.maps.Geocoder();
-      this.codeAddress(GoogleMapsService.deleteSymbolInAdress(adress)).subscribe(res => {
-        this.markerDataChange.next(
-          new Mark(res[0].geometry.location.lat(), res[0].geometry.location.lng())
-        );
-        this.initGoogleStreetView(node);
-        GoogleMapsService.changeZoom(res[0].types, this.googleMapWrapper);
-      });
+      this.subscriptions.push(
+        this.codeAddress(GoogleMapsService.deleteSymbolInAdress(adress)).subscribe(res => {
+          this.markerDataChange.next(
+            new Mark(res[0].geometry.location.lat(), res[0].geometry.location.lng())
+          );
+          this.initGoogleStreetView(node);
+          GoogleMapsService.changeZoom(res[0].types, this.googleMapWrapper);
+        })
+      );
     });
   }
 
@@ -100,8 +104,11 @@ export class GoogleMapsService {
   }
 
   public clearAfterSubscription() {
-    this.markerDataChange.unsubscribe();
-    this.streetViewChange.unsubscribe();
+    this.sh.clearAfterSubscriptions(this.subscriptions);
+  }
+
+  public getMarkLatLang(): Observable<Mark> {
+    return this.markerDataChange.asObservable();
   }
 
 }
