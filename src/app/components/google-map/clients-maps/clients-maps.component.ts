@@ -12,12 +12,10 @@ import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 })
 export class ClientsMapsComponent implements OnInit, OnDestroy {
   @ViewChild('streetView') streetViewNode: ElementRef;
-  @ViewChild('searchIcon') search: ElementRef;
   public clientAddress: string;
   public mark: Mark;
-  public geocodingResult: boolean;
   private clientId: string;
-  constructor(private googleMapService: GoogleMapsService, private route: ActivatedRoute, private router: Router) {}
+  constructor(public googleMapService: GoogleMapsService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.googleMapService.getMarkLatLang().pipe(
@@ -29,20 +27,13 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
     this.route.params.pipe(
       takeUntil(componentDestroyed(this))
     ).subscribe(params => {
-      if (params['address'] === '' || params['id'] === '') {
+      if (!params['address'] || !params['id']) {
+        this.router.navigate(['map']);
         throw new Error('One of the parameters for the search is not set');
       } else {
-        console.log(params);
         this.clientAddress = params['address'];
         this.clientId = params['id'];
-        this.triggerClick();
       }
-    });
-
-    this.googleMapService.getGeocodingResult().pipe(
-      takeUntil(componentDestroyed(this))
-    ).subscribe(res => {
-      this.geocodingResult = res;
     });
   }
 
@@ -55,6 +46,7 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
   }
 
   public showOnMap(): void {
+    if (!this.clientId || !this.clientAddress) return;
     this.googleMapService.showOnMap(this.clientAddress, this.streetViewNode.nativeElement);
     this.router.navigate(['map', {address: this.clientAddress, id: this.clientId}]);
   }
@@ -67,13 +59,10 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
     this.googleMapService.initMap(map);
   }
 
-  private triggerClick() {
-    const el: HTMLElement = this.search.nativeElement;
-    el.click();
+  ngOnDestroy(): void {
+
   }
 
-  ngOnDestroy(): void {
-  }
 }
 
 

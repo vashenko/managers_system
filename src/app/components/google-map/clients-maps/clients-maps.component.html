@@ -9,7 +9,6 @@
       [value]="this.clientAddress || '' "
       [disabled]="true">
     <i
-      #searchIcon
       class="fas fa-search"
       (click)="showOnMap()">
     </i>
@@ -24,7 +23,7 @@
      [latitude]="this.mark.lat"
      [longitude]="this.mark.lng"
      [markerDraggable]="false"
-     *ngIf="this.geocodingResult">
+     *ngIf="this.googleMapService.showMark">
    </agm-marker>
    <app-google-map-wrapper (mapLoad)='initMap($event)'></app-google-map-wrapper>
  </agm-map>

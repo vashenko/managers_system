@@ -11,10 +11,10 @@ import StreetViewPanorama = google.maps.StreetViewPanorama;
 export class GoogleMapsService {
   private markerDataChange: BehaviorSubject<Mark> = new BehaviorSubject<Mark>( new Mark(48.379433, 31.16557990000001));
   private streetViewChange: BehaviorSubject<StreetViewPanorama> = new BehaviorSubject<StreetViewPanorama>(null);
-  private geocodingResult: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private geocoder: any;
   private googleMapWrapper: any;
   private mark: Mark;
+  public showMark = false;
 
   constructor(public googleMapsAPi: MapsAPILoader) {
     this.markerDataChange.subscribe(mark => {
@@ -61,8 +61,8 @@ export class GoogleMapsService {
             new Mark(res[0].geometry.location.lat(), res[0].geometry.location.lng())
           );
           this.sendClientLatAndLng(this.mark);
-          this.initGoogleStreetView(node);
           GoogleMapsService.changeZoom(res[0].types, this.googleMapWrapper);
+          this.initGoogleStreetView(node);
         });
     });
   }
@@ -72,15 +72,15 @@ export class GoogleMapsService {
       this.geocoder.geocode({ address: address }, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
           if (status === google.maps.GeocoderStatus.OK) {
-            this.geocodingResult.next(true);
             observer.next(results);
             observer.complete();
+            this.showMark = true;
           } else {
+            this.showMark = false;
             console.log(
               'Geocoding service: geocode was not successful for the following reason: '
               + status
             );
-            this.geocodingResult.next(false);
             observer.error(status);
           }
         })
@@ -98,17 +98,12 @@ export class GoogleMapsService {
   }
 
   public replaceMark(event: any, node: HTMLDivElement): void {
-    this.geocodingResult.next(true);
     this.changeMarksLatAndLng(event);
     this.initGoogleStreetView(node);
   }
 
   public getMarkLatLang(): Observable<Mark> {
     return this.markerDataChange.asObservable();
-  }
-
-  public getGeocodingResult(): Observable<boolean> {
-    return this.geocodingResult.asObservable();
   }
 
 }
