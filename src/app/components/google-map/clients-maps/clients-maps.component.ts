@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GoogleMapsService} from '../../../services/google-maps.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Mark} from '../../../domains/google-mark.model';
 import {takeUntil} from 'rxjs/operators';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
@@ -17,7 +17,7 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
   public mark: Mark;
   public geocodingResult: boolean;
   private clientId: string;
-  constructor(private googleMapService: GoogleMapsService, private route: ActivatedRoute) {}
+  constructor(private googleMapService: GoogleMapsService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.googleMapService.getMarkLatLang().pipe(
@@ -29,12 +29,13 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
     this.route.params.pipe(
       takeUntil(componentDestroyed(this))
     ).subscribe(params => {
-      if (params) {
+      if (params['address'] === '' || params['id'] === '') {
+        throw new Error('One of the parameters for the search is not set');
+      } else {
+        console.log(params);
         this.clientAddress = params['address'];
         this.clientId = params['id'];
         this.triggerClick();
-      } else {
-        return;
       }
     });
 
@@ -55,6 +56,7 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
 
   public showOnMap(): void {
     this.googleMapService.showOnMap(this.clientAddress, this.streetViewNode.nativeElement);
+    this.router.navigate(['map', {address: this.clientAddress, id: this.clientId}]);
   }
 
   public replaceMark(event): void {
