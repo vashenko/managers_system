@@ -5,6 +5,7 @@ import {Mark} from '../../../domains/google-mark.model';
 import {takeUntil} from 'rxjs/operators';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import {HttpService} from '../../../services/http.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-clients-maps',
@@ -18,14 +19,17 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
   public mark: Mark;
   public geocodingResult: boolean;
   private clientId: string;
+  private subscriptions = new Subscription();
   constructor(private googleMapService: GoogleMapsService, private route: ActivatedRoute, private http: HttpService) {}
 
   ngOnInit(): void {
-      this.googleMapService.getMarkLatLang().pipe(
-        takeUntil(componentDestroyed(this))
-      ).subscribe(res => {
+    this.subscriptions.add(
+      this.googleMapService.getMarkLatLang().subscribe(res => {
         this.mark = res;
-      });
+      }),
+    );
+
+    this.subscriptions.add(
       this.route.params.pipe(
         takeUntil(componentDestroyed(this))
       ).subscribe(params => {
@@ -36,12 +40,16 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
         } else {
           return;
         }
-      });
+      })
+    );
+
+    this.subscriptions.add(
       this.googleMapService.getGeocodingResult().pipe(
         takeUntil(componentDestroyed(this))
       ).subscribe(res => {
         this.geocodingResult = res;
-      });
+      })
+    );
   }
 
   public showStreetViewPano(): string {
@@ -73,7 +81,7 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
+    this.subscriptions.unsubscribe();
   }
 }
 
