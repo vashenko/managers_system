@@ -5,7 +5,7 @@ import {GraphicsComponent} from '../components/graphics/graphics.component';
 
 const routes: Routes = [
   {
-    path: '', pathMatch: 'full', component: SignInComponent
+    path: '', pathMatch: 'full', redirectTo: 'log-in'
   },
   {
     path: 'log-in', component: SignInComponent

@@ -46,10 +46,6 @@ export class HttpService {
     return this.http.get(this.auth_url, {headers, responseType: 'text'});
   }
 
-  public sendUserLatAndLng(address: number, uid: number): void {
-    console.log(address);
-    console.log(uid);
-  }
 }
 
 

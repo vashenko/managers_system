@@ -29,7 +29,6 @@ export class GoogleMapsService {
       } else if (i === 'locality') {
         map.setZoom(8);
       } else if (i === 'country') {
-        console.log('i am here');
         map.setZoom(4);
       }
     });
@@ -41,6 +40,11 @@ export class GoogleMapsService {
 
   private changeMarksLatAndLng(res: any): void {
     this.markerDataChange.next(new Mark(res.coords.lat, res.coords.lng));
+  }
+
+  private sendClientLatAndLng(mark: Mark): void {
+    console.log(mark.lng);
+    console.log(mark.lat);
   }
 
   public initMap(googleMapWrapper): void {
@@ -56,6 +60,7 @@ export class GoogleMapsService {
           this.markerDataChange.next(
             new Mark(res[0].geometry.location.lat(), res[0].geometry.location.lng())
           );
+          this.sendClientLatAndLng(this.mark);
           this.initGoogleStreetView(node);
           GoogleMapsService.changeZoom(res[0].types, this.googleMapWrapper);
         });
@@ -105,5 +110,6 @@ export class GoogleMapsService {
   public getGeocodingResult(): Observable<boolean> {
     return this.geocodingResult.asObservable();
   }
+
 }
 
