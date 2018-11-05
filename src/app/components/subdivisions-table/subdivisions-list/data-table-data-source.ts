@@ -55,16 +55,17 @@ export class  DataTableDataSource extends DataSource<Subdivision> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'direction': return compareString(a.direction, b.direction, isAsc);
+        case 'direction': return this.compareString(a.direction, b.direction, isAsc);
         default: return 0;
       }
     });
   }
+
+  private compareString(a, b, isAsc) {
+    const convertedA = a.replace(/\d+/g, '').replace(/\./g, '').toLowerCase(),
+      convertedB = b.replace(/\d+/g, '').replace(/\./g, '').toLowerCase();
+    return (convertedA < convertedB ? -1 : 1) * (isAsc ? 1 : -1);
+  }
 }
 
-function compareString(a, b, isAsc) {
-  const convertedA = a.replace(/\d+/g, '').replace(/\./g, '').toLowerCase(),
-        convertedB = b.replace(/\d+/g, '').replace(/\./g, '').toLowerCase();
-  return (convertedA < convertedB ? -1 : 1) * (isAsc ? 1 : -1);
-}
 

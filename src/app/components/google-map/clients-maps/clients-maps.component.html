@@ -4,12 +4,14 @@
     <input
       type="text"
       placeholder="Find Location"
-      class="googleMapSearch" #direction
-      (keyup.enter)="showOnMap(direction.value)"
-      [value]="this.urlAddress || '' ">
+      class="googleMapSearch"
+      (keyup.enter)="showOnMap()"
+      [value]="this.clientAddress || '' "
+      [disabled]="true">
     <i
+      #searchIcon
       class="fas fa-search"
-      (click)="showOnMap(direction.value)">
+      (click)="showOnMap()">
     </i>
   </div>
  </div>
@@ -17,14 +19,12 @@
      [ngStyle]="{'width': googleMapWidthHandler()}"
      [zoom]="6"
      [latitude]="this.mark.lat"
-     [longitude]="this.mark.lng"
-     (mapClick)="replaceMark($event)">
+     [longitude]="this.mark.lng">
    <agm-marker
      [latitude]="this.mark.lat"
      [longitude]="this.mark.lng"
-     [markerDraggable]="true"
-     *ngIf="this.googleMapService.showMark"
-     (dragEnd)="replaceMark($event)">
+     [markerDraggable]="false"
+     *ngIf="this.geocodingResult">
    </agm-marker>
    <app-google-map-wrapper (mapLoad)='initMap($event)'></app-google-map-wrapper>
  </agm-map>

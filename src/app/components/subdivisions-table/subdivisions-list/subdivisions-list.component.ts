@@ -3,7 +3,7 @@ import {MatPaginator, MatSort} from '@angular/material';
 import {DataTableDataSource} from './data-table-data-source';
 import {DataBase} from './data-base';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
-import {fromEvent, Subscription} from 'rxjs';
+import {fromEvent} from 'rxjs';
 import {HttpService} from '../../../services/http.service';
 import {ManagerService} from '../../../services/manager.service';
 import {DateService} from '../../../services/date.service';

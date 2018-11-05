@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: '../components/google-map/clients-maps/clients-maps.module#ClientsMapsModule'
   },
   {
-    path: 'map/:address',
+    path: 'map/:address/:id',
     loadChildren: '../components/google-map/clients-maps/clients-maps.module#ClientsMapsModule'
   }
 ];

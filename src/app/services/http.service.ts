@@ -45,6 +45,11 @@ export class HttpService {
     headers =  headers.append('Authorization', 'Basic ' + btoa(email + ':' + password));
     return this.http.get(this.auth_url, {headers, responseType: 'text'});
   }
+
+  public sendUserLatAndLng(address: number, uid: number): void {
+    console.log(address);
+    console.log(uid);
+  }
 }
 
 

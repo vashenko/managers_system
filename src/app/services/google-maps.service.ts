@@ -4,7 +4,6 @@ import {MapsAPILoader} from '@agm/core';
 import {google} from 'google-maps';
 import {Mark} from '../domains/google-mark.model';
 import StreetViewPanorama = google.maps.StreetViewPanorama;
-import {SubscriptionHandlerService} from './subscription-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +11,15 @@ import {SubscriptionHandlerService} from './subscription-handler.service';
 export class GoogleMapsService {
   private markerDataChange: BehaviorSubject<Mark> = new BehaviorSubject<Mark>( new Mark(48.379433, 31.16557990000001));
   private streetViewChange: BehaviorSubject<StreetViewPanorama> = new BehaviorSubject<StreetViewPanorama>(null);
+  private geocodingResult: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private geocoder: any;
   private googleMapWrapper: any;
-  private subscriptions: Subscription[] = [];
   private mark: Mark;
 
-  public showMark = false;
-
-  constructor(public googleMapsAPi: MapsAPILoader, private sh: SubscriptionHandlerService) {
-    this.subscriptions.push(this.markerDataChange.subscribe(mark => {
+  constructor(public googleMapsAPi: MapsAPILoader) {
+    this.markerDataChange.subscribe(mark => {
       this.mark = mark;
-    }));
+    });
   }
 
   static changeZoom(types: string[], map): void {
@@ -38,7 +35,7 @@ export class GoogleMapsService {
     });
   }
 
-  static deleteSymbolInAdress(adress: string): string {
+  private deleteSymbolInAdress(adress: string): string {
     return adress.includes('№') ? adress.replace('№', '') : adress;
   }
 
@@ -55,15 +52,13 @@ export class GoogleMapsService {
   public showOnMap(adress: string, node: HTMLDivElement): void {
     this.googleMapsAPi.load().then(() => {
       this.geocoder = new google.maps.Geocoder();
-      this.subscriptions.push(
-        this.codeAddress(GoogleMapsService.deleteSymbolInAdress(adress)).subscribe(res => {
+        this.codeAddress(this.deleteSymbolInAdress(adress)).subscribe(res => {
           this.markerDataChange.next(
             new Mark(res[0].geometry.location.lat(), res[0].geometry.location.lng())
           );
           this.initGoogleStreetView(node);
           GoogleMapsService.changeZoom(res[0].types, this.googleMapWrapper);
-        })
-      );
+        });
     });
   }
 
@@ -72,7 +67,7 @@ export class GoogleMapsService {
       this.geocoder.geocode({ address: address }, (
         (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
           if (status === google.maps.GeocoderStatus.OK) {
-            this.showMark = true;
+            this.geocodingResult.next(true);
             observer.next(results);
             observer.complete();
           } else {
@@ -80,7 +75,7 @@ export class GoogleMapsService {
               'Geocoding service: geocode was not successful for the following reason: '
               + status
             );
-            this.showMark = false;
+            this.geocodingResult.next(false);
             observer.error(status);
           }
         })
@@ -98,18 +93,17 @@ export class GoogleMapsService {
   }
 
   public replaceMark(event: any, node: HTMLDivElement): void {
-    this.showMark = true;
+    this.geocodingResult.next(true);
     this.changeMarksLatAndLng(event);
     this.initGoogleStreetView(node);
-  }
-
-  public clearAfterSubscription() {
-    this.sh.clearAfterSubscriptions(this.subscriptions);
   }
 
   public getMarkLatLang(): Observable<Mark> {
     return this.markerDataChange.asObservable();
   }
 
+  public getGeocodingResult(): Observable<boolean> {
+    return this.geocodingResult.asObservable();
+  }
 }
 

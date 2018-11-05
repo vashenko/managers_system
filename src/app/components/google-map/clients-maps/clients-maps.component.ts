@@ -2,8 +2,9 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {GoogleMapsService} from '../../../services/google-maps.service';
 import {ActivatedRoute} from '@angular/router';
 import {Mark} from '../../../domains/google-mark.model';
-import {Subscription} from 'rxjs';
-import {SubscriptionHandlerService} from '../../../services/subscription-handler.service';
+import {takeUntil} from 'rxjs/operators';
+import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
+import {HttpService} from '../../../services/http.service';
 
 @Component({
   selector: 'app-clients-maps',
@@ -12,20 +13,35 @@ import {SubscriptionHandlerService} from '../../../services/subscription-handler
 })
 export class ClientsMapsComponent implements OnInit, OnDestroy {
   @ViewChild('streetView') streetViewNode: ElementRef;
-  public urlAddress = '';
+  @ViewChild('searchIcon') search: ElementRef;
+  public clientAddress: string;
   public mark: Mark;
-  private subscriptions: Subscription[] = [];
-  constructor(public googleMapService: GoogleMapsService, private route: ActivatedRoute, private sh: SubscriptionHandlerService) {}
+  public geocodingResult: boolean;
+  private clientId: string;
+  constructor(private googleMapService: GoogleMapsService, private route: ActivatedRoute, private http: HttpService) {}
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.route.params.subscribe(params => {
-        params ? this.urlAddress = params['address'] : this.urlAddress = '';
-      }),
-      this.googleMapService.getMarkLatLang().subscribe(res => {
+      this.googleMapService.getMarkLatLang().pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe(res => {
         this.mark = res;
-      })
-    );
+      });
+      this.route.params.pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe(params => {
+        if (params) {
+          this.clientAddress = params['address'];
+          this.clientId = params['id'];
+          this.triggerClick();
+        } else {
+          return;
+        }
+      });
+      this.googleMapService.getGeocodingResult().pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe(res => {
+        this.geocodingResult = res;
+      });
   }
 
   public showStreetViewPano(): string {
@@ -36,21 +52,28 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
     return this.streetViewNode.nativeElement.hasChildNodes() ? '75%' : '100%';
   }
 
-  public showOnMap(adress: string): void {
-    this.googleMapService.showOnMap(adress, this.streetViewNode.nativeElement);
+  public showOnMap(): void {
+    this.googleMapService.showOnMap(this.clientAddress, this.streetViewNode.nativeElement);
+    console.log(this.mark);
+    this.http.sendUserLatAndLng(this.mark.lat, this.mark.lng);
   }
 
-  public replaceMark(event): void {
-    this.googleMapService.replaceMark(event, this.streetViewNode.nativeElement);
-  }
+  // public replaceMark(event): void {
+  //   this.googleMapService.replaceMark(event, this.streetViewNode.nativeElement);
+  //   this.http.sendUserLatAndLng(this.mark.lat, this.mark.lng);
+  // }
 
   public initMap(map): void {
     this.googleMapService.initMap(map);
   }
 
+  private triggerClick() {
+    const el: HTMLElement = this.search.nativeElement;
+    el.click();
+  }
+
   ngOnDestroy(): void {
-    this.googleMapService.clearAfterSubscription();
-    this.sh.clearAfterSubscriptions(this.subscriptions);
+
   }
 }
 
