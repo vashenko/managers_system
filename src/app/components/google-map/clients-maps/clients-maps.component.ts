@@ -12,6 +12,7 @@ import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 })
 export class ClientsMapsComponent implements OnInit, OnDestroy {
   @ViewChild('streetView') streetViewNode: ElementRef;
+  @ViewChild('searchIcon') search: ElementRef;
   public clientAddress: string;
   public mark: Mark;
   private clientId: string;
@@ -60,7 +61,7 @@ export class ClientsMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
+    this.googleMapService.showMark = false;
   }
 
 }

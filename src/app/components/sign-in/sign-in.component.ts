@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {HttpService} from '../../services/http.service';
+import {takeUntil} from 'rxjs/operators';
+import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, OnDestroy {
   public logInForm: FormGroup;
   public logInEmail: FormControl;
   public logInPassword: FormControl;
@@ -45,16 +47,21 @@ export class SignInComponent implements OnInit {
 
   public signIn(): void {
     if (this.logInForm.valid) {
-      this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).subscribe(token => {
-        this.authService.signInWithCustomToken(token)
-          .then(() => {
-            this.authService.getUserTokenId()
-              .then((idToken) => localStorage.setItem('User', idToken));
-          })
-          .then(() => this.router.navigate(['/subdivisions']))
-          .catch(err => this.errosHandler(err.message));
-      },
-    err => this.errosHandler(err.error));
+      this.httpService.sendUserCredentials(this.logInEmail.value, this.logInPassword.value).pipe(
+        takeUntil(componentDestroyed(this))).subscribe(token => {
+          this.authService.signInWithCustomToken(token)
+            .then(() => {
+              this.authService.getUserTokenId()
+                .then((idToken) => localStorage.setItem('User', idToken));
+            })
+            .then(() => this.router.navigate(['/subdivisions']))
+            .catch(err => this.errosHandler(err.message));
+        },
+        err => this.errosHandler(err.error));
     }
+  }
+
+  ngOnDestroy() {
+
   }
 }
